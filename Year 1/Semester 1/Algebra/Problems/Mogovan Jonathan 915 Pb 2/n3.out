@@ -1,0 +1,565 @@
+Associative Table Operation Number: 1
+a a a 
+a a a 
+a a a 
+
+Associative Table Operation Number: 2
+a a a 
+a b a 
+a a a 
+
+Associative Table Operation Number: 3
+a a a 
+a c a 
+a a a 
+
+Associative Table Operation Number: 4
+a a a 
+b b b 
+a a a 
+
+Associative Table Operation Number: 5
+a a a 
+a b c 
+a a a 
+
+Associative Table Operation Number: 6
+a b b 
+b a a 
+b a a 
+
+Associative Table Operation Number: 7
+a c c 
+c a a 
+c a a 
+
+Associative Table Operation Number: 8
+a b a 
+a b a 
+a b a 
+
+Associative Table Operation Number: 9
+a b a 
+b a b 
+a b a 
+
+Associative Table Operation Number: 10
+a b a 
+b b b 
+a b a 
+
+Associative Table Operation Number: 11
+b b b 
+b b b 
+b b a 
+
+Associative Table Operation Number: 12
+a b c 
+b b b 
+c b a 
+
+Associative Table Operation Number: 13
+a a a 
+a b a 
+a c a 
+
+Associative Table Operation Number: 14
+a a a 
+a b c 
+a c a 
+
+Associative Table Operation Number: 15
+c a b 
+a b c 
+b c a 
+
+Associative Table Operation Number: 16
+a a c 
+a a c 
+c c a 
+
+Associative Table Operation Number: 17
+a a c 
+a b c 
+c c a 
+
+Associative Table Operation Number: 18
+a a a 
+a a a 
+a a b 
+
+Associative Table Operation Number: 19
+b a b 
+a b a 
+b a b 
+
+Associative Table Operation Number: 20
+a b c 
+b c a 
+c a b 
+
+Associative Table Operation Number: 21
+a a a 
+a b b 
+a b b 
+
+Associative Table Operation Number: 22
+b a a 
+a b b 
+a b b 
+
+Associative Table Operation Number: 23
+a b b 
+a b b 
+a b b 
+
+Associative Table Operation Number: 24
+a a a 
+b b b 
+b b b 
+
+Associative Table Operation Number: 25
+a b b 
+b b b 
+b b b 
+
+Associative Table Operation Number: 26
+b b b 
+b b b 
+b b b 
+
+Associative Table Operation Number: 27
+c b b 
+b b b 
+b b b 
+
+Associative Table Operation Number: 28
+a b c 
+b b b 
+b b b 
+
+Associative Table Operation Number: 29
+a b b 
+b b b 
+c b b 
+
+Associative Table Operation Number: 30
+a b c 
+b b b 
+c b b 
+
+Associative Table Operation Number: 31
+a a a 
+a b c 
+a c b 
+
+Associative Table Operation Number: 32
+b c b 
+c b c 
+b c b 
+
+Associative Table Operation Number: 33
+a b c 
+b b c 
+c c b 
+
+Associative Table Operation Number: 34
+b b c 
+b b c 
+c c b 
+
+Associative Table Operation Number: 35
+a a a 
+a a a 
+a a c 
+
+Associative Table Operation Number: 36
+a a a 
+a b a 
+a a c 
+
+Associative Table Operation Number: 37
+c c a 
+c c a 
+a a c 
+
+Associative Table Operation Number: 38
+a a a 
+a a b 
+a a c 
+
+Associative Table Operation Number: 39
+a a a 
+b b b 
+a a c 
+
+Associative Table Operation Number: 40
+a a c 
+a a c 
+a a c 
+
+Associative Table Operation Number: 41
+a a c 
+a b c 
+a a c 
+
+Associative Table Operation Number: 42
+a a a 
+a a a 
+a b c 
+
+Associative Table Operation Number: 43
+a b a 
+a b a 
+a b c 
+
+Associative Table Operation Number: 44
+a a a 
+a a b 
+a b c 
+
+Associative Table Operation Number: 45
+a b a 
+b a b 
+a b c 
+
+Associative Table Operation Number: 46
+b c a 
+c a b 
+a b c 
+
+Associative Table Operation Number: 47
+a a a 
+a b b 
+a b c 
+
+Associative Table Operation Number: 48
+b a a 
+a b b 
+a b c 
+
+Associative Table Operation Number: 49
+a b a 
+a b b 
+a b c 
+
+Associative Table Operation Number: 50
+a b b 
+a b b 
+a b c 
+
+Associative Table Operation Number: 51
+a a a 
+b b b 
+a b c 
+
+Associative Table Operation Number: 52
+a b a 
+b b b 
+a b c 
+
+Associative Table Operation Number: 53
+b b a 
+b b b 
+a b c 
+
+Associative Table Operation Number: 54
+c b a 
+b b b 
+a b c 
+
+Associative Table Operation Number: 55
+b b b 
+b b b 
+a b c 
+
+Associative Table Operation Number: 56
+a b c 
+b b b 
+a b c 
+
+Associative Table Operation Number: 57
+a a a 
+a c b 
+a b c 
+
+Associative Table Operation Number: 58
+a a a 
+a b c 
+a b c 
+
+Associative Table Operation Number: 59
+a b c 
+a b c 
+a b c 
+
+Associative Table Operation Number: 60
+a a a 
+b b b 
+b b c 
+
+Associative Table Operation Number: 61
+b b a 
+b b b 
+b b c 
+
+Associative Table Operation Number: 62
+a b b 
+b b b 
+b b c 
+
+Associative Table Operation Number: 63
+b b b 
+b b b 
+b b c 
+
+Associative Table Operation Number: 64
+c c b 
+c c b 
+b b c 
+
+Associative Table Operation Number: 65
+a b c 
+b b c 
+b b c 
+
+Associative Table Operation Number: 66
+b b c 
+b b c 
+b b c 
+
+Associative Table Operation Number: 67
+a b a 
+b b b 
+c b c 
+
+Associative Table Operation Number: 68
+a b c 
+b b b 
+c b c 
+
+Associative Table Operation Number: 69
+c b c 
+b b b 
+c b c 
+
+Associative Table Operation Number: 70
+a b c 
+b c b 
+c b c 
+
+Associative Table Operation Number: 71
+c b c 
+b c b 
+c b c 
+
+Associative Table Operation Number: 72
+a b c 
+b b c 
+c b c 
+
+Associative Table Operation Number: 73
+a b c 
+c b c 
+c b c 
+
+Associative Table Operation Number: 74
+c b c 
+c b c 
+c b c 
+
+Associative Table Operation Number: 75
+a a a 
+a b b 
+a c c 
+
+Associative Table Operation Number: 76
+a a a 
+a b c 
+a c c 
+
+Associative Table Operation Number: 77
+c a a 
+a b c 
+a c c 
+
+Associative Table Operation Number: 78
+a a c 
+a b c 
+a c c 
+
+Associative Table Operation Number: 79
+a c c 
+a b c 
+a c c 
+
+Associative Table Operation Number: 80
+a a a 
+a c c 
+a c c 
+
+Associative Table Operation Number: 81
+c a a 
+a c c 
+a c c 
+
+Associative Table Operation Number: 82
+a c c 
+a c c 
+a c c 
+
+Associative Table Operation Number: 83
+a a a 
+a a a 
+c c c 
+
+Associative Table Operation Number: 84
+a a a 
+a b a 
+c c c 
+
+Associative Table Operation Number: 85
+a a a 
+b b b 
+c c c 
+
+Associative Table Operation Number: 86
+a b b 
+b b b 
+c c c 
+
+Associative Table Operation Number: 87
+b b b 
+b b b 
+c c c 
+
+Associative Table Operation Number: 88
+a b c 
+b b b 
+c c c 
+
+Associative Table Operation Number: 89
+a c c 
+b b b 
+c c c 
+
+Associative Table Operation Number: 90
+c c c 
+b b b 
+c c c 
+
+Associative Table Operation Number: 91
+a a c 
+a a c 
+c c c 
+
+Associative Table Operation Number: 92
+a b c 
+b a c 
+c c c 
+
+Associative Table Operation Number: 93
+c c c 
+c a c 
+c c c 
+
+Associative Table Operation Number: 94
+a a a 
+a b c 
+c c c 
+
+Associative Table Operation Number: 95
+a a c 
+a b c 
+c c c 
+
+Associative Table Operation Number: 96
+b a c 
+a b c 
+c c c 
+
+Associative Table Operation Number: 97
+c a c 
+a b c 
+c c c 
+
+Associative Table Operation Number: 98
+a b c 
+a b c 
+c c c 
+
+Associative Table Operation Number: 99
+c c c 
+a b c 
+c c c 
+
+Associative Table Operation Number: 100
+a a c 
+b b c 
+c c c 
+
+Associative Table Operation Number: 101
+a b c 
+b b c 
+c c c 
+
+Associative Table Operation Number: 102
+b b c 
+b b c 
+c c c 
+
+Associative Table Operation Number: 103
+a a a 
+c b c 
+c c c 
+
+Associative Table Operation Number: 104
+c a c 
+c b c 
+c c c 
+
+Associative Table Operation Number: 105
+a c c 
+c b c 
+c c c 
+
+Associative Table Operation Number: 106
+c c c 
+c b c 
+c c c 
+
+Associative Table Operation Number: 107
+a b c 
+b c c 
+c c c 
+
+Associative Table Operation Number: 108
+a c c 
+b c c 
+c c c 
+
+Associative Table Operation Number: 109
+a a a 
+c c c 
+c c c 
+
+Associative Table Operation Number: 110
+a b c 
+c c c 
+c c c 
+
+Associative Table Operation Number: 111
+a c c 
+c c c 
+c c c 
+
+Associative Table Operation Number: 112
+b c c 
+c c c 
+c c c 
+
+Associative Table Operation Number: 113
+c c c 
+c c c 
+c c c 
+
