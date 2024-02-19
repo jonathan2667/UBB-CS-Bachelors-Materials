@@ -1,0 +1,22 @@
+     1                                  ; Ne propunem ca programul de mai jos sa citeasca de la tastatura un numar si sa afiseze pe ecran valoarea numarului citit impreuna cu un mesaj.
+     2                                  bits 32
+     3                                  global start        
+     4                                  
+     5                                  ; declararea functiilor externe folosite de program
+     6                                  extern exit, printf, scanf  ; adaugam printf si scanf ca functii externe           
+     7                                  import exit msvcrt.dll     
+     8                                  import printf msvcrt.dll     ; indicam asamblorului ca functia printf se gaseste in libraria msvcrt.dll
+     9                                  import scanf msvcrt.dll      ; similar pentru scanf
+    10                                                            
+    11                                  segment  data use32 class=data
+    12 00000000 256400                  	format  db "%d", 0  ; definim formatul
+    13                                      
+    14                                  segment  code use32 class=code
+    15                                      start:
+    16 00000000 6AEF                            push dword -17  ; punem parametrii pe stiva de la dreapta la stanga
+    17 00000002 68[00000000]            		push dword format  
+    18 00000007 FF15[00000000]          		call [printf]       ; apelam functia printf
+    19 0000000D 83C408                  		add esp, 4 * 2     ; eliberam parametrii de pe stiva
+    20                                  
+    21 00000010 6A00                            push dword 0 ; push the parameter for exit onto the stack
+    22 00000012 FF15[00000000]          	    call [exit] ; call exit to terminate the program
