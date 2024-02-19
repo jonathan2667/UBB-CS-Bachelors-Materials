@@ -1,0 +1,8 @@
+The number of bases is  6
+((0, 1), (1, 0))
+((0, 1), (1, 1))
+((1, 0), (0, 1))
+((1, 0), (1, 1))
+((1, 1), (0, 1))
+((1, 1), (1, 0))
+Number of bases printed - to check we printed all of them:  6

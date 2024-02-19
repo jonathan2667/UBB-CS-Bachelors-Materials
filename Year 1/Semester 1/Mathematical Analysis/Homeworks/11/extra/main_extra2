@@ -1,0 +1,61 @@
+import numpy as np
+
+# Define the function and its gradient
+def f(x: np.ndarray) -> float:
+    return 100*(x[1] - x[0]**2)**2 + (1 - x[0])**2
+
+def grad_f(x: np.ndarray) -> np.ndarray:
+    df_dx = -400*x[0]*(x[1] - x[0]**2) - 2*(1 - x[0])
+    df_dy = 200*(x[1] - x[0]**2)
+    return np.array([df_dx, df_dy])
+
+def hessian_f(x: np.ndarray) -> np.ndarray:
+    d2f_dx2 = -400*(x[1] - 3*x[0]**2) + 2
+    d2f_dxdy = -400*x[0]
+    d2f_dydx = -400*x[0]
+    d2f_dy2 = 200
+    return np.array([[d2f_dx2, d2f_dxdy], [d2f_dydx, d2f_dy2]])
+
+# Initialize x for Newton's method
+x = np.array([-1.2, 1])
+
+# Initialize counter for Newton's method
+counter = 0
+
+# Apply Newton's method
+for _ in range(100):  # maximum 100 iterations
+    gradient = grad_f(x)
+    hessian = hessian_f(x)
+    x_new = x - np.linalg.inv(hessian).dot(gradient)
+
+    # Check for convergence
+    if np.allclose(x, x_new):
+        break
+
+    x = x_new
+    counter += 1
+
+print(f"Newton's method converged to the minimum at {x} in {counter} steps.")
+
+# Initialize x for gradient descent
+x_gd = np.array([-1.2, 1])
+
+# Set learning rate
+alpha = 0.001
+
+# Initialize counter for gradient descent
+counter_gd = 0
+
+# Apply gradient descent
+for _ in range(10000):  # maximum 10000 iterations
+    gradient = grad_f(x_gd)
+    x_gd_new = x_gd - alpha * gradient
+
+    # Check for convergence
+    if np.allclose(x_gd, x_gd_new):
+        break
+
+    x_gd = x_gd_new
+    counter_gd += 1
+
+print(f"Gradient descent converged to the minimum at {x_gd} in {counter_gd} steps.")

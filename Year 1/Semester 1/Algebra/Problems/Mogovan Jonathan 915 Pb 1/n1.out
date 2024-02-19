@@ -1,0 +1,8 @@
+The number of partitions on the set A is 5
+
+Their corresponding equivalence relations are: 
+{a1, a2, a3} -> A x A
+{ {a1, a2}, {a3} } -> dA U { (a1, a2), (a2, a1) }
+{ {a1, a3}, {a2} } -> dA U { (a1, a3), (a3, a1) }
+{ {a1}, {a2, a3} } -> dA U { (a2, a3), (a3, a2) }
+{ {a1}, {a2}, {a3} } -> dA
