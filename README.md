@@ -5,32 +5,20 @@ This repository is a comprehensive collection of academic materials accumulated 
 
 The purpose of this repository is to organize my academic journey, reflect on the knowledge acquired, and provide a resource for current and future students to reference and study.
 
-### 📘 Semester 1
+### 📘 Semester 1 
 
-#### ➗ Algebra
-- **Lectures**: Notes and slides covering group theory, ring theory, and fields.
-- **Seminars**: Problem sets and solutions focused on abstract algebra concepts.
-- **Assignments & Homework**: Specific algebra problems assigned throughout the semester.
+1. #### Algebra ➗
 
-#### 🧠 Computational Logic
-- **Lectures**: Theoretical foundations of logic in computer science.
-- **Seminars**: Exercises on logic application in computing.
-- **Assignments & Homework**: Problems and projects involving computational logic theories.
+2. #### Computational Logic 🧠
 
-#### 🛠️ Computer Systems Architecture
-- **Lectures**: Overview of computer architecture, including CPU design, memory hierarchy, and I/O systems.
-- **Seminars**: Case studies and architecture simulation exercises.
-- **Assignments & Homework**: Design and analysis tasks related to computer systems.
+3. #### Computer Systems Architecture 🛠️
 
-#### 👾 Fundamentals of Programming
-- **Lectures**: Basic programming principles, algorithmic thinking, and introduction to software development.
-- **Seminars**: Practical programming exercises and collaborative coding sessions.
-- **Assignments & Homework**: Projects aimed at applying programming fundamentals.
+4. #### Fundamentals of Programming 👾
 
-#### 📈 Mathematical Analysis
-- **Lectures**: Concepts of limits, continuity, differentiation, and integration.
-- **Seminars**: Analytical problem-solving sessions.
-- **Assignments & Homework**: Extensive problem sets covering various topics in mathematical analysis.
+5. #### Mathematical Analysis 📈
+
+
+
 
 ### 📘 Semester 2
 _Coming Soon - This section will be updated with materials from the second semester as they become available._
