@@ -1,0 +1,10 @@
+98,Cristian,6
+110,Tiberiu,74
+127,Ursula,30
+139,Radu,74
+174,Liam,99
+169,Karina,46
+202,Tiberiu,14
+126,Eduard,92
+490,Fiona,33
+396,Octavian,85

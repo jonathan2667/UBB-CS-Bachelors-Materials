@@ -1,0 +1,52 @@
+[
+ {
+  "_student_unique_id": 11,
+  "_student_name": "Eduard",
+  "_student_group": 35
+ },
+ {
+  "_student_unique_id": 39,
+  "_student_name": "Fiona",
+  "_student_group": 1
+ },
+ {
+  "_student_unique_id": 191,
+  "_student_name": "Ursula",
+  "_student_group": 37
+ },
+ {
+  "_student_unique_id": 112,
+  "_student_name": "Jovan",
+  "_student_group": 44
+ },
+ {
+  "_student_unique_id": 67,
+  "_student_name": "Tessa",
+  "_student_group": 78
+ },
+ {
+  "_student_unique_id": 114,
+  "_student_name": "Fiona",
+  "_student_group": 67
+ },
+ {
+  "_student_unique_id": 293,
+  "_student_name": "Ursula",
+  "_student_group": 97
+ },
+ {
+  "_student_unique_id": 314,
+  "_student_name": "Eduard",
+  "_student_group": 4
+ },
+ {
+  "_student_unique_id": 184,
+  "_student_name": "Gabriel",
+  "_student_group": 81
+ },
+ {
+  "_student_unique_id": 538,
+  "_student_name": "Petra",
+  "_student_group": 90
+ }
+]
