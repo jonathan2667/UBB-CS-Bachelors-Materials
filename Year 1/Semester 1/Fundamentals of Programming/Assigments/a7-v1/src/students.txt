@@ -1,0 +1,10 @@
+92,Vladimir,82
+91,Beatrice,40
+118,Vladimir,94
+58,Radu,11
+183,Gabriel,49
+78,Alexandru,57
+249,Diana,16
+125,Nadia,94
+386,Vladimir,78
+548,Tiberiu,51

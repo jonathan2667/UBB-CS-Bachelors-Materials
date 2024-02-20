@@ -1,0 +1,3 @@
+1, 1, Mercedes, 3
+2, 1, Volvo Electric, 13
+3, 5, Iveco V40, 7
