@@ -1,0 +1,97 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit, fopen, fprintf, fclose, printf, fscanf, scanf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fprintf msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import exit msvcrt.dll    
+    11                                  import printf msvcrt.dll    ; tell the assembler that function printf is found in msvcrt.dll library
+    12                                  import scanf msvcrt.dll     ; similar for scanf
+    13                                  import fscanf msvcrt.dll  
+    14                                  
+    15                                  segment data use32 class=data
+    16 00000000 70312D77726974652E-         file_name_write db "p1-write.txt", 0
+    16 00000009 74787400           
+    17 0000000D 7700                        acess_mode_write db "w", 0
+    18 0000000F FFFFFFFF                    file_descriptor_write dd -1
+    19                                      
+    20 00000013 70312D726561642E74-         file_name_read db "p1-read.txt", 0
+    20 0000001C 787400             
+    21 0000001F 7200                        acess_mode_read db "r", 0
+    22 00000021 FFFFFFFF                    file_descriptor_read dd -1
+    23                                      
+    24 00000025 00                          char db 0
+    25 00000026 256300                      char_format db "%c", 0
+    26 00000029 256400                      char_format_char db "%d", 0
+    27                                      
+    28                                  segment code use32 class=code
+    29                                  start:
+    30                                  
+    31 00000000 68[0D000000]                push dword acess_mode_write
+    32 00000005 68[00000000]                push dword file_name_write
+    33 0000000A FF15[00000000]              call dword [fopen]
+    34 00000010 83C408                      add esp, 4 * 2
+    35                                      
+    36 00000013 83F800                      cmp eax, 0
+    37 00000016 7478                        je final
+    38 00000018 A3[0F000000]                mov [file_descriptor_write], eax
+    39                                      
+    40                                      
+    41 0000001D 68[1F000000]                push dword acess_mode_read
+    42 00000022 68[13000000]                push dword file_name_read
+    43 00000027 FF15[00000000]              call dword [fopen]
+    44 0000002D 83C408                      add esp, 4 * 2
+    45                                      
+    46 00000030 83F800                      cmp eax, 0
+    47 00000033 745B                        je final
+    48 00000035 A3[21000000]                mov [file_descriptor_read], eax
+    49                                      
+    50                                   
+    51                                  read:    
+    52 0000003A 68[25000000]                push dword char
+    53 0000003F 68[26000000]                push dword char_format
+    54 00000044 FF35[21000000]              push dword [file_descriptor_read]
+    55 0000004A FF15[00000000]              call [fscanf]
+    56 00000050 83C40C                      add esp, 4 * 3
+    57                                      
+    58 00000053 83F800                      cmp eax, 0
+    59 00000056 7E29                        jle close
+    60                                      
+    61 00000058 B800000000                  mov eax, 0
+    62 0000005D A0[25000000]                mov al, byte [char]
+    63 00000062 3C61                        cmp al, 'a'
+    64 00000064 72D4                        jb read
+    65 00000066 3C7A                        cmp al, 'z'
+    66 00000068 77D0                        ja read 
+    67                                      
+    68 0000006A 50                          push eax 
+    69 0000006B 68[29000000]                push dword char_format_char
+    70 00000070 FF35[0F000000]              push dword [file_descriptor_write]
+    71 00000076 FF15[00000000]              call [fprintf]
+    72 0000007C 83C40C                      add esp, 4 * 3
+    73                                      
+    74 0000007F EBB9                        jmp read
+    75                                      
+    76                                      
+    77                                      
+    78                                      
+    79                                  close:
+    80 00000081 FF35[0F000000]              push dword [file_descriptor_write]
+    81 00000087 FF15[00000000]              call dword [fclose]
+    82 0000008D 83C404                      add esp, 4
+    83                                  
+    84                                  final: 
+    85 00000090 6A00                        push    dword 0    
+    86 00000092 FF15[00000000]              call    [exit]     
+    87                                      
+    88                                  ; mov ecx, 3
+    89                                      ; lea eax, [file_name_read + ecx]
+    90                                      ; push dword eax
+    91                                      ; push dword string_format_nl
+    92                                      ; push dword [file_descriptor_write]
+    93                                      ; call [fprintf]
+    94                                      ; add esp, 4 * 3
+    95                                    

@@ -1,0 +1,51 @@
+
+bits 32 ;asamblare si compilare pentru arhitectura de 32 biti
+; definim punctul de intrare in programul principal
+global  start 
+
+extern  exit 
+import  exit msvcrt.dll
+        
+segment  data use32 class=data 
+	a db 19h
+    b dw -3456h
+    c dd 1234abcdh
+    d dq 1122334455667788h
+    
+;a + b + c + d - (a + b) - signed 
+
+segment  code use32 class=code 
+start:
+
+    mov al, [a]
+    cbw ; ax = a
+    
+    add ax, [b] ; ax = a + b
+    cwde ; eax = a + b
+    
+    add eax, [c] ; eax = a + b + c
+    cdq ; edx:eax = a + b + c
+    
+    mov ebx, dword [d]
+    mov ecx, dword [d + 4]
+    
+    add ebx, eax
+    adc ecx, edx
+    ; ecx:ebx = a + b + c + d
+    
+    mov ebx, [d]
+    mov edx, [d + 4]
+    
+    mov al, [a]
+    cbw ; ax = a
+    
+    add ax, [b] ; ax = (a + b)
+    cwde ; eax = (a + b)
+    cdq ; edx:eax = (a + b)
+    
+    sub ebx, eax
+    sbb ecx, edx
+    ; ecx:ebx = the result
+    
+	push   dword 0 ;se pune pe stiva codul de retur al functiei exit
+	call   [exit] ;apelul functiei sistem exit pentru terminarea executiei programului	
