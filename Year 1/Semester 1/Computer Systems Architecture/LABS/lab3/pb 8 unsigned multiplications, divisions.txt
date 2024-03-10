@@ -1,0 +1,87 @@
+
+bits 32 ;asamblare si compilare pentru arhitectura de 32 biti
+; definim punctul de intrare in programul principal
+global  start 
+
+extern  exit 
+import  exit msvcrt.dll
+        
+segment  data use32 class=data 
+	a dw 19h
+    b dw 3456h
+    c db 12h
+    d db 2h
+    e dd 1144h
+    x dq 5223344h
+    
+;1/a + 200*b - c/(d+1) + x/a - e 
+; a,b-word; c,d-byte; e-doubleword; x-qword
+;unsigned
+
+segment  code use32 class=code 
+start:
+
+    mov dx, 0
+    mov ax, 0
+    
+    mov ax, 1; ax = 1
+    
+    div word [a]; dx: ax, ax = 1 / [a], dx = 1 % [a]
+    
+    mov bx, ax; bx = ax = 0
+    
+    mov eax, 0
+    mov ax, [b]
+    
+    mov edx, 0
+    mov dx, 200
+    mul dx; DX:AX ← AX * DX  ; 28 E330
+    
+    ;28 E330 + 0
+    add ax, bx; ax = ax + bx
+    adc dx, 0  ; dx = dx + 0 - sbb
+    
+    push dx
+    push ax
+    pop eax 
+    ; eax - > dx: ax
+    mov ebx, eax; ebx = eax ; 28 E330
+    
+    ;c/(d+1)
+    mov eax, 0
+    mov al, [c]
+    mov ah, 0 ; ax = [c]
+    
+    mov ecx, 0
+    mov cl, [d]
+    inc cl
+    
+    div cl; al = ax / cl, ah, ax % bc
+    
+    movzx eax, al; eax -> al
+    
+    sub ebx, eax; 28 E330 - 6 = 28 E32A
+    
+    mov eax, 0
+    mov edx, 0
+    
+    mov eax, [x]
+    mov edx, [x + 4]
+    
+    ;x/a
+    ; x qword, a word
+    
+    mov ecx, 0
+    mov cx, [a]
+    movzx ecx, cx
+    
+    div ecx; EAX ← EDX:EAX / ECX, EDX ← EDX:EAX % ECX  36A 7FA9 485D 872B
+    
+    add ebx, eax
+    mov eax, [e]
+    sub ebx, eax; 
+    
+    
+    
+	push   dword 0 ;se pune pe stiva codul de retur al functiei exit
+	call   [exit] ;apelul functiei sistem exit pentru terminarea executiei programului	

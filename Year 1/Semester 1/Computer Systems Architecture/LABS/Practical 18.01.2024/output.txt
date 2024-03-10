@@ -1,0 +1,8 @@
+m©e©r©e©p©e©r©e©b©a©n©a©n©e©m©a©n©d©a©r©i©n©e©e©%cc©
+
+Hello!
+
+
+nasm -fobj Written6.asm
+nasm -fobj Written6-b.asm
+alink Written6.obj Written6-b.obj -oPE -subsys console -entry start

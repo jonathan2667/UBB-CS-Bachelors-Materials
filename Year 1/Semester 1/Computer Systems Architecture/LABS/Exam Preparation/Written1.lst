@@ -1,0 +1,60 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit, printf 
+     6                                  
+     7                                  import exit msvcrt.dll
+     8                                  import printf msvcrt.dll
+     9                                  
+    10                                  segment data use32 class = data
+    11 00000000 78A63412345678122B-         sir dd 1234A678h,12785634h,1A4D3C2Bh
+    11 00000009 3C4D1A             
+    12                                      len equ ($ - sir) / 4
+    13 0000000C 0000<rept>                  sir2 times len dw 0
+    14 00000012 00000000                    cnt dd 0
+    15 00000016 25642500                    print db "%d%", 0
+    16                                      
+    17                                  
+    18                                  segment code use32 class = code
+    19                                  start:
+    20 00000000 B903000000                  mov ecx, len
+    21 00000005 BF[0C000000]                mov edi, sir2
+    22 0000000A BE[00000000]                mov esi, sir 
+    23                                      
+    24                                  repeta:
+    25 0000000F 8A4601                      mov al, [esi +1]
+    26 00000012 8807                        mov [edi + 0], al
+    27                                      
+    28 00000014 8A4603                      mov al, [esi + 3]
+    29 00000017 884701                      mov [edi + 1], al
+    30                                      
+    31 0000001A 83C604                      add esi, 4
+    32 0000001D 83C702                      add edi, 2
+    33 00000020 E2ED                        loop repeta 
+    34                                      
+    35 00000022 B906000000                  mov ecx, len * 2
+    36 00000027 BE[0C000000]                mov esi, sir2
+    37                                      
+    38                                  repeta2:
+    39 0000002C AC                          lodsb 
+    40 0000002D 0FB6D8                      movzx ebx, al
+    41                                      
+    42                                      count_bits:
+    43 00000030 F6C301                          test bl, 1
+    44 00000033 7407                            jz no_increment
+    45 00000035 8305[12000000]01                add dword [cnt], 1
+    46                                          no_increment:
+    47 0000003C D1EB                            shr ebx, 1
+    48 0000003E 75F0                            jnz count_bits
+    49                                      
+    50 00000040 E2EA                        loop repeta2
+    51                                      
+    52                                      
+    53 00000042 FF35[12000000]              push dword [cnt]
+    54 00000048 68[16000000]                push dword print
+    55 0000004D FF15[00000000]              call[printf]
+    56 00000053 83C408                      add esp, 4 * 2
+    57                                      
+    58 00000056 6A00                        push dword 0
+    59 00000058 FF15[00000000]              call [exit]

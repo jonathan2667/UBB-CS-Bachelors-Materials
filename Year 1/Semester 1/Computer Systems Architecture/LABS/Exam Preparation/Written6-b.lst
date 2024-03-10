@@ -1,0 +1,43 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit, printf
+     6                                  import exit msvcrt.dll
+     7                                  import printf msvcrt.dll
+     8                                  
+     9                                  segment data use32 class = data
+    10                                  global functie
+    11 00000000 00000000                sum dd 0
+    12                                  segment code use32 class = code
+    13                                  functie:
+    14                                      ; [ESP + 12] len
+    15                                      ; [ESP + 8] rez
+    16                                      ; [ESP + 4] sir
+    17                                      ; [ESP + 0] - adresa de revenire
+    18                                      
+    19 00000000 FC                          cld
+    20 00000001 8B742404                    mov esi, [ESP + 4]
+    21 00000005 8B7C2408                    mov edi, [ESP + 8]
+    22 00000009 8B4C240C                    mov ecx, [ESP + 12]
+    23                                      
+    24                                      repeta:
+    25 0000000D AD                              lodsd
+    26 0000000E C705[00000000]0000-             mov dword [sum], 0
+    26 00000016 0000               
+    27                                          repeta2:
+    28 00000018 89C3                                mov ebx, eax
+    29 0000001A 83E30F                              and ebx, 1111b
+    30 0000001D 011D[00000000]                      add dword [sum], ebx
+    31 00000023 C1E804                              shr eax, 4
+    32 00000026 83F800                              cmp eax, 0
+    33 00000029 75ED                            jnz repeta2
+    34                                          
+    35 0000002B A1[00000000]                    mov eax, dword [sum]
+    36 00000030 AB                              stosd
+    37                                          
+    38 00000031 E2DA                        loop repeta
+    39                                      
+    40 00000033 C3                          ret
+    41 00000034 6A00                        push dword 0
+    42 00000036 FF15[00000000]              call [exit]

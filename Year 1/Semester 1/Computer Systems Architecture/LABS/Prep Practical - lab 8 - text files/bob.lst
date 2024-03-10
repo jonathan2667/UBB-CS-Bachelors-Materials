@@ -1,0 +1,135 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit, fopen, fprintf, fclose, printf, fscanf, scanf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fprintf msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import exit msvcrt.dll    
+    11                                  import printf msvcrt.dll    ; tell the assembler that function printf is found in msvcrt.dll library
+    12                                  import scanf msvcrt.dll     ; similar for scanf
+    13                                  import fscanf msvcrt.dll  
+    14                                  
+    15                                  segment data use32 class=data
+    16 00000000 626F625F726561642E-         file_name_read db "bob_read.txt", 0
+    16 00000009 74787400           
+    17 0000000D FFFFFFFF                    file_descriptor_read dd -1
+    18 00000011 7200                        access_mode_read db "r", 0
+    19                                      
+    20 00000013 626F625F7772697465-         file_name_write db "bob_write.txt", 0
+    20 0000001C 2E74787400         
+    21 00000021 FFFFFFFF                    file_descriptor_write dd -1
+    22 00000025 7700                        access_mode_write db "w", 0
+    23                                      
+    24 00000027 256400                      format db "%d", 0
+    25 0000002A 25732000                    string_format db  "%s ",  0
+    26 0000002E <res 00000064>              text resb 100
+    27 00000092 00000000                    len dd 0
+    28                                      
+    29                                  segment code use32 class=code
+    30                                  start:
+    31 00000000 68[11000000]               push dword access_mode_read
+    32 00000005 68[00000000]               push dword file_name_read
+    33 0000000A FF15[00000000]             call [fopen]
+    34 00000010 83C408                     add esp, 4 * 2
+    35                                     
+    36 00000013 83F800                     cmp eax, 0
+    37 00000016 0F84D7000000               je final
+    38 0000001C A3[0D000000]               mov [file_descriptor_read], eax
+    39                                     
+    40 00000021 68[25000000]               push dword access_mode_write
+    41 00000026 68[13000000]               push dword file_name_write
+    42 0000002B FF15[00000000]             call [fopen]
+    43 00000031 83C408                     add esp, 4 * 2
+    44                                     
+    45 00000034 83F800                     cmp eax, 0
+    46 00000037 0F84B6000000               je final
+    47 0000003D A3[21000000]               mov [file_descriptor_write], eax
+    48                                     
+    49                                     
+    50                                  read:
+    51 00000042 68[2E000000]                push dword text         
+    52 00000047 68[2A000000]                push dword string_format  
+    53 0000004C FF35[0D000000]              push dword [file_descriptor_read] ; 
+    54 00000052 FF15[00000000]              call [fscanf]            
+    55 00000058 83C40C                      add esp, 4 * 3            
+    56                                  
+    57 0000005B 83F800                      cmp eax, 0               
+    58 0000005E 0F8E80000000                jle close   
+    59                                      
+    60 00000064 FC                          cld
+    61 00000065 BE[2E000000]                mov esi, text
+    62                                       
+    63                                      check:
+    64 0000006A AC                              lodsb
+    65 0000006B 3C00                            cmp al, 0
+    66 0000006D 7455                            je next
+    67 0000006F 3C41                            cmp al, 'A'
+    68 00000071 72F7                            jb check
+    69 00000073 3C5A                            cmp al, 'Z'
+    70 00000075 77F3                            ja check 
+    71 00000077 EB00                            jmp no_print
+    72                                      
+    73                                      
+    74                                  no_print:   
+    75 00000079 833D[92000000]00            cmp dword [len], 0
+    76 00000080 7542                        jne next
+    77 00000082 FF05[92000000]              inc dword [len]
+    78                                      
+    79 00000088 B800000000                  mov eax, 0
+    80 0000008D FC                          cld 
+    81 0000008E BE[2E000000]                mov esi, text           
+    82                                  
+    83                                      push_string:
+    84 00000093 AC                              lodsb               
+    85 00000094 3C00                            cmp al, 0      
+    86 00000096 7403                            jz pop_string      
+    87 00000098 50                              push eax            
+    88 00000099 EBF8                            jmp push_string
+    89                                  
+    90                                      
+    91                                      pop_string:
+    92 0000009B BF[2E000000]                    mov edi, text           
+    93 000000A0 4E                              dec esi
+    94                                      
+    95                                      pop_characters:
+    96 000000A1 39FE                            cmp esi, edi       
+    97 000000A3 7404                            je done             
+    98 000000A5 58                              pop eax            
+    99 000000A6 AA                              stosb               
+   100 000000A7 EBF8                            jmp pop_characters
+   101                                  
+   102                                          
+   103                                  done:
+   104 000000A9 68[2E000000]                push dword text
+   105 000000AE 68[2A000000]                push dword string_format
+   106 000000B3 FF35[21000000]              push dword [file_descriptor_write]
+   107 000000B9 FF15[00000000]              call [fprintf]
+   108 000000BF 83C40C                      add esp, 4 * 3
+   109 000000C2 EB1B                        jmp finish
+   110                                   
+   111                                  next: 
+   112 000000C4 68[2E000000]                push dword text
+   113 000000C9 68[2A000000]                push dword string_format
+   114 000000CE FF35[21000000]              push dword [file_descriptor_write]
+   115 000000D4 FF15[00000000]              call [fprintf]
+   116 000000DA 83C40C                      add esp, 4 * 3
+   117 000000DD EB00                        jmp finish
+   118                                      
+   119                                      
+   120                                  finish:   
+   121 000000DF E95EFFFFFF                  jmp read 
+   122                                  
+   123                                  close:
+   124                                      
+   125                                      
+   126 000000E4 FF35[21000000]              push dword [file_descriptor_write]
+   127 000000EA FF15[00000000]              call [fclose]
+   128 000000F0 83C404                      add esp, 4
+   129                                      
+   130                                  final: 
+   131 000000F3 6A00                        push    dword 0    
+   132 000000F5 FF15[00000000]              call    [exit]     
+   133                                      

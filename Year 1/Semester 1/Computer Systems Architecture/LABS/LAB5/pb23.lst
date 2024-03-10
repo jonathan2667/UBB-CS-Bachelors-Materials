@@ -1,0 +1,47 @@
+     1                                  bits 32 
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern exit
+     6                                  import exit msvcrt.dll  
+     7                                  
+     8                                  segment data use32 class=data
+     9 00000000 0104020408020101            s db 1, 4, 2, 4, 8, 2, 1, 1
+    10                                      len equ $ - s
+    11 00000008 00<rept>                    d times len db 0
+    12                                  
+    13                                  segment code use32 class=code
+    14                                  start:
+    15 00000000 BE[00000000]                mov esi, s
+    16 00000005 BF[08000000]                mov edi, d
+    17 0000000A B908000000                  mov ecx, len
+    18 0000000F 31D2                        xor edx, edx  ; counter for string D
+    19                                  
+    20                                  loop_start:
+    21 00000011 AC                          lodsb  ; load byte at address esi into al and increment esi
+    22 00000012 51                          push ecx  ; save ecx
+    23 00000013 89D1                        mov ecx, edx  ; set ecx to the current length of string D
+    24                                  
+    25                                      ; start of nested loop
+    26 00000015 F2AE                        repne scasb  ; compare al with byte at address edi and increment edi, repeat while not equal
+    27 00000017 7503                        jne no_match  ; if zf = 0, jump to no_match
+    28                                  
+    29                                      ; if we're here, we found a match
+    30 00000019 4F                          dec edi  ; decrement edi to point to the next free space in string D
+    31 0000001A EB02                        jmp end_nested_loop
+    32                                  
+    33                                  no_match:
+    34                                      ; if we're here, we didn't find a match
+    35 0000001C AA                          stosb  ; store al at address edi and increment edi
+    36 0000001D 42                          inc edx
+    37                                  
+    38                                  end_nested_loop:
+    39 0000001E 59                          pop ecx  ; restore ecx
+    40 0000001F 49                          dec ecx  ; decrement ecx
+    41 00000020 E2EF                        loop loop_start
+    42                                  
+    43                                      ; store null byte at the end of string D
+    44 00000022 C682[08000000]00            mov byte [d + edx], 0
+    45                                  
+    46 00000029 6A00                        push dword 0 
+    47 0000002B FF15[00000000]              call [exit] 

@@ -1,0 +1,121 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start
+     4                                  
+     5                                  extern scanf, printf, exit
+     6                                  import exit msvcrt.dll
+     7                                  import scanf msvcrt.dll
+     8                                  import printf msvcrt.dll
+     9                                  
+    10                                  segment data use32 class=data
+    11 00000000 887766554433221111-         sir dq 1122334455667788h, 99AABBCCDDEEFF11h, 0FF00000000000055h, 0FFFEFFFFFFFFEFFFh, 450000AB0000ABh, 11113733555577ABh
+    11 00000009 FFEEDDCCBBAA995500-
+    11 00000012 0000000000FFFFEFFF-
+    11 0000001B FFFFFFFEFFAB0000AB-
+    11 00000024 00004500AB77555533-
+    11 0000002D 371111             
+    12                                      len equ ($ - sir) / 8
+    13 00000030 00000000                    n dd 0
+    14 00000034 256400                      read db "%d", 0
+    15 00000037 25782000                    print db "%x ", 0
+    16 0000003B 00<rept>                    rez times len*2 db 0
+    17 00000047 00000000                    cnt dd 0
+    18 0000004B 00000000                    counter dd 0
+    19 0000004F 00000000                    aux dd 0
+    20 00000053 00000000                    index dd 0
+    21                                  segment code use32 class = code
+    22                                  start: 
+    23                                  
+    24 00000000 68[30000000]                push dword n
+    25 00000005 68[34000000]                push dword read
+    26 0000000A FF15[00000000]              call [scanf]
+    27 00000010 83C408                      add esp, 4 * 2
+    28                                      
+    29 00000013 833D[30000000]01            cmp dword [n], 1
+    30 0000001A 0F82D1000000                jb final
+    31 00000020 833D[30000000]06            cmp dword [n], 6
+    32 00000027 0F87C4000000                ja final
+    33                                      
+    34 0000002D B906000000                  mov ecx, len
+    35 00000032 BE[00000000]                mov esi, sir
+    36 00000037 BF[3B000000]                mov edi, rez
+    37                                      
+    38                                      repeta:
+    39                                  
+    40 0000003C 51                              push ecx
+    41                                          
+    42 0000003D B908000000                      mov ecx, 8
+    43                                          repeta2:
+    44 00000042 AC                                  lodsb 
+    45 00000043 8305[47000000]01                    add dword [cnt], 1
+    46 0000004A 833D[47000000]01                    cmp dword[cnt], 1
+    47 00000051 7508                                jne no_storage
+    48 00000053 AA                                  stosb
+    49 00000054 8305[4B000000]01                    add dword [counter], 1
+    50                                              no_storage:
+    51                                              
+    52 0000005B 8B1D[30000000]                      mov ebx, dword [n]
+    53 00000061 391D[47000000]                      cmp dword[cnt], ebx
+    54 00000067 750A                                jne sari
+    55 00000069 C705[47000000]0000-                 mov dword [cnt], 0
+    55 00000071 0000               
+    56                                              sari:
+    57 00000073 E2CD                            loop repeta2
+    58                                          
+    59 00000075 59                              pop ecx 
+    60 00000076 E2C4                        loop repeta
+    61                                      
+    62 00000078 8B0D[4B000000]              mov ecx, dword [counter]
+    63 0000007E BE[3B000000]                mov esi, rez
+    64                                      
+    65                                      
+    66                                      
+    67 00000083 B908000000                  mov ecx, 8
+    68                                      
+    69                                      repeta3:
+    70 00000088 890D[53000000]                  mov dword [index], ecx
+    71 0000008E 51                              push ecx 
+    72                                          
+    73 0000008F 8B0D[4B000000]                  mov ecx, dword [counter]
+    74 00000095 BE[3B000000]                    mov esi, rez
+    75                                      
+    76                                          repeta4:
+    77 0000009A C705[47000000]0000-                 mov dword [cnt], 0
+    77 000000A2 0000               
+    78 000000A4 AC                                  lodsb
+    79 000000A5 0FB6C0                              movzx eax, al
+    80 000000A8 0FB6D8                              movzx ebx, al
+    81                                              
+    82                                              repeta5:
+    83 000000AB 891D[4F000000]                          mov dword[aux], ebx
+    84 000000B1 83E301                                  and ebx, 1
+    85 000000B4 83FB01                                  cmp ebx, 1
+    86 000000B7 7507                                    jne next
+    87 000000B9 8305[47000000]01                        add dword[cnt], 1
+    88                                                  next:
+    89 000000C0 8B1D[4F000000]                          mov ebx, dword[aux]
+    90 000000C6 D1EB                                    shr ebx, 1
+    91 000000C8 83FB00                                  cmp ebx, 0
+    92 000000CB 75DE                                jnz repeta5
+    93                                              
+    94 000000CD 8B1D[53000000]                      mov ebx, dword[index]
+    95 000000D3 391D[47000000]                      cmp dword[cnt], ebx
+    96 000000D9 7511                                jne sari11
+    97                                              
+    98 000000DB 51                                  push ecx
+    99 000000DC 50                                  push eax
+   100 000000DD 68[37000000]                        push dword print
+   101 000000E2 FF15[00000000]                      call [printf]
+   102 000000E8 83C408                              add esp, 4 * 2
+   103 000000EB 59                                  pop ecx
+   104                                              
+   105                                              sari11:
+   106 000000EC E2AC                            loop repeta4
+   107                                          
+   108                                          
+   109 000000EE 59                              pop ecx
+   110 000000EF E297                        loop repeta3
+   111                                      
+   112                                  final:
+   113 000000F1 6A00                        push dword 0
+   114 000000F3 FF15[00000000]              call [exit]
