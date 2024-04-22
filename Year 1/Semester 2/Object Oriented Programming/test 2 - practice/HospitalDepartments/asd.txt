@@ -1,0 +1,20 @@
+Type: Neonatal Unit
+Name: 1
+Number Of Doctors: 11
+Average Grade: 12.000000 numberOfMothers 13 numberOfNewborns 14
+
+Type: Neonatal Unit
+Name: 2
+Number Of Doctors: 21
+Average Grade: 22.000000 numberOfMothers 23 numberOfNewborns 24
+
+Type: Surgery Unit
+Name: 1
+Number Of Doctors: 31
+Number of Pacients: 32
+
+Type: Surgery Unit
+Name: 2
+Number Of Doctors: 41
+Number of Pacients: 42
+

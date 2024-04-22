@@ -1,0 +1,16 @@
+Refrigerator
+Id:
+1aa
+electricityUsageClass
+A+
+hasFreezer
+1
+
+Refrigerator
+Id:
+1b
+electricityUsageClass
+A+
+hasFreezer
+1
+

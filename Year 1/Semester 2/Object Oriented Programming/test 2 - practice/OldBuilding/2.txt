@@ -1,0 +1,10 @@
+House
+Address : str asda
+Construction Year : 2202
+type :casa
+isHistorical : 1
+House
+Address : str 2da3a
+Construction Year : 2012
+type :casa
+isHistorical : 1
