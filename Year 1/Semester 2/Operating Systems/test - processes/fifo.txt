@@ -1,0 +1,91 @@
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+// Program A
+int main(int argc, char** argv) {
+    if (argc != 3) return 1;
+    int nr1 = atoi(argv[1]);
+    int nr2 = atoi(argv[2]);
+
+    int fifo;
+    fifo = open("fifo", O_WRONLY);
+
+    if (fork() == 0) {
+        // First child => calculate the sum
+        int sum = nr1 + nr2;
+        write(fifo, &sum, sizeof(int));
+        exit(0);
+    }
+
+    if (fork() == 0) {
+        // Second child => calculate the product
+        int prod = nr1 * nr2;
+        write(fifo, &prod, sizeof(int));
+        exit(0);
+    }
+
+    // parent
+    wait(0); wait(0);
+
+    close(fifo);
+    return 0;
+}
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+// Program B
+int main(int argc, char** argv) {
+    if (argc != 2) return 1;
+    int nr1, nr2;
+
+    int fifo;
+    fifo = open(argv[1], O_RDONLY);  // This should use argv[1] correctly if it's a filename.
+
+    read(fifo, &nr1, sizeof(int));
+    read(fifo, &nr2, sizeof(int));
+
+    // Greatest common divisor
+    int a = nr1, b = nr2;
+    while (b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+
+    printf("The greatest common divisor of %d and %d is: %d\n", nr1, nr2, a);
+
+    close(fifo);
+    return 0;
+}
+
+
+
+
+
+mkfifo fifo
+gcc -Wall -g testA.c -o testA
+gcc -Wall -g testB.c -o testB
+./testA 10 20
+./testB fifo
+
+
+
+

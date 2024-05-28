@@ -1,0 +1,48 @@
+#include<fcntl.h>
+#include<unistd.h>
+#include<stdlib.h>
+#include<sys/wait.h>
+#include<sys/types.h>
+#include<stdio.h>
+
+int main(int argc, char ** argv) {
+
+        int a2b[2], b2a[2], n;
+        pipe(a2b); pipe(b2a);
+        if (fork() == 0) {
+                //Process A
+                //reads form A
+                //writes to B
+                close(b2a[1]); close(a2b[0]);
+                n = rand() % 150 + 50;
+                printf("number was generated\n");
+
+                if (n % 2 == 1) n++;
+                write(a2b[1], &n, sizeof(int));
+                while(1) {
+                        if (read(b2a[0], &n , sizeof(int)) <= 0) break;
+
+                        if (n <= 5) break;
+                        printf("N is %d\n", n);
+                        if (n % 2 == 1) n++;
+                        write(a2b[1], &n, sizeof(int));
+                }
+                close(b2a[0]); close(a2b[1]);
+                exit(0);
+        }
+
+        //Process B
+        //reads from A
+        //writes to A
+        close(b2a[0]); close(a2b[1]);
+
+        while(1) {
+                if (read(a2b[0], &n, sizeof(int)) <= 0) break;
+                n = n / 2;
+                write(b2a[1], &n, sizeof(int));
+        }
+
+        close(a2b[0]); close(b2a[1]);
+        wait(0);
+        return 0;
+}

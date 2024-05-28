@@ -1,0 +1,147 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+// Program A
+int main(int argc, char** argv) {
+    int a2b, b2a, c2a;
+    mkfifo("a2b", 0600);
+    mkfifo("b2a", 0600);
+    mkfifo("c2a", 0600);
+
+    a2b = open("a2b", O_WRONLY);
+    b2a = open("b2a", O_RDONLY);
+    c2a = open("c2a", O_RDONLY);
+
+    if (a2b == -1 || b2a == -1 || c2a == -1)
+        return 1;
+
+    int n, v[11], sum;
+    char s[100];
+    while(1) {
+        printf("Enter lowercased string: ");
+        scanf("%s", s);
+        n = strlen(s);
+
+        if (s[0] == 'X')
+            break;
+
+        write(a2b, &n, sizeof(int));
+        write(a2b, s, n*sizeof(char));
+
+        if (read(b2a, v, 11*sizeof(int)) <= 0)
+            break;
+
+        if (read(c2a, &sum, sizeof(int)) <= 0)
+            break;
+        printf("The sum is: %d\n", sum);
+    }
+
+    close(a2b); close(b2a); close(c2a);
+    return 0;
+}
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+// Program B
+int main(int argc, char** argv) {
+    int a2b, b2a, b2c;
+    mkfifo("a2b", 0600);
+    mkfifo("b2a", 0600);
+    mkfifo("b2c", 0600);
+
+    a2b = open("a2b", O_RDONLY);
+    b2a = open("b2a", O_WRONLY);
+    b2c = open("b2c", O_WRONLY);
+
+    if (a2b == -1 || b2a == -1 || b2c == -1)
+        return 1;
+
+    int n, v[11] = {0};
+    char s[100];
+    while(1) {
+        if (read(a2b, &n, sizeof(int)) <= 0)
+            break;
+        if (read(a2b, s, n*sizeof(char)) <= 0)
+            break;
+
+        while(n >= 0) {
+            if ('0' <= s[n] && s[n] <= '9') {
+                int cnt = s[n] - '0';
+                v[cnt]++;
+            } else
+                v[10]++;
+            n--;
+        }
+
+        // send to process A and C
+        write(b2a, v, 11*sizeof(int));
+        write(b2c, v, 11*sizeof(int));
+    }
+
+    close(a2b); close(b2a); close(b2c);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+// Program C
+int main(int argc, char** argv) {
+    int b2c, c2a;
+    mkfifo("b2c", 0600);
+    mkfifo("c2a", 0600);
+
+    b2c = open("b2c", O_RDONLY);
+    c2a = open("c2a", O_WRONLY);
+
+    if (b2c == -1 || c2a == -1)
+        return 1;
+
+    int v[11];
+    while(1) {
+        if (read(b2c, v, 11*sizeof(int)) <= 0)
+            break;
+
+        int sum = 0;
+        for (int i = 0; i < 11; ++i)
+            sum += v[i];
+
+        write(c2a, &sum, sizeof(int));
+    }
+
+    close(b2c); close(c2a);
+    return 0;
+}

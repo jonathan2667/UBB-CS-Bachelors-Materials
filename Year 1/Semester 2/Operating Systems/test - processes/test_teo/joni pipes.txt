@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+
+
+int main() {
+        int c2a[2], b2c[2];
+        pipe(c2a); pipe(b2c);
+
+
+        int a2b[2], b2a[2];
+        pipe(a2b); pipe(b2a);
+
+        if (fork() == 0) {
+                //C
+                //reads from B
+                //writes to A
+                close(b2c[1]); close(c2a[0]);
+                close(a2b[0]); close(a2b[1]); close(b2a[0]); close(b2a[1]);
+                int v[11];
+                while(1) {
+                        printf("Here");
+                        if (read(b2c[0], v, 11 * sizeof(int)) <= 0) { perror("Read from b2c failed"); break; }
+                        int sum = 0;
+                        for (int i = 0; i < 11; i++) sum += v[i] * i;
+                        if (write(c2a[1], &sum, sizeof(int)) < 0) { perror("Write to c2a failed"); break; }
+                }
+                close(b2c[0]); close(c2a[1]);
+                exit(0);
+        }
+
+        if (fork() == 0) {
+                //B
+                //read from A
+                //write to A
+                //write to C
+                close(a2b[1]); close(b2a[0]); close(b2c[0]); close(c2a[0]); close(c2a[1]);
+
+                char s[100];
+                int n;
+                while(1) {
+                        printf("Arrived in B");
+                        if (read(a2b[0], &n, sizeof(int)) <= 0) { perror("Read from a2b failed"); break; }
+                        if (read(a2b[0], s, n * sizeof(char)) <= 0) { perror("Read from a2b failed"); break; }
+                        int v[11] =  { 0 };
+                        for (int i = 0; i < n; i++) {
+                                        if (s[i] >= '0' && s[i] <= '9') v[s[i] - '0']++;
+                                        else v[10]++;
+                                }
+                        if (write(b2a[1], v, 11 * sizeof(int)) < 0 || write(b2c[1], v, 11 * sizeof(int)) < 0) { perror("Write to b2a or b2c failed"); break; }
+                }
+                close(a2b[0]); close(b2a[1]); close(b2c[1]);
+                exit(0);
+        }
+
+        //A
+        //write to B
+        close(a2b[0]); close(b2a[1]); close(b2c[0]); close(b2c[1]); close(c2a[1]);
+        char s[100];
+        int n, sumR;
+        int v[11];
+
+        while(1) {
+                printf("Insert a string or x to exit!\n");
+                scanf("%s", s);
+                n = strlen(s);
+                if (s[0] == 'x' && n == 1) break;
+                if (write(a2b[1], &n, sizeof(int)) < 0 || write(a2b[1], s, n * sizeof(char)) < 0) { perror("Write to a2b from A failed"); break; }
+                if (read(b2a[0], v, 11*sizeof(int)) <= 0) break;
+                if (read(c2a[0], &sumR, sizeof(int)) > 0) printf("Sum received is: %d\n", sumR);
+                else { perror("Read from b2c failed"); break; }
+
+        }
+
+        close(a2b[1]); close(c2a[0]); close(b2a[0]);
+
+        wait(0); wait(0);
+
+        return 0;
+
+}

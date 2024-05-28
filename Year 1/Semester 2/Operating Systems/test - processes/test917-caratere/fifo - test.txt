@@ -1,0 +1,122 @@
+fifoa.c
+
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<string.h>
+#include<fcntl.h>
+int main(int argc, char **argv) {
+        //A
+        //write to B
+        //write to C
+        //read from C
+
+        int a2b, c2a, a2c;
+        a2b = open("a2b", O_WRONLY);
+        a2c = open("a2c", O_WRONLY);
+        c2a = open("c2a", O_RDONLY);
+
+        int n;
+        char s[100];
+        while(1) {
+                if (read(c2a, &n, sizeof(int)) <= 0) break;
+                if (read(c2a, s, n * sizeof(char)) <= 0) break;
+
+                int v[26] = { 0 };
+                for (int i = 0; i < n; i++) if (s[i] >= 'a' && s[i] <= 'z') v[s[i] - 'a']++;
+
+                write(a2b, v, 26 * sizeof(int));
+                write(a2c, v, 26 * sizeof(int));
+
+
+        }
+        close(a2b); close(c2a); close(a2c);
+        return 0;
+}
+
+
+
+
+fifob.c
+
+#include<fcntl.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<string.h>
+
+int main(int argc, char **argv) {
+        //B
+        //read from A
+
+        int a2b;
+        a2b = open("a2b", O_RDONLY);
+
+        int v[26];
+        while(1) {
+                if (read(a2b, v, 26 * sizeof(int)) <= 0) break;
+
+                int sum = 0;
+                for (int i = 0; i < 26; i++) sum += v[i];
+                printf("Sum is : %d\n", sum);
+        }
+        close(a2b);
+        return 0;
+}
+
+
+
+
+fifoc.c
+
+#include<fcntl.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<string.h>
+
+int main(int argc, char **argv) {
+        //C - Parent
+        //writes to A
+        //reads from A
+        int a2c, c2a;
+        a2c = open("a2c", O_RDONLY);
+        c2a = open("c2a", O_WRONLY);
+
+
+        char s[100];
+        int n;
+        int v[26];
+
+        while(1) {
+                printf("Insert a string, or x to exit!");
+                scanf("%s", s);
+                n = strlen(s);
+                if (s[0] == 'x') break;
+                write(c2a, &n, sizeof(int));
+                write(c2a, s, n * sizeof(char));
+                if (read(a2c, v, 26 * sizeof(int)) <= 0) break;
+
+                for (int i = 0; i < 26; i++) printf("%c -> %d\n", 'a' + i, v[i]);
+        }
+
+        close(a2c); close(c2a);
+        return 0;
+}
+
+gcc -Wall -g fifoa.c -o fifoa
+gcc -Wall -g fifob.c -o fifob
+gcc -Wall -g fifoc.c -o fifoc
+rm a2c c2a a2b b2a
+mkfifo a2c c2a a2b b2a
+
+
+ ./fifoa
+ ./fifob
+ ./fifoc

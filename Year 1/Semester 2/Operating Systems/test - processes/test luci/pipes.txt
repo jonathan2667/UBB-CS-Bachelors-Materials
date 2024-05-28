@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
+
+int main(int argc, char**argv)
+{
+
+        int p2a[2], a2b[2],a2p[2];
+        pipe(p2a); pipe(a2b); pipe(a2p);
+
+        if(fork() == 0)      //A
+        {
+                close(a2b[0]);close(a2p[0]);close(p2a[1]);
+
+                while(1)
+                {
+                        int n;
+                        char s[256],u[256],l[256];
+                        int sum=0,j=0,k=0;
+                        if(read(p2a[0], &n, sizeof(int)) <= 0) break;
+                        if(read(p2a[0], s, n*sizeof(char)) <= 0) break;
+
+                        //printf("N este: %d \n",n);
+                        //printf("S este: %s \n",s);
+
+                        for(int i=0;i<n;i++)
+                        {
+                                if(s[i]>='a' && s[i]<='z')
+                                        l[j++] = s[i];
+                                else if(s[i]>='A' && s[i]<='Z')
+                                        u[k++] = s[i];
+                                else sum++;
+
+                        }
+                        //printf("L este: %s \n",l);
+                        //printf("U este: %s \n",u);
+                        //printf("%d %d is\n",j,k);
+                        write(a2p[1], &sum, sizeof(int));
+
+                        write(a2b[1], &j, sizeof(int));
+                        if(j!=0)
+                                write(a2b[1], l, j*sizeof(char));
+
+
+                        write(a2b[1], &k, sizeof(int));
+                        if(k!=0)
+                                write(a2b[1], u, k*sizeof(char));
+                }
+
+                close(a2b[1]);close(a2p[1]);close(p2a[0]);
+                exit(0);
+
+        }
+
+        if(fork() == 0)      //B
+        {
+
+                close(a2p[1]);close(a2p[0]);close(p2a[0]);close(p2a[1]);
+                close(a2b[1]);
+
+                while(1)
+                {
+                        int k,j;
+                        char u[256],l[256];
+                        if(read(a2b[0], &j, sizeof(int)) <= 0) break;
+                        if(j!=0)
+                                if(read(a2b[0], l, j*sizeof(char))<=0) break;
+
+                        if(read(a2b[0], &k, sizeof(int)) <= 0) break;
+                        if(k!=0)
+                                if(read(a2b[0], u, k*sizeof(char))<=0) break;
+
+                        //printf("%d %d is\n",j,k);
+                        int sum=k+j;
+                        printf("The sizes are: %d \n", sum);
+                }
+
+                close(a2b[0]);
+                exit(0);
+        }
+
+                             //P
+        close(a2b[0]);close(a2b[1]);close(p2a[0]);close(a2p[1]);
+
+        char s[256];
+        //int n;
+        while(scanf("%s",s))
+        {
+                if(strcmp(s,"X") == 0)
+                        break;
+                int n=strlen(s);
+                write(p2a[1], &n, sizeof(int));
+                write(p2a[1], s, n*sizeof(char));
+
+                int sum;
+                read(a2p[0], &sum, sizeof(int));
+                printf("S is: %d \n", sum);
+
+        }
+
+        close(p2a[1]);close(a2p[0]);
+        wait(0); wait(0);
+        return 0;
+
+}

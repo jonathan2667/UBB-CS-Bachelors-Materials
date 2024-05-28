@@ -1,0 +1,74 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<string.h>
+
+int main(int argc, char **argv) {
+        int p2a[2], a2p[2], a2b[2];
+        pipe(p2a); pipe(a2p); pipe(a2b);
+
+        if (fork() == 0) {
+                //B
+                //read from A and send write to P
+                close(p2a[1]); close(p2a[0]); close(a2b[1]); close(a2p[0]); close(a2p[1]);
+
+                int v[26];
+                while(1) {
+                        if (read(a2b[0], v, 26 * sizeof(int)) <= 0) break;
+                        int sum = 0;
+                        for (int i = 0; i  < 26; i++)
+                                sum += v[i];
+                        printf("Sum is :%d ", sum);
+                }
+                close(a2b[0]);
+                exit(0);
+        }
+
+        if (fork() == 0) {
+                //A
+                //write to B, write to P
+                //read from P
+                close(p2a[1]); close(a2p[0]);  close(a2b[0]);
+
+                int n;
+                char s[100];
+                while(1) {
+                        if (read(p2a[0], &n, sizeof(int)) <= 0) break;
+                        if (read(p2a[0], s, n * sizeof(char)) <= 0) break;
+
+                        int v[26] = { 0 };
+                        for (int i = 0; i < n; i++) if (s[i] >= 'a' && s[i] <= 'z') v[s[i] - 'a']++;
+
+                        write(a2b[1], v, 26 * sizeof(int));
+                        write(a2p[1], v, 26 * sizeof(int));
+                }
+                close(p2a[0]); close(a2b[1]); close(a2p[1]);
+                exit(0);
+        }
+
+        //Parent
+        //writes to A
+        //reads from A
+
+        close(p2a[0]); close(a2b[0]); close(a2b[1]); close(a2p[1]);
+        char s[100];
+        int n;
+        int v[26];
+
+        while(1) {
+                printf("Insert a string, or x to exit!");
+                scanf("%s", s);
+                n = strlen(s);
+                if (s[0] == 'x') break;
+                write(p2a[1], &n, sizeof(int));
+                write(p2a[1], s, n * sizeof(char));
+                if (read(a2p[0], v, 26 * sizeof(int)) <= 0) break;
+
+                for (int i = 0; i < 26; i++) printf("%c -> %d\n", 'a' + i, v[i]);
+        }
+        close(p2a[1]);
+        close(a2p[0]);
+        wait(0); wait(0);
+}
