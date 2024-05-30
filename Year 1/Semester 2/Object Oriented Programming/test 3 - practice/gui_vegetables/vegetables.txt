@@ -1,0 +1,35 @@
+Potato family|Potato|fruit
+Potato family|Tomato|fruit
+Beetroot family|Spinach|leaves
+Marrow family|Melon|fruit
+Onion family|Onion|stem, root
+
+
+void Repository::loadFromFile()
+{
+    std::ifstream file("../cars.txt");
+    std::string line;
+    while (std::getline(file, line))
+    {
+        std::istringstream iss(line);
+        std::string manufacturer, model, colour, yearString;
+        int year;
+        const char delimiter = '|';
+        std::getline(iss, manufacturer, delimiter);
+        std::getline(iss, model, delimiter);
+        std::getline(iss, yearString, delimiter);
+        year = std::stoi(yearString);
+        std::getline(iss, colour, delimiter);
+        cars.push_back(Car(manufacturer, model, year, colour));
+    }
+    file.close();
+}
+
+
+#include <QWidget>
+#include <QListWidget>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include "service.h"
