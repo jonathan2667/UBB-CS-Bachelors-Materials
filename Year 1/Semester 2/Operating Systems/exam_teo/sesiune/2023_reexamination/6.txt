@@ -1,0 +1,17 @@
+What could happen if function f were executed by several simultaneous threads? Why?
+
+pthread_mutex_t m[2];
+void* f(void* p)
+{
+	int id = (int) p;
+	pthread_mutex_t* first = &m[id % 2];
+	pthread_mutex_t* second = &m[(id + 1) % 2];
+
+	pthread_mutex_lock(first);
+	pthread_mutex_lock(second);
+	...
+	pthread_mutex_unlock(second);
+	pthread_mutex_unlock(first);
+}
+
+solution:

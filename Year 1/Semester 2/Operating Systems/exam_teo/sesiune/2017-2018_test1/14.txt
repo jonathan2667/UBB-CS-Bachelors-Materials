@@ -1,0 +1,10 @@
+Give one advantage and one disadvantage of the segmented allocation method over the paged allocation method
+
+solution:
+
+advantage: flexibility in memory allocation
+segmented allocation allows for more flexible memory allocation compared to paged allocation. In segmented allocation, memory is divided into variable-sized segments, where each segment can represent a logical unit or a specific module of the program. This flexibility is beneficial when dealing with programs that have varying memory requirements for different modules or data structures. Segmented allocation can efficiently allocate memory for modules of different sizes without the fixed-size restrictions imposed by the paged allocation method.
+
+disadvantage: external fragmentation
+one significant disadvantage of the segmented allocation method is the potential for external fragmentation. external fragmentation occurs when free memory blocks are scattered throughout the memory space, resulting in the inability to allocate contiguous memory blocks for larger segments or modules. over time, as segments are allocated and deallocated, small gaps of unused memory may form between allocated segments, even when the total amount of free memory is sufficient. Dealing with external fragmentation requires additional memory management techniques, such as compaction or dynamic relocation, to reclaim fragmented memory blocks and provide larger contiguous memory spaces. paged allocation, on the other hand, can mitigate external fragmentation by dividing memory into fixed-size pages, allowing for more efficient memory allocation and utilization.
+

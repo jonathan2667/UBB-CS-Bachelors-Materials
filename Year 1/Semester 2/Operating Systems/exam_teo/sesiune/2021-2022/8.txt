@@ -1,0 +1,4 @@
+Write a regular expression that accepts lines that contain the letter "a" but do not contain the letter "b"
+
+solution:
+grep "a" file_name | grep -v "b"

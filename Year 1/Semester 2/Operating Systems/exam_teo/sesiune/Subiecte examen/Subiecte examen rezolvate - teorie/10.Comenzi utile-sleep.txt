@@ -1,0 +1,49 @@
+Comenzi utile in context shell: sleep, shift, read,exit, sort, cut, echo 
+
+SLEEP-are ca efect suspendarea executiei procesului care a lansat comanda pt un nr specificat de secunde. Sintaxa: sleep n
+      Daca comanda apare intr-un fisier de comenzi, dupa trecerea celor n secunde shell-ul executa comanda de pe linia imediat urmatoare
+      Daca comanda a fost lansata de la un terminal, prompterul va fi afisat dupa trecerea celor n secunde
+                
+2.2.4.1 shift 
+ 
+In cadrul unui subcapitol anterior am vãzut cã într-un fiºier de comenzi se pot accesa direct 
+doar primii 9 parametri din linia de comandã identificaşi prin $1, pânã la $9, la care se adaugã 
+$0 ce desemneazã numele fiºierului lansat în execuşie. Comanda shift permite "deplasarea" 
+spre stânga cu una sau n pozişii a parametrilor cu care a fost lansatã comanda. Sintaxa ei este:
+shift [ n ] 
+
+2.2.4.2 read
+read listaDeNume 
+ 
+unde argumentele cu care este lansatã comanda reprezintã o listã de nume de variabile shell care 
+urmeazã a fi definite. In urma execuşiei comenzii, urmãtoarea linie cititã de la intrarea standard 
+este împãrşitã în cuvinte, acestea fiind atribuite variabilelor shell din listaDeNume, în ordine 
+de la stânga spre dreapta. Parsarea liniei citite de la intrarea standard se face considerându-se ca 
+delimitatori caracterele albe. 
+
+2.2.4.4 exit
+Apelul exit provoacã terminarea fiºierului de comenzi curent ºi revenirea la procesul din 
+care a fost lansat, permişând totodatã ºi fixarea codului de retur. Lansarea comenzii în cadrul 
+unui shell determinã terminarea acestuia ºi fixarea codului de retur. Sintaxa este: 
+ 
+exit [ n ]
+
+2.2.4.6 cut 
+Comanda este folositã în principal pentru “decuparea” unor bucãşi de text din fiecare linie a unui 
+fiºier, pe baza unui ºablon prestabilit. Sintaxa apelului este: 
+ 
+cut [ -b lista | -c lista | -f lista [-d delim]? ] [ fisier ] 
+
+
+2.2.4.7 echo 
+ 
+Comanda se apeleazã sub forma: 
+ 
+$ echo text 
+ 
+ºi afiºeazã la ieºirea standard text. Prin text se înşelege un ºir de caractere obiºnuit, care va fi 
+prelucrat de cãtre shell-ul implicit în sensul tratãrii caracterelor speciale. De aceea, utilizatorul 
+trebuie sã aibã grijã sã foloseascã acolo unde este nevoie caracterele de evitare. In acest context, 
+prezentãm douã comenzi aproape identice, dar cu efecte total diferite: 
+$ echo Eu sunt > tine 
+$ echo Eu sunt \> tine 

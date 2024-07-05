@@ -1,0 +1,4 @@
+Give three ways of finding the size of a file on the linux command line.
+
+solution:
+ls -s

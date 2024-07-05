@@ -1,0 +1,6 @@
+How many processes will be created by the code fragment below, excluding the initial parent process?
+
+fork(); wait(0); fork(); wait(0); fork();
+
+solution:
+7

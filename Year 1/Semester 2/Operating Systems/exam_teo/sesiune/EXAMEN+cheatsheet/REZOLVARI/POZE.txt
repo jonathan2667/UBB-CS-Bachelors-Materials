@@ -1,0 +1,42 @@
+1.1 n^2+n^3
+1.2 Avantaj: nu ai calcul de adresa (programul se ruleaza pe partitia pe care e scris
+    Dezavantaj: nu poti rula 2 programe scrise pe aceeasi partitie deodata.
+1.3 Pornirea lenta e un dezavantaj. Avantaj: odata pornit merge repede.
+1.4 Directul e rapid, dar are coliziuni care conduc la trashing.
+1.5 Nu poate trece direct. Cand i s-au incarcat datele trece in ready si asteapta sa prinda procesor ca sa treaca
+in run.
+2.1 ~am mai facut
+2.2 9 procese (in ubuntu ps -e; ps --forest -u nume)
+2.3 grep -E '^(.....){1,}..$' <fis
+2.4 Thread cu id 0 ar putea bloca mtx0, apoi thread cu id 1 sa blocheze mtx1 (first la ambele) ->deadlock
+2.5 Cate core-uri am disponibile (cat mai multe). Lucreaza mai repede
+3.1 B/A patratele (cate blocuri incap pe unul) -> (B/A)^3
+3.2 first fit e rapid, posibilitate mai mare de fragmentare
+3.3 ~am mai facut
+3.4 5 procese
+4. Pentru ca un i node nu poate arata spre ceva din alt file system
+5. int p[2];
+   int fd=dup(1) //duplicam consola
+   pipe(p)
+   dup2(p[1],1); //am suprascris standard output cu write ul de la pipe
+   dup2(fd,1); //acum scriem in consola in loc de pipe
+   printf("asdf\n");
+6. calcul: tabela de segmentare, tabela de pagini pt fiecare segment
+   elementele: segmentul, pagina si offset-ul
+7. noi dam referinta la i, care se modifica in for. n-are niciun sens ce afiseaza
+8. B A D C 3 delay
+9. 2.4
+10. cand incarci o pagina ii incarci si vecinii
+11. 2 17      17  2  
+    6 37      37  2 9 nu mai are loc sub 37->coliziuni
+       9
+   e mai bine 2 seturi de 4 pagini aici
+12. facut
+13. A
+14.1 usor
+14.2 necitite si nescrise recent -> scrisa recent -> citita recent -> ambele (cea mai mica clasa nevida)
+14.3 (B/A)^3
+14.4 am facut
+15 n1=n2=n3=t=1
+16. facut
+17. facut

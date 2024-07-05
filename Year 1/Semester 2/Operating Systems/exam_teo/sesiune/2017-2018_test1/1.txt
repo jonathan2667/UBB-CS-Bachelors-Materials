@@ -1,0 +1,4 @@
+Write a UNIX Shell command that displays the lines in file a.txt that contains words starting with capital letters
+
+solution:
+cat a.txt | grep -E "^[A-Z]|*\ [A-Z]"

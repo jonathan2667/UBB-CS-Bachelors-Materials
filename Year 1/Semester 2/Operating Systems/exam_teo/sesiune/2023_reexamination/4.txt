@@ -1,0 +1,4 @@
+What state transition will a process undergo when it calls sem_wait and under what conditions? Justify your answer.
+
+solution:
+

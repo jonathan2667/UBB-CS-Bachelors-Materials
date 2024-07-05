@@ -1,0 +1,3 @@
+Give three GREP commands that display the lines of a file which consist exclusively of a non-empty sequence of alternating leters and digits (ex: a0g or 1r5m)
+
+solution:

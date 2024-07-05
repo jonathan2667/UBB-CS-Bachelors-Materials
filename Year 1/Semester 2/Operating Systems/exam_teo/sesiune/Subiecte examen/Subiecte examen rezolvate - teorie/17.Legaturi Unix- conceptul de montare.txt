@@ -1,0 +1,25 @@
+Conceptul de montare
+
+Spre deosebire de alte sisteme de operare ca DOS, Windows, etc. în specificarea fiºierelor 
+Unix nu apare zona de periferic. Acest fapt nu este întâmplãtor, ci este cauzat de filozofia 
+generalã de acces la fiºierele Unix. Conceptul esenþial prin care se rezolvã aceastã problemã 
+este cunoscut în Unix prin termenii de montare ºi demontare a unui sistem de fiºiere. 
+ 
+Operaþia de montare constã în conectarea unui sistem de fiºiere, de pe un anumit disc, la un 
+director existent pe sistemul de fiºiere implicit. Administratorul lanseazã comanda de montare 
+sub forma: 
+ 
+# mount [ optiuni ] sistemDeFisiere directorDeMontare 
+ 
+Efectul este conectarea indicatã prin sistemDeFisiere la directorDeMontare 
+existent pe sistemul implicit de fiºiere. Opþiunile pot sã indice caracteristicile montãrii. De 
+exemplu opþiunea rw permite atât citirea, cât ºi scrierea în subsistemul montat, în timp ce 
+opþiunea ro permite numai citirea din subsistemul montat. Opþiunea -t indicã tipul sistemului 
+de fiºiere care se monteazã, ºi în funcþie de tip, argumentul sistemDeFisiere poate fi 
+/dev/periferic sau dev/dsk/periferic sau /root/periferic º.a.m.d. Pentru 
+detalii se va putea consulta manualul mount al sistemului de operare curent. 
+ 
+Operaþia de demontare are efectul invers ºi ea se face cu comanda: 
+ 
+#/etc/unmount directorDeMontare 
+

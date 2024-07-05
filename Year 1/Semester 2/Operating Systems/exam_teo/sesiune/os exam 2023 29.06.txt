@@ -1,0 +1,93 @@
+1. scrieti un grep care ia grupurile de cate 2 cuvinte, separate de un singur spatiu, care sunt formate doar din litere mici si fiecare cuvant contine cel putin 2 vocale
+"</[a-z]*[aeiou][a-z]*[aeiou][a-z]*/> </[a-z]*[aeiou][a-z]*[aeiou][a-z]*/>"
+10
+
+2. scrieti 2 grep uri care iau liniile care nu au numarul de caractere multiplu al lui 3
+grep -E -v "^(...)*$"
+grep -E -v -i "^(...)*$"da 
+10
+
+3. scrieti un sed care inlocuieste prima aparitie a caracterului A cu caracterul B
+sed -E "s/(^[^A]*)(A)(.*$)/\1B\3/gi" a.txt
+sed -E "s/A/B/i"i
+10
+
+4. scrieti un awk care afiseaza liniile care au primul cuvant identic cu ultimul cuvant si al caror penultim cuvant are numar par de caractere
+awk 'NF > 1 && $1 == $NF && length($(NF - 1)) % 2 == 0 {print $0}'
+10
+
+5. scrieti 3 moduri de a crea un fisier gol
+touch a.txt
+echo "" > a.txt
+echo "" 2> a.txt
+10
+
+6. scrieti 5 moduri de a verifica daca un string este gol(cu test)
+1) if test -z $A
+2) if test $A=""
+3) if test ${#A} -eq 0
+4) if test ${#A} -lt 1
+5) if test ! ${#A} -gt 0
+6) if test $(echo $A | grep -E -c "^$") -eq 1
+7) if $(echo $A | grep -E -q "^$")
+8) if test $(echo $A | awk '{print length}') -eq 0
+10
+
+7. afisati ierarhia proceselor a urmatorului cod:
+for(int i = 0; i < 3; i++)
+    if (fork() != 0)
+        wait();
+10
+
+8. scrieti ce afiseaza codul:
+execlp(“expr”,”expr”,”a”,”+”,”1”);mut
+printf(“xyz\n”);
+// eroare boss
+10
+
+9. schitati o implementare a functiilor popen si pclose
+FILE* mypopen(char *cmd, char *type)
+{
+	int p[2], callerd_idx = 0, child_idx;
+	pipe(p);
+	if (type[0] == 'w')
+		caller_idx = 1;
+	child_idx = caller_idx ^ 1;
+	if (fork() == 0)
+	{
+		close(p[caller_idx]);
+		
+}
+
+10. cate FIFO pot fi deschise de catre un fisier daca fiecare dintre acele FIFO-uri va avea capatul celalalt deschis de catre un alt proces?
+10
+
+11. cand am dori sa folosim execl si cand am dori sa folosim execv?
+5
+
+12. definiti notiunea de sectiune critica
+10
+
+13. 10
+10
+
+14. care sunt consecintele inlocuirii lui pthread_mutex_lock cu sem_post in cod?
+10
+
+15. definiti un semafor binar si explicati cum functioneaza
+10
+
+16. era ceva cod, nu am cum sa il scriu pe tot, vad daca cineva l a postat pe grup
+???
+
+17. scrieti un mod de a preveni deadlock
+10
+
+18. prin ce stare(gen ready, wait, swap, etc) trece un proces cand apelam pthread_join?
+10
+
+19. daca avem B drept block size si A drept address size, cate adrese o sa aiba un double indirect dintr-un i-node?
+(B/A) ^ 2
+
+20. ce se intampla cu continutul directorului in care montam o partitie?
+0

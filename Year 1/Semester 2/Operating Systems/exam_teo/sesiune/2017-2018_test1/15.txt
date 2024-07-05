@@ -1,0 +1,4 @@
+When would you load into memory the pages of a program that is being started?
+
+solution:
+demand paging is a technique where pages of a program are loaded into memory only when they are actually accessed or needed during the program's execution. when the program is first started, the operating system loads the initial set of pages that are required for program execution, such as the program's entry point and any necessary libraries or shared code.

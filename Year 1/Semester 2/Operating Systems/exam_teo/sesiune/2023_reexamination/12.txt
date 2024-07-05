@@ -1,0 +1,4 @@
+How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for writing?
+
+solution:
+

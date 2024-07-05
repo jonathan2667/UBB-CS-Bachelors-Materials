@@ -1,0 +1,43 @@
+8.2.2.3 Partea de servicii 
+ 
+COMPILATOARELE sunt programe care traduc texte sursã scrise în limbaje de nivel înalt 
+(C, C++, Java, FORTRAN, COBOL, Pascal, Ada etc.) în limbaj maºinã. 
+
+ASAMBLORUL este un program care traduce texte scrise în limbajul de asamblare propriu 
+SC într-un modul obiect. Din punct de vedere al SO problemele legate de asamblor sunt 
+incluse în problemele compilatoarelor. 
+ 
+LINK-EDITORUL sau EDITORUL DE LEGATURI. Grupeazã unul sau mai multe module 
+obiect, împreunã cu subprograme de serviciu din diverse biblioteci, într-un program 
+executabil. 
+ 
+LOADER (PROGRAM DE INCARCARE) este un program al SO care are trei sarcini: 
+ citirea unui program executabil de pe un anumit suport; 
+ încãrcarea acestuia în memorie; 
+ lansarea lui în execuþie
+
+ 
+INTERPRETOR este un program care executã pas cu pas instrucþiunile descrise într-un 
+anumit limbaj. Tehnica interpretãrii este aplicatã la diferite limbaje de programare, cum ar fi 
+Java, BASIC, LISP, PROLOG etc. 
+ 
+MACROPROCESOR (PREPROCESOR) este un program cu ajutorul cãruia se transformã o 
+machetã de program, pe baza unor parametri, într-un program sursã compilabil.
+
+EDITORUL DE TEXTE este un program interactiv destinat introducerii ºi corectãrii textelor 
+sursã sau a unor texte destinate tipãririi. Orice SO interactiv dispune cel puþin de câte un astfel 
+de editor de texte.
+
+RUTINELE DE DEPANARE (DEPANATOARELE) asistã execuþia unui program utilizator 
+ºi-l ajutã sã depisteze în program cauzele erorilor apãrute în timpul execuþiei lui. 
+
+BIBLIOTECARUL este un program cu ajutorul cãruia utilizatorul poate comanda pãstrarea 
+programelor proprii în fiºiere speciale de tip bibliotecã, poate copia programe dintr-o 
+
+MEDIILE DE PROGRAMARE sunt componente complexe destinate în principal activitãþii de 
+dezvoltare de programe
+
+SUPRAFETELE DE OPERARE au apãrut tot la calculatoarele IBM-PC ºi a celor compatibile 
+cu ele. Ele au rolul principal de a "îmbrãca" sistemul de operare (Windows sau Unix), pentru 
+a-i face mai uºoarã operarea
+bibliotecã în alta, ºterge, insereazã ºi modificã programe în aceste biblioteci.

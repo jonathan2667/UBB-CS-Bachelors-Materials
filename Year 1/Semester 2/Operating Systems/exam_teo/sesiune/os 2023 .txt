@@ -1,0 +1,100 @@
+1. RO: Daţi o expresie regulară care acceptă orice număr impar de cuvinte separate prin spaţii, fiecare cuvânt având număr impar de litere. - 0, 10 
+EN: Give a regular expression that matches any odd number of words, each word having an odd number of letters.
+<\(..)*.\> (<\(..)*.\> <\(..)*.\>)* 
+
+2. RO: Daţi patru comenzi care afişează numărul de linii goale dintr-un fişier.-8, 8
+EN: Give four commands that display the number of empty lines in a file.
+grep -E -c "^$" a.txt
+grep -E -V -c "..*" a.txt
+grep -E -v -c ".+" a.txt
+grep -E -v -c ".{1,}" a.txt
+
+3. RO: Scrieţi o comandă SED care afişează liniile dintr-un fişier ştergând din ele primul, al treilea, al cincilea, al şaptelea, etc spaţii. - 0, 7
+EN: Write a SED command that displays a file's lines deleting the first, the third, the fifth, the seventh, etc space on those lines
+sed -E "s/( )([^ ]+)?( )?/\2\3/gi" test.txt
+
+4. RO: Scrieţi o comandă AWK care afişează produsul ultimului câmp al liniilor de pe poziţii impare care au număr impar de câmpuri. - 10, 10
+EN: Write an AWK command that displays the product of the last field of lines on odd positions having an odd number of fields.
+awk 'BEGIN { p = 1} { if (NF % 2 == 1 && NR % 2 == 1) p *= $NF} END { print p}' nrs.txt 
+
+5. RO: Daţi patru moduri prin care ieşirea standard a unui proces poate fi redirectată. - 5, 10
+EN: Give four ways of redirecting the standard output of a process.
+Redirect it via >  : command > a.txt
+Redirect it via >> : command >> a.txt
+Redirect it via pipe : command | echo > a.txt
+Redirect it with tee: echo "Hello" | tee greetings.txt
+
+6. RO: Scrieţi trei condiţii Shell UNIX care verifică existenţa unui fişier. - 8, 10
+EN: Write three UNIX Shell conditions that check the existence of a file.
+1) if [ -e $file ]
+2) if [ $(ls $file 2>&1 | grep -E -c "No such file") -eq 0 ]
+3) if $(ls $file2 2>&1 | grep -E -q "No such file")
+
+7. RO: Desenati ierarhia proceselor create de coduld e mai jos, incluzand procesul parinte. - 10, 10
+EN: Draw the hierarchy of processes created by the code below, including the parent process.
+
+    for(i=0; i<3; i++) {
+        if(execlp("ls", "ls", "/", NULL) != -1) {
+            fork();
+        }
+    }
+P->C1
+
+8. RO: Adăugaţi codul C necesar pentru ca instrucţiunea de mai jos să nu se blocheze aşteptând la intrarea standard. - 7, 10
+EN: Add the necessary code so that the instruction below does not get stuck waiting for standard input.
+    execlp("cat", NULL);
+
+	int fd = open("a.txt", O_RDRWR);
+	dup2(fd, 0);
+	execlp("cat", "cat", NULL);
+
+9. RO: Schiţaţi o implementare a funcţiilor popen şi pclose, doar pentru cazul în care outputul comenzii e citit în codul C. - 0, 0
+EN: Sketch an implementation of the popen and pclose functions, only for the case when the command output should be read in the C code.
+
+
+10. RO: Câte FIFO-uri poate deschide pentru citire un process, dacă FIFO-urile sunt şi vor fi întotdeauna folosite de alte procese doar pentru citire? - 10, 10
+EN: How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for reading?
+
+11. RO: Când aţi folosi un FIFO în locul unui pipe? - 2, 10
+EN: When would you prefer using a FIFO instead of a pipe?
+I would use a FIFO instead of a pipe when I'd have to work with processes resulted from different programs, that do not have a common ancestor. For these 2 to be able to communicate, they would need a file on the disk, something that a pipe can not provide, so FIFO would be the solution to go for this case.
+
+12. RO: Ce este o "secţiune critică"? - 10, 10
+EN: What is a "critical section"?
+A critical section of a code is a part where are performed operations that are not atomic, so they need to be protected using a synchronization mechanism, such as mutexes, read-write locks, semaphores etc.
+
+13. RO: Când aţi folosi un mutex în locul unui rwlock? - 7, 7
+EN: When would you prefer using a mutex instead of a rwlock?
+I would use a mutex instead of a rwlock when I would work with conditionals. They can release only mutexes, so rwlock won't be a suitable solution in this case. Also, readlocks are advisable only when a specific thread performs a read only operations, so, if all the threads that are running have actions that are not atomic, a a rwlock is not justified.
+
+14. RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la sem_wait? - 4, 0
+EN: What will be the effect of replacing calls to pthread_mutex_lock with calls to sem_wait?
+Three cases: 1) We only replace sem_wait on mutex_lock, but not so mutex_unlock with sem_post
+Result: Undefined behaviour caused by unlocking a mutex that has not been locked
+2) We use a binary_semaphore
+Result: same as using a mutex, at each passing, the semaphore is decremented to 1, and when passing sem_post, the semaphore will be incremented
+3) Using a generic semaphore with x thread allocated
+Result: Threads will pass until the semaphore allows it, and, depending on the operations we execute, the results can be random
+
+15. RO: Ce face pthread_cond_wait cu mutex-ul primit ca argument? - 0, 9
+EN: What does pthread_cond_wait do with the mutex it gets as argument?
+pthread_cond_wait unlocks and releases the mutex when it is called. When a signal is sent (either via signal or broadcast), pthread_cond_wait waits until the mutex is free, acquires and locks it, and continues the execution of the program
+
+16. RO: Schiţaţi o soluţie pentru problema producător-consumator. 5, 8
+EN: Sketch a solution for the producer-consumer problem.
+We will use 2 semaphores and a thread
+
+17. RO: Ce puteţi face ca programator pentru a preveni deadlock-urile? 10, 10
+EN: What can you do as a software developer to prevent deadlocks?
+
+As programmers, we can choose an order of locking, and always stick to it, for avoiding cycles.
+
+18. RO: Prin ce tranziţie de stare va trece un process când apelează pthread_cond_wait? Justificaţi răspunsul. - 5, 5
+EN: What state transition will a process undergo when it calls pthread_cond_wait? Justify your answer.
+When a process call pthread_cond_wait, it will go from RUN to WAIT. This behaviour is caused by the fact that, since the thread will wait for a signal from another thread, the processor would be occupied without a reason, so it will release the core for another process to complete it's taks.
+
+19. RO: Ce conţinue un fişier de tip director în sistemul de fişiere Linux? - 2, 8
+EN: What is the content of file of type directory in the Linux file system?
+
+20. RO: Explicaţi diferenţa dintre un link simbolic şi un link hard. - 6, 8
+EN: Explain the difference between a symbolic link and a hard link.

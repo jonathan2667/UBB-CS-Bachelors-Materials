@@ -1,0 +1,175 @@
+1. Sa se scrie o comanda UNIX care afiseaza liniile care au numarul total de caractere divizibil cu 3.
+
+2. Sa se scrie o comanda UNIX care duplica primele 5 caractere de pe fiecare linie
+
+ex: abc01xyz => abc01abc01xyz
+
+3. Sa se scrie o comanda AWK care numara cate cate linii au primul cuvant egal cu ultimul.
+
+4. Un program Shell care afiseaza numere care sunt multiplu de 15. Fara validari.
+
+5. Un program Shell care afiseaza fisierele date in linia de comanda care sunt executabile si citibile.
+
+6. Cate procese se creaza (fara procesul parinte) in urma executarii urmatoarelor linii de cod?
+
+int i;
+
+for(i = 0; i < 6; i++)
+	
+if(i % 3 == 1)
+		
+fork();
+
+7. Ce se va afisa in urma comenzilor cd ~/.././../xyz ; pwd
+
+8. Care este valoarea de adevar a unei functii (parca exit(2)) ?
+
+9. Un program Shell care face suma argumentelor din linia de comanda de pe pozitii divizibile cu 8. Fara validari.
+
+10. Enumerati 2 din 3 tipuri de alocare virtuala de memorie.
+
+11. Functie pentru crearea unui FIFO.
+
+12. Comportamentul functiei read(pentru pipe/FIFO) fara O_NDELAY.
+
+13. Un motiv pentru care un proces poate trece de la starea RUN in WAIT.
+
+14. Sa se precizeze intre ce linii trebuie facuta dealocarile pentru urmatoarea secventa de cod:
+  
+		 
+void* f(void* p){
+                        
+	printf("%d\n",*(int*)p);
+                        
+	return NULL;
+                
+}
+ 
+                
+int main(){
+                       
+	int i;
+                        
+	pthread_t t[3];
+                        
+	int* x,z;
+ 
+                        
+	z = (int*) malloc(15*sizeof(int));
+                        
+	for (i = 0 ; i < 3; i++){
+                                 
+		x = (int*) malloc(sizeof(int));
+                               
+ 		*x = i;
+                               
+ 		pthread_create(&t[i],NULL,f,x);
+ 
+                       
+ 	}
+ 
+                        
+	for (i = 0; i < 3; i++){
+                                
+		pthread_join(t[i],NULL);
+                       
+	}
+ 
+                
+	return 0;
+                
+}
+
+
+15. Completati programul C astfel incat suma sa se calculeze corect.
+		
+		
+int sum = 0;
+                
+void *f(void * arg){
+                        
+	sum++;
+                
+}
+ 
+                
+int main(){
+                        
+	int i;
+                        
+	pthread_t t[10];
+                               
+                        
+	for(i = 0 ; i < 10; i++){
+                              
+		pthread_create(&t[i],NULL,f,NULL);
+                        
+	}
+                              
+                        
+	for (i = 0 ; i < 10; i++)
+                              
+		pthread_join(t[i],NULL);
+                        
+	}	
+ 
+                  	
+	return 0;
+                  
+}
+
+
+16. Componentele unui semafor.
+
+17. Programul A scris in programul B prin canalul "a2b", iar programul B 
+scrie in programul A prin canalul "b2a". 
+Scrieti functiile pentru open in ordinea 
+corecta astfel incat sa mearga programul.
+
+
+Programul A:			Programul B:
+
+
+open(  ,   ); 			open(  ,   );
+open(  ,   ); 			open(  ,   ); 			
+				 
+
+
+18. exec -  ce face in cazul in care se executa cu succes(nu da eroare)
+
+19. Problema cu semafor ... Ce afiseaza programul?
+	
+	
+semaphore a,b,c,d;
+	
+a.value = 0;
+	
+b.value = 0;
+	
+c.value = 1;
+	
+d.value = 0;
+
+while(1){		
+	while(1){
+		
+P(a);			
+		P(b);
+
+	print "A\n";		
+	print "B\n";
+
+V(d);			
+V(a);
+
+
+P(c);			
+P(d);
+
+print "C\n";		
+print "D\n";
+V(b);			
+V(c);
+
+
+20. O metoda de rezolvare a unui impas(deadlock)

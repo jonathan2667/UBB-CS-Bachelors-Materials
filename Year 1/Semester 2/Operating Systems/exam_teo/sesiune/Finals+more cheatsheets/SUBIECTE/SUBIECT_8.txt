@@ -1,0 +1,37 @@
+1. Write a sed command which duplicates the numbers in a file and prints it to the output
+
+2. Print the lines from a.txt which ends in vowels
+
+3. In a.txt in each row has 3 numbers separated by ":". Write an awk script which prints the sum of the numbers from the 2nd position
+
+4. Print the path of the current, parents and root directory
+
+5. How many processes will be created? fork(); fork(); fork(); wait(); wait(); wait(); (dont count the root process)
+6. Write a shell script which prints all its arguments which are not files or directories. (No valiadation needed)
+
+7. Write a shell script which takes 2 numbers as arguments and prints the greater one (No valiadtion needed)
+
+8. A shell script takes as argument the numbers "1 2 3 4 5". Write a script, which prints the sum of the numbers from the odd positions.(9)
+
+9. Explain why the parent process can't use a pipe, which has been created in the child process.
+
+10. What is the logical value of a shell script which terminates whith return value of 5
+
+11. Explain a case when the state of a process is changed from RUN to SWAP
+
+12. Explain the roles of V and P in Semaphores. (short answers)
+
+13. Explain a technique to prevent deadlocks
+
+14. Add 2 examples of the 3 possible, real memory allocation techniques
+
+15. Which unix c function creates a new pipe
+
+16. What happens when we run the next commands at the same time. 
+(Note that fifos are created and can be used): 
+open("a2b", O_RDONLY); open("b2a",O_RDWR); ||| open("b2a", O_RDONLY); open("a2b",O_RDWR);
+
+Restul au fost exemple cu coduri si a trebuit sa le completez (adica sa scriu 2-3 randuri in plus) 
+dupa intrebarea din problema: unul cu threaduri, am pus mutex in cod, 
+altul o intrebare daca vreau sa eliberez memoria alocata in for (cu malloc), unde trebuie sa pun functia "free()".
+A mai fost o intrebare cu semaphors, in pseudocod.

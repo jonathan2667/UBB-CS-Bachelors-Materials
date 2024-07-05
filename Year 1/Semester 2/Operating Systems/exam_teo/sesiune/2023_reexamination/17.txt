@@ -1,0 +1,4 @@
+Write two SED commands that display a file's lines deleting the first non-empty sequence of lower-case letters.
+
+solution:
+

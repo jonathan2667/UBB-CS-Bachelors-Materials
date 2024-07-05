@@ -1,0 +1,4 @@
+How many threads would you use for processing a million files? Justify your choice.
+
+solution:
+i would use a number of threads equal to the number of cores on the processor so there is a balance between having too many threads that don't actualyy get the processor to run their code and to few threads that the code becomes almost as if we were to write it iteratively.

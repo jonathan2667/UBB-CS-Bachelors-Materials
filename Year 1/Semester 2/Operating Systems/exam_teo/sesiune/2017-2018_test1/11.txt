@@ -1,0 +1,8 @@
+Give a reason for choosing threads over processes
+
+solution:
+1. efficiency: threads are generally more lightweight than processes. creating a thread requires fewer system resources compared to creating a new process. threads share the same memory space, file descriptors, and other resources of the process that created them, resulting in lower overhead and faster communication between threads. this makes threads a more efficient option when multiple tasks need to be performed concurrently within a single program.
+
+2. shared memory: threads within a process can directly access and modify shared memory. this allows for efficient communication and data sharing between threads without the need for complex interprocess communication mechanism, such as pipes or sockets. Sharing data between threads can be simpler and faster compared to sharing data between separate processes.
+
+3. synchronization: threads can easily synchronize their execution using mechanisms like locks, semaphores, and conditional variables. Synchronization primitives enable threads to coordinate their activities, share resources safely, and avoid race conditions when accessing shared data. Inter-thread communication and coordination are generally simpler to implement and understand than inter-process communication.

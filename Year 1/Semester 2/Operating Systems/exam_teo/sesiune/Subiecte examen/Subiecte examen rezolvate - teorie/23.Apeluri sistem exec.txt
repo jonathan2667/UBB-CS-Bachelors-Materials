@@ -1,0 +1,10 @@
+*exec*()
+-apelului exec i se furnizeaza numele unui fisier executabil, iar continutul acestuia se 
+suprapune peste programul procesului existent
+-Prototipurile apelului exec*()
+  int execv (char *fisier,char *argv[]);
+  int execl(char *fisier, char *arg0,...,char *argn,NULL);
+  int execve(char *fisier,char *argv[],char *envp[]);
+  int execle(char *fisier,char *arg0,...,char *argn,NULL,char *envp[]);
+  int execvp(char *fisier,char *argv[]);
+  int execlp(char *fisier,char *arg0,...,char *argn,NULL);

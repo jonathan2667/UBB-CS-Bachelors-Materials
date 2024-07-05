@@ -1,0 +1,4 @@
+What is a "critical section"?
+
+solution:
+

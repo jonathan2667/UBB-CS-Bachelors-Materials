@@ -1,0 +1,17 @@
+Conceptul de thread, sau fir de execuþie, a aparut în ultimii 10-15 ani. Proiectanþii ºi programatorii
+au “simþit nevoia” sa-ºi defineascã entitãþi de calcul independente, dar în cadrul aceluiaºi proces.
+Astfel, un thread se defineºte ca o entitate de execuþie din interiorul unui proces, compusã dintrun
+context ºi o secvenþã de instrucþiuni de executat.
+Deºi noþiunea de thread va fi prezentatã pe larg în capitolele urmãtoare, punctãm aici câteva
+caracteristici de bazã ale acestor entitãþi:
+ Thread-urile sunt folosite pentru a crea programe formate din unitãþi de procesare
+concurentã.
+ Entitatea thread executã o secvenþã datã de instrucþiuni, încapsulate în funcþia thread-ului.
+ Execuþia unui thread poate fi întreruptã pentru a permite procesorului sã dea controlul unui
+alt thread.
+ Thread-urile sunt tratate independent, fie de procesul însuºi, fie de nucleul sistemului de
+operare. Componenta sistem (proces sau nucleu) care gestioneazã thread-urile depinde de
+modul de implementare a acestora.
+ Operaþiile de lucru cu thread-uri sunt furnizate cu ajutorul unor librãrii de programe (C, C++)
+sau cu ajutorul unor apeluri sistem (în cazul sistemelor de operare: Windows NT, Sun
+Solaris).

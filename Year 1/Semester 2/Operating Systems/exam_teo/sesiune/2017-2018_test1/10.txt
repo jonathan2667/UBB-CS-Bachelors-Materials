@@ -1,0 +1,4 @@
+What does the system call "open" do before returning from opening a FIFO?
+
+solution: 
+the "open" system call firstly checks the existence of the FIFO. if it doesn't exist and the "open" call is invoked in write-only mode or read-only mode, the call will create a FIFO in the file system and block until another process opens the FIFO for reading, respectively writing.

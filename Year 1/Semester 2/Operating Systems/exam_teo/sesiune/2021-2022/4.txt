@@ -1,0 +1,5 @@
+How is the address calculation done in the absolute fixed partition allocation?
+
+solution:
+there are multiple predetermined partitions and the RAM locations are already established
+the first program takes the first position, the first address takes the beginning of the partition

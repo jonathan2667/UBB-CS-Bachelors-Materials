@@ -1,0 +1,25 @@
+Conceptul de proces
+Facilitatea de a a rula mai multe programe simultan în cadrul unui sistem de operare este 
+consideratã astãzi normalã de cãtre toþi utilizatorii. Rularea unui navigator web (Mozilla 
+Firefox, Internet Explorer, Safari, Konqueror etc.) simultan cu rularea unui program pentru 
+citirea poºtei electronice (Mozilla Thunderbird, Outlook Express, Eudora, Pine etc.) este o 
+practicã de zi cu zi a majoritãþii utilizatorilor. Din punctul de vedere al unui proces de operare 
+toate aceste programe rulând pe un sistem de operare sunt considerate procese sau task-uri. 
+ 
+Formal, un proces sau task, este un calcul care poate fi executat concurent (în paralel) cu alte 
+calcule. Este o abstractizare a activitãþii procesorului care pur ºi simplu executã instrucþiunile 
+care i se transmit fãrã a face diferenþiere între procesele cãrora le aparþin. Revenind la 
+exemplul iniþial, un procesor nu “ºtie” dacã instrucþiunea executatã aparþine de Mozilla 
+Firefox sau Outlook Express. 
+
+ Conceptul de semafor
+Pentru a evita situaþia de mai sus ºi pentru a permite o serie de operaþii cu procese (pe care le 
+vom prezenta mai târziu), Dijkstra a introdus conceptul de semafor. 
+ 
+Un semafor s este o pereche 
+(v(s), c(s)) 
+ 
+unde v(s) este valoarea semaforului, iar c(s) o coadã de aºteptare. Valoarea v(s) este un 
+numãr întreg, care primeºte o valoare iniþialã v0(s). Coada de aºteptare conþine (pointeri la) 
+procesele care aºteaptã la semaforul s. Iniþial coada este vidã, iar disciplina cozii depinde de 
+sistemul de operare (FIFO, LIFO, prioritãþi etc.). 

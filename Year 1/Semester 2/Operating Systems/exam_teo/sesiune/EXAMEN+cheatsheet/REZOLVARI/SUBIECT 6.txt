@@ -1,0 +1,24 @@
+1. "^[^b]{0,}[a]{1,}[^b]{0,}$"
+2. O sa coexiste impreuna copiii 1,2,4,5,6 pentru ca pe 0 si 3 ii asteapta parintele si ii inchide. Pe 6 o sa il 
+inchida dupa, dar nu mai are relevanta. -> 5 procese copil
+3. PROCES A:
+	int fd1=open("X",O_WRONLY);
+	int fd2=open("Z",O_RDONLY);
+   PROCES B:
+	int fd1=open("X",O_RDONLY);
+	int fd2=open("Y",O_WRONLY);
+   PROCES C:
+	int fd2=open("Y",O_RDONLY);	
+	int fd1=open("Z",O_WRONLY);
+4. As folosi sqrt(1 000 000 ), fiecare thread ar procesa 1000 fisiere. - merge mai bine raspunsul cu cate core-uri
+sunt disponibile, apoi am creste treptat nr de thread-uri si am masura timpul de executie sa verificam eficienta.
+5. Daca T=1, se creeaza 3 thread-uri si fiecare merge in functii separate, deci barierele vor trebui sa astepte 
+terminarea unui singur thread -> T=N1=N2=N3=1
+6. Ca sa nu tina procesorul ocupat cat timp nu fac nimic.
+(ex. daca read nu are nimic de citit si asteapta sa ii fie scris).
+7. ai nevoie doar de nr. partitiei si offset, pe care le aduni (AF=AE)
+8. avantaj: il gasesti rapid 
+   dezavantaj: fragmenteaza memoria intr-un fel in care e mai greu sa gasesti altceva ce are nevoie 
+ 	       de exact atata memorie
+9. nescris si necitit recent
+10. A*B^3

@@ -1,0 +1,15 @@
+8.2.1.1 Stãrile unui proces 
+ 
+In secþiunile precedente am folosit destul de des termenul de proces, privit intuitiv ca un 
+program în execuþie. Am vãzut în capitolele precedente noþiunea de proces sub Unix ºi sub 
+Windows. In fig. 5.18 din 5.2.3 sunt prezentate stãrile unui proces Unix. Existã [62] ºi stãri în 
+care se poate afla un proces Windows. 
+ 
+Sintetizând stãrile proceselor sub diverse sisteme de operare, putem defini stãrile unui proces 
+într- un sistem de operare. Aceste stãri sunt: 
+ HOLD – proces pregãtit pentru intrarea în sistem; 
+ READY – procesul este în memorie ºi este gata de a fi servit de (un) procesor; 
+ RUN – un procesor executã efectiv instrucþiuni (maºinã) ale procesului; 
+ WAIT – procesul aºteaptã terminarea unei operaþii de intrare / ieºire; 
+ SWAP – imaginea procesului este evacuatã temporar pe disc; 
+ FINISH – procesul s-a terminat, trebuie livrate doar rezultatele. 

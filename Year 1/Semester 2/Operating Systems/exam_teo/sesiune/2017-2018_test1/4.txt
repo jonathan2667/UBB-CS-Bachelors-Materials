@@ -1,0 +1,4 @@
+Display only the lines of file a.txt that appear only once (not duplicated).
+
+solution:
+sort a.txt | uniq -u

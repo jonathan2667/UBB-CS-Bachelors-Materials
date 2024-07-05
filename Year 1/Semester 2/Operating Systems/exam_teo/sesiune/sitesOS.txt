@@ -1,0 +1,5 @@
+http://www.cs.ubbcluj.ro/~rares/course/os/res/teaching/teaching-notes.pdf
+http://www.cs.ubbcluj.ro/~rares/course/os/res/practice/gsa/index.html
+http://www.cs.ubbcluj.ro/~rares/course/os/res/practice/shell/index.html
+https://www.cs.ubbcluj.ro/~horea.muresan/os/
+http://www.cs.ubbcluj.ro/~rares/course/os/

@@ -1,0 +1,17 @@
+Variabila mutex (mutual exclusion) este un instrument util pentru protejarea unor resurse
+partajate, accesate concurent de mai multe thread-uri. Variabilele mutex sunt folosite, de
+asemenea, pentru implementarea secþiunilor critice ºi a monitoarelor (notiuni pe care le vom
+defini în secþiunile imediat urmãtoare).
+
+O variabilã mutex are douã stãri posibile: blocatã (este proprietatea unui thread) sau neblocatã (nu este proprietatea nici unui thread). 
+O variabilã mutex nu este proprietatea mai multor thread-uri simultan. Un thread care vrea sã obþinã o variabilã mutex blocatã de alt thread, 
+trebuie sã aºtepte pânã când primul o elibereazã.
+Operaþiile posibile asupra variabilelor mutex sunt: iniþializarea (static sau dinamic), blocarea (pentru obþinerea accesului la resursa protejatã), deblocarea 
+(pentru eliberarea resursei protejate) ºi distrugerea variabilei mutex.
+Din punct de vedere conceptual, o variabilã mutex este echivalentã cu un semafor s, care poate lua douã valori: 1 pentru starea neblocatã ºi 0 pentru starea blocatã.
+ (Un astfel de semafor se va numi semafor binar). Operaþiile asupra unei variabile mutex m se definesc, cu ajutorul semafoarelor, astfel:
+
+Iniþializare: se defineºte un semafor m astfel încât v0(m) = 1.
+ Blocare: (dupã o eventualã deblocare de cãtre alt thread): P(m).
+ Deblocare: V(m).
+ Distrugere: distrugerea semaforului m.

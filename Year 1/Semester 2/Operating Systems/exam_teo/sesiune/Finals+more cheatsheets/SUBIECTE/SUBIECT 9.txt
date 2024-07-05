@@ -1,0 +1,11 @@
+1. grep -E '^(...)+$' <fis
+2. sed -r 's/^(.....)/\1\1/g' <fis
+3. awk 'BEGIN{cnt=0}{if($1==$NF){cnt+=1}}END{print cnt}' fis
+4. 
+6. la 1 se creaza un proces si la 3 doua (creaza si copilul si parintele)
+7. am mai facut
+8. fals
+10. paginata, segmentata, paginat-segmentata
+11. mkfifo
+12. stiu
+13. am mai facut

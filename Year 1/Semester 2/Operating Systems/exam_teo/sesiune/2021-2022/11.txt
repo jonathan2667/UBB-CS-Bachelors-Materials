@@ -1,0 +1,15 @@
+Why a hard-link can be created only toward files on the same partition and not toward files on other partitions?
+
+solution:
+A hard link is a directory entry that points to an inode, which represents a file on a file system. The limitation of creating hard links only within the same partition (or file system) and not across partitions is primarily due to the way file systems are structured and how they manage disk space.
+
+When a file is created, it is allocated space on a specific partition, which is a logical division of a physical storage device. The file system manages the allocation and organization of data within that partition. Here's why hard links are restricted to the same partition:
+
+1. File System Organization: Each file system has its own organization and data structures for managing files and directories. These structures include the superblock, inode table, and data blocks. Different partitions may have different file system types, structures, and configurations. When a file is created, it becomes part of the specific file system's organization and cannot be directly linked to files on a different file system.
+
+2. Inode and Data Block Allocation: Inodes contain metadata about files, such as permissions, ownership, and pointers to the file's data blocks. Inodes are typically assigned and managed within the context of a specific file system. When a hard link is created, it points to the inode of the original file. If the original file and the hard link were on different partitions with different file systems, their inodes would be managed separately, potentially leading to inconsistencies and difficulties in maintaining synchronization and coherence between the file systems.
+
+3. Disk Space Management: File systems manage disk space allocation, including how data blocks are allocated and tracked. Disk space management is typically performed within the boundaries of a partition. Hard links within the same partition can share the same data blocks, which helps in optimizing storage utilization. However, across partitions, different disk space management mechanisms may be employed, making it difficult to ensure efficient and coherent sharing of data blocks between hard-linked files.
+
+
+Considering these factors, allowing hard links across partitions could lead to complexities in managing file system structures, synchronization of metadata, and maintaining data integrity. Therefore, file systems typically enforce the restriction that hard links can only be created within the same partition, ensuring simplicity and consistency within the file system's organization and disk space management.

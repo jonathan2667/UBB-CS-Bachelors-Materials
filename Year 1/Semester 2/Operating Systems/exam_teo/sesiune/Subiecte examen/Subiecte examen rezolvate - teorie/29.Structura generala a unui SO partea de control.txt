@@ -1,0 +1,51 @@
+8.2.2.2 Partea de control 
+ 
+INTRERUPERI. Un ansamblu de rutine, fiecare dintre ele fiind activatã la apariþia unui 
+anumit semnal fizic de întrerupere. Corespunzãtor, SO efectueazã acþiunile aferente 
+întreruperii respective. Semnificaþia conceptului de întrerupere este descrisã în fiecare manual 
+de arhitectura calculatoarelor. Pentru întreruperile 8086, se poate consulta [52]. 
+ 
+Funcþionarea concretã a componentei (sistemului) de întreruperi depinde foarte mult de 
+particularitãþile SC, deci nu se preteazã prea bine la abordãri cu caracter general. Pe de altã 
+parte, detalii despre aceste componente intereseazã în primul rând pe programatorii ºi inginerii 
+de sistem, mai puþin pe utilizatorii obiºnuiþi., cãrora ne adresãm noi. Din aceste motive vom 
+schiþa numai mecanismul de funcþionare a întreruperilor. 
+Fiecare tip de întrerupere are asociatã o locaþie fixã de memorie. In aceastã locaþie se aflã o 
+adresã. Aceastã adresã indicã locul din memorie la care se aflã o secvenþã de instrucþiuni, 
+numitã handler, secvenþã care deserveºte întreruperea respectivã. 
+ 
+La apariþia semnalului de întrerupere, dupã ce instrucþiunea maºinã în curs s-a executat, se 
+executã, în aceastã ordine, urmãtoarele activitãþi: 
+ se salveazã într-o zonã de memorie starea programului în curs de desfãºurare; 
+ se activeazã handlerul asociat întreruperii respective; 
+ handlerul executã acþiunile necesare servirii întreruperii; 
+ se restaureazã starea programului care a fost întrerupt. 
+
+GESTIUNE PROCESE. Creeazã procese ºi rezolvã problemele privind cooperarea ºi 
+concurenþa acestora. La terminarea unui proces, acesta este ºters din sistem. Asupra 
+conceptului de proces vom mai reveni. 
+ 
+DISPECER PROCESOARE. La sistemele multiprocesor, repartizeazã sarcinile de calcul 
+solicitate de procese, procesoarelor care sunt libere ºi care pot executa sarcinile cerute. 
+ 
+GESTIUNEA MEMORIEI. Alocã necesarul de memorie internã solicitat de procese ºi asigurã 
+protecþia memoriei interprocese.  
+ 
+I/O LA NIVEL FIZIC. Asigurã efectuarea operaþiilor elementare de I/O cu toate tipurile de 
+periferice din sistem realizând, acolo unde este posibil, desfãºurarea simultanã a uneia sau mai 
+multor operaþii I/O, cu activitatea procesorului central.
+
+GESTIUNEA FISIERELOR. O colecþie de module prin intermediul cãrora se asigurã: 
+deschiderea, închiderea ºi accesul utilizatorului la fiºierele rezidente pe diferite suporturi de 
+informaþii.  
+ 
+PLANIFICAREA LUCRARILOR SI ALOCAREA RESURSELOR. Resursele unui SC se 
+împart în: resurse fizice (procesoare, memorie internã, periferice etc.) ºi resurse logice 
+(proceduri comune, tabele ale sistemului etc.). 
+ 
+GESTIUNEA TEHNICA a SO. Tine evidenþa erorilor hard apãrute la echipamentele SC. La 
+cerere, furnizeazã informaþii statistice asupra gradului de utilizare a componentelor SC. 
+ 
+GESTIUNEA ECONOMICA a SO. Tine evidenþa utilizatorilor care folosesc sistemul, 
+lucrãrile executate de cãtre aceº- tia ºi resursele consumate de aceste lucrãri (timpi de rulare, 
+memorie internã ocupatã, echipamente ºi suporþi folosiþi etc). 

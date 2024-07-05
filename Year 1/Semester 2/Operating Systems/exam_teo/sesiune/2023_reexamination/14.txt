@@ -1,0 +1,8 @@
+What will the fragment below print? Justify your answer.
+
+execl("expr", "expr", "1", "+", "1", NULL);
+execlp("echo", "echo", "3", NULL);
+printf("4\n");
+
+solution:
+

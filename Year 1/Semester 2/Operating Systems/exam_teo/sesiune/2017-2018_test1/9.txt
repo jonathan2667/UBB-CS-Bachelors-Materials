@@ -1,0 +1,4 @@
+What does the system call "read" do when the pipe is empty?
+
+solution:
+the "read" call will block (pause) the process until data is available. this means that the process will wait until there is something to read from the pipe. the "read" call will only return when at least one byte of data is available to be read from the pipe.

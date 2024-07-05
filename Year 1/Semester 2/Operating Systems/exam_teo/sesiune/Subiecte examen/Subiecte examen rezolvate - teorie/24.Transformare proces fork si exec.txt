@@ -1,0 +1,15 @@
+5.2.2.4 Ce se moºteneºte din context dupã fork ºi exec*? 
+ 
+Dupã cum se vede din fig. 5.6 ºi 5.10, mecanismele fork ºi exec pãstreazã unele dintre 
+informaþiile din context / contexte ºi le modificã pe altele. Din acest punct de vedere, poate cel 
+mai important element este faptul cã fiºierele deschise sunt pãstrate ºi moºtenite atât prin 
+fork cât ºi prin exec . 
+ 
+Pe scurt, în urma unui fork se creeazã un nou proces care diferã de pãrinte prin faptul cã: 
+? fiul are PID nou. 
+? fiul are PPID nou. 
+? fiul are propriile copii ale descriptorilor de fiºiere din pãrinte. 
+ 
+Programul lansat prin exec moºteneºte de la procesul pãrinte pe care-l suprapune: 
+? PID, PPID, fiºierele deschise. 
+? Atributele EUID ºi EGID pot fi eventual schimbate.

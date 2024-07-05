@@ -1,0 +1,39 @@
+2.Conceptul de comandã Unix; fiºiere standard, argumente ºi valori asociate
+
+*Sistemele de operare de tip unix ofera o mare diversitate de comenzi, care presupun aceleasi
+reguli de scriere. In general, o comanda Unix este de forma:
+
+ncomanda optiuni expresii fisiere
+unde:
+
+-"ncomanda" este numele propriu-zis al comenzii
+-"optiuni" o optiune unix este specificata de obicei printr-o singura litera. In unele cazuri, litera este urmata
+de un argument sir de caractere sau numar intreg. Un grup de optiuni este precedat de semnul "-"(minus). Exista insa
+anumite comenzi pentru care optiunile pot fi precedate de semnul "+"(plus), indicandu-se astfel ca este vorba de o 
+activare a optiunilor respective, iar semnul "-"folosit in asemenea cazuri semnifica dezactivarea acestora (de ex: 
+atunci cand se doreste generarea unui fisier listing la compilare se foloseste semnul "+", iar daca nu se doreste generarea 
+unui astfel de fisier se va folosi semnul "-". 
+-"expresii" sunt siruri de caractere, utilizate ca argumente pentru comanda respectiva
+-"fisiere" reprezinta unul sau mai multe fisiere specificate relativ (doar numele acestora) sau absolut (cu cale completa); 
+se pot utiliza si specificari generice
+
+*La terminarea executiei oricarei comenzi in sistem se returneaza un numar intreg intre 0 si 255 (care e retinut in spatiul sist de operare) numit cod de retur 
+sau exit status. In general, codul de retur "0" denota faptul ca executia comenzii s-a incheiat cu succes.
+*In mod implicit, comenzilor U le sunt asociate 3 fisere: fisier standard de intrare: stdin 0 (are ca input ceea ce s-a introdus 
+de la tastatura), fisierul standard de iesire: stdout 1; si cel standard de eroare: stderr 2 (ambele avand ca output monitorul consolei de la care a 
+fost lansata comanda). Aceasta asociere implicita a fisierelor standard cu monitorul sau tastatura poate fi
+modificata (redirectata/redirectionata) putandu-se utiliza ca input/output un fisier specificat de utilizator.
+*Sintaxele celor mai simple modificari.Pt redirectare, se va specifica in linia de comanda:
+-comanda <fin datele de intrare (input-ul) pt comanda se vor prelua din fisierul text fin, pregatit in prealabil
+-comanda >fout sau comanda >>fout iesire standard va fi depusa in fisierul fout; daca se foloseste semnul > se va crea
+un fisier nou cu numele specificat in care se va scrie output-ul comenzii (in cazul in care fisierul exista, continutul 
+acestuia este suprascris); cand se utilizeaza >> output-ul comenzii este adaugat la sfarsitul fisierului fout daca fisierul 
+exista deja, in caz contrar creandu-se fisierul respectiv
+
+comanda1 | comanda2 iesirea standard pentru comanda1 se constituie automat in intrare standard pentru comanda2 (conectare in pipe)
+
+*De regula,dupa lansarea unei comenzi prompterul reapare doar dupa executia completa a acesteia - se spune ca ea este executata 
+in mod foreground. Daca utilizatorul doreste, el poate cere sistemului sa preia comanda si sa o executa in mod background, ceea ce
+permite lansarea simultana a mai multor comenzi. Lansarea in background se specifica prin caracterul "&"(ampersand) plasat ca 
+ultim caracter al comenzii. In acest caz, sistemul preia argumentele comenzii, afiseaza utilizatorului prompterul, intre timp 
+executa comanda lansata si poate sa preia o noua comanda. 

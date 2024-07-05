@@ -1,0 +1,4 @@
+Give three function calls that ensure mutual exclusion.
+
+solution:
+

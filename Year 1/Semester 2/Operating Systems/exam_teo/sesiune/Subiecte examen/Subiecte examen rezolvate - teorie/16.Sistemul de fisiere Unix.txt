@@ -1,0 +1,30 @@
+22.Sistemul de fiºiere Unix; tipuri de fiºiere Unix, structura arborescentã de fiºiere
+
+In cadrul unui sistem de fisiere, apelurile sistem Unix gestioneaza 8 tipuri de fisiere:
+1. Normale (obisnuite)
+2. Directori
+3. Legaturi hard (hard links)
+4. Legaturi simbolice (symbolic links)
+5. Socketuri (sockets)
+6. FIFO -pipe cu nume (named pipes)
+7. Periferice caracter
+8. Periferice bloc
+*Mai exista 4 entitati gestionate de nucleul Unix:
+9. Pipe(anonymous pipes)
+10. Segmente de memorie partajata
+11. Cozi de mesaje
+12. Semafoare
+
+*Fiecare sistem de fisiere contine un director principal numit root sau /
+*Sisteme de fisiere extinse:
+ -Solaris utilizeaza sistemul de fisiere ufs
+ -Linux utilizeaza ext2 si mai nou ext3
+ -IRIX utilizeaza xfs
+*Sisteme de fisiere:
+ -sistemele FAT si FAT32 de sub MS-DOS si Windows 9x
+ -sistemul NTFS propriu Windows NT si 2000
+
+*Principiul structurii arborescente de fisiere este acela ca orice fisier sau director are
+un singur parinte. Automat, pt fiecare director sau fisier exista o singura cale (path) de
+la radacina la directorul curent. Legatura intre un director sau fisier si parinte o vom 
+numi legatura naturala

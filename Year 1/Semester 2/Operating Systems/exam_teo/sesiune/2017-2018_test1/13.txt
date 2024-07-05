@@ -1,0 +1,3 @@
+Schedule the following jobs (given ads Name/Duration/Deadline) so that they all meet their deadlines: A/5/9, B/7/13, C/1/10
+
+solution: CAB or ACB

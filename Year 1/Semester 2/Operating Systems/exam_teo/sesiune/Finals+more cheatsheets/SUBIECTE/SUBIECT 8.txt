@@ -1,0 +1,50 @@
+1. sed -r 's/(\<[0-9]*\>)/\1\1/g' <fis
+2. grep -E "[aeiouAEIOU]$" <fis
+3. awk 'BEGIN {FS=":"; sum=0}{sum+=$2} END {print sum}' <fis
+4. pwd
+   cd ..; ppwd
+   cd ~; pwd (root posibil sa fie doar /, idk)
+5. 2^3-1=7
+6.
+#!/bin/bash
+
+for arg in $*
+do
+   if [ ! -f $arg -a ! -d $arg ]
+   then
+      echo $arg
+   fi
+done
+
+7.
+#!/bin/bash
+
+if [ $1 -lt $2 ]
+then
+        echo $2
+else
+        echo $1
+fi
+
+8.
+#!/bin/bash
+cnt=0
+sum=0
+for arg in $*
+do
+cnt=$((cnt+1))
+if [ $((cnt%2)) -eq 0 ]
+then
+    sum=$((sum+$arg))
+fi
+done
+echo $sum
+
+9. Toate variabilele din copil sunt independente (la fel si cele din parinte declarate dupa crearea copilului).
+10. fals (s-a intamplat ceva prost)
+11. Cand nu mai am loc sa rulez procesull.
+12. v-creste valoarea din semafor; p-scade valoarea din semafor
+13. Blocarea in aceeasi ordine a resurselor.
+14. partitii fixe: absolute si relocabile; partitii variabile
+15. pipe()
+16. deadlock

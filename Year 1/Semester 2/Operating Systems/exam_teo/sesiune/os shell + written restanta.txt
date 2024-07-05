@@ -1,0 +1,196 @@
+RO: Se da fisierul a.log de mai jos in care un server concurent a scris evenimentele aparute                                                                                                 pe parcursul rezolvarii diferitelor cereri. Fiecare eveniment apare pe o singura linie si are                                                                                                 formatul: data ora tip cerere detalii. Scrieti un script Shell UNIX care separa liniile din                                                                                                 a.log in fisiere separate (cate unul pentru fiecare cerere) si afiseaza un top al cererilor i                                                                                                n functie de numarul de erori aparute in procesarea ei.
+
+EN: A concurrent server wrote in the a.log file below the events that came up while solving v                                                                                                arious requests. Each event is written on a single line with the format: date time type reque                                                                                                st details. Write a UNIX Shell script that separates the a.log lines in separate files (one f                                                                                                or each request) and displays a top of the requests based on the number of errors that appear                                                                                                ed during its processing.
+
+
+File a.log content:
+2021-07-01 12:01:33 info req1 doing action a
+2021-07-01 12:01:33 info req2 doing action b1 and b2
+2021-07-01 12:01:35 info req3 doing action c
+2021-07-01 12:01:35 info req1 doing action d quickly
+2021-07-01 12:01:37 debug req1 doing action e and it may cause an error or two
+2021-07-01 12:01:38 error req1 failed doing action f
+2021-07-01 12:01:39 debug req3 doing action g bot not liking it
+2021-07-01 12:01:40 error req2 doing action h which is a weird corner case
+2021-07-01 12:01:40 info req1 doing action i
+2021-07-01 12:01:40 error req2 doing action j
+
+
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw01.txt
+RO: Daţi o expresie regulară care acceptă orice secvenţă de lungime pară de cuvinte (formate din litere) separate prin spaţii, cu condiţia ca pentru fiecare cuvânt să lungimea şi poziţia în secvenţă să fie ambele pare sau impare. Numărarea cuvintelor începe de la 1. Ex: al 5-lea cuvânt trebuie să aibă lungime impară, iar al 16-lea să aibă lungime pară.
+EN: Give a regular expression that matches any even-length sequence of lower-case words separated by spaces, if for each word its length and its position in the sequence are either both odd or both even. The words ware counted starting with 1. Ex: the 5th word must have odd length and the 16th word must of even length.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw02.txt
+RO: Daţi trei comenzi GREP care afişează dintr-un fişier liniile formate exclusiv dintr-o secvenţă nevidă de litere şi cifre alternativ (ex: a0g sau 1r5m).
+EN: Give three GREP commands that display the lines of a file which consist exclusively of a non-empty sequence of alternating leters and digits (eg a0g or 1r5m)
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw03.txt
+RO: Scrieţi două comenzi SED care afişează liniile unui fişier ştergând prima secvenţă nevidă de litere mici.
+EN: Write two SED commands that display a file's lines deleting the first non-empty sequence of lower-case letters
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw04.txt
+RO: Scrieţi o comandă AWK care afişează suma tuturor numerelor dintr-un fişier text ale cărui linii sunt formate din secvenţe de cifre separate prin spaţii.
+EN: Write an AWK command that displays the sum of all the numbers in a text file whose lines consist of sequences of digits separated by spaces.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw05.txt
+RO: Daţi trei moduri de a afla dimensiunea unui fişier în linia de comandă Linux.
+EN: Give three ways of finding the size of a file on the Linux command line.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw06.txt
+RO: Scrieţi o condiţie Shell UNIX care verifică dacă un un fişier există şi utilizatorul curent are vreo permisiune asupra lui.
+EN: Write a UNIX Shell condition that checks whether a file exists and the current user has any permissions on it.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw07.txt
+RO: Desenati ierarhia proceselor create de coduld e mai jos, incluzand procesul parinte.
+EN: Draw the hierarchy of processes created by the code below, including the parent process.
+
+    for(i=0; i<3; i++) {
+        if(fork() > 0) {
+            wait(0);
+            wait(0);
+            exit(0);
+        }
+    }
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw08.txt
+RO: Ce va tipări fragmentul de cod de mai jos? Justificaţi răspunsul.
+EN: What will the fragment below print? Justify your answer.
+
+    execl("expr", "expr", "1", "+", "1", NULL);
+    execlp("echo", "echo", "3", NULL);
+    printf("4\n");
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw09.txt
+RO: De ce descriptorul de fişier returnat de popen trebuie închis cu pclose şi nu cu fclose?
+EN: Explain why the file descriptor returned by popen must be closed with pclose instead of fclose.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw10.txt
+RO: Câte FIFO-uri poate deschide pentru citire un process, dacă FIFO-urile sunt şi vor fi întotdeauna folosite de alte procese doar pentru scriere?
+EN: How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for writing?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw11.txt
+RO: Când aţi folosi execv în locul de execl?
+EN: When would you use execv instead of execl?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw12.txt
+RO: Ce este o "secţiune critică"?
+EN: What is a "critical section"?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw13.txt
+RO: Daţi trei apeluri de funcţii care asigură excludere mutuală.
+EN: Give three function calls that ensure mutual exclusion.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw14.txt
+RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la sem_post?
+EN: What will be the effect of replacing calls to pthread_mutex_lock with calls to sem_post?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw15.txt
+RO: Ce se poate întâmpla dacă funcţia f este rulată de mai multe thread-uri simultane? De ce?
+EN: What could happen if function f were executed by several simultaneous threads? Why?
+
+pthread_mutex_t m[2];
+void* f(void* p) {
+    int id = (int)p;
+    pthread_mutex_t* first = &m[id % 2];
+    pthread_mutex_t* second = &m[(id+1) % 2];
+
+    pthread_mutex_lock(first);
+    pthread_mutex_lock(second);
+    ...
+    pthread_mutex_unlock(second);
+    pthread_mutex_unlock(first);
+}
+
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw16.txt
+RO: Daţi un exemplu de valori distincte şi mai mari ca 0 pentru T, N1, N2 şi N3 pentru care programul de mai jos se incheie.
+EN: Give an example of distinct values greater than 0 for T, N1, N2, and N3 for which the program below finishes execution.
+
+pthread_barrier_t b1, b2;
+
+void* f1(void* a) {
+    pthread_barrier_wait(&b1);
+    return NULL;
+}
+
+void* f2(void* a) {
+    pthread_barrier_wait(&b2);
+    return NULL;
+}
+
+int main() {
+    int i;
+    pthread_t t[T][2];
+
+    pthread_barrier_init(&b1, NULL, N1);
+    pthread_barrier_init(&b2, NULL, N2);
+    for(i=0; i<T; i++) {
+        pthread_create(&t[i][0], NULL, f1, NULL);
+        pthread_create(&t[i][1], NULL, f2, NULL);
+    }
+    for(i=0; i<T; i++) {
+        pthread_join(t[i][0], NULL);
+        pthread_join(t[i][1], NULL);
+    }
+    pthread_barrier_destroy(&b1);
+    pthread_barrier_destroy(&b2);
+    return NULL;
+}
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw17.txt
+RO: Ce puteţi face ca programator pentru a preveni deadlock-urile?
+EN: What can you do as a software developer to prevent deadlocks?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw18.txt
+RO: Prin ce tranziţie de stare va trece un process când apelează sem_wait şi în ce condiţii? Justificaţi răspunsul.
+EN: What state transition will a process undergo when it calls sem_wait and under what conditions? Justify your answer.
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw19.txt
+RO: Considerand ca dimensiunea unui bloc este B si dimensiunea unei adrese este A, cate blocuri de date sunt adresate de indirectarea dubla a unui i-nod?
+EN: Considering that the size of a block is B and the size of and address is A, how many data blocks are addressed by the double indirect addressing of an i-node?
+
+Answer:
+
+/home/xm/exam/os/account/filip.rus/ex3325> cat exam-rw20.txt
+RO: Cand ati incarca in memorie paginile unui program care tocmai este pornit?
+EN: When would you load into memory the pages of a process that is just starting?
+
+Answer:
+

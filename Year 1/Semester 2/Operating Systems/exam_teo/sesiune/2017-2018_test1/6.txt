@@ -1,0 +1,19 @@
+In the program fragment below, mark which process executes each line: the Parent, the Child, or both.
+
+P       C
+                k = fork();
+                if (k == 0)
+                        printf("A\n");
+                else
+                        printf("B\n");
+                printf("C\n");
+
+
+solution:
+P	C
+X	X	k = fork();
+X	X	if (k == 0)
+	X		printf("A\n");
+X		else
+X			printf("B\n");
+X	X	printf("C\n");

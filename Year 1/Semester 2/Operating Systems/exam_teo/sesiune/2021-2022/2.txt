@@ -1,0 +1,47 @@
+Dati un exemplu de valori pentru T, N1, N2 si N3 pentru care programul de mai jos se incheie
+
+pthread_barrier_t b1, b2, b3;
+
+void* f1(void* a)
+{
+	pthread_barrier_wait(&b1);
+	return NULL;
+}
+
+void* f2(void* a)
+{
+        pthread_barrier_wait(&b2);
+        return NULL;
+}
+
+void* f3(void* a)
+{
+        pthread_barrier_wait(&b3);
+        return NULL;
+}
+
+int main()
+{
+	int i;
+	pthread_t t[T][3];
+
+	pthread_barrier_init(&b1, N1);
+	pthread_barrier_init(&b2, N2);
+	pthread_barrier_init(&b3, N3);
+	for (i = 0; i < T; i++)
+	{
+		pthread_join(t[i][0], NULL);
+		pthread_join(t[i][1], NULL);
+		pthread_join(t[i][2], NULL);
+	}
+	pthread_barrier_destroy(&b1);
+	pthread_barrier_destroy(&b2);
+	pthread_barrier_destroy(&b3);
+	return NULL;
+}
+
+solution:
+T = 5
+N1 = 5
+N2 = 5
+N3 = 5

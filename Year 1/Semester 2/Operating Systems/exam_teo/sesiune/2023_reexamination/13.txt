@@ -1,0 +1,4 @@
+Explain why the file descriptor returned by popen must be closed with pclose instead of fclose.
+
+solution:
+

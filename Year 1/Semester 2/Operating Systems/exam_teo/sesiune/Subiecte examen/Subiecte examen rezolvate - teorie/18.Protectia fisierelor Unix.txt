@@ -1,0 +1,29 @@
+24.Protecþia fiºierelor Unix; drepturi de acces; atributele setuid ºi setgid
+
+*Utilizatori:
+-proprietarul fisierului (u-user)
+-grupul de utilizatori (g-group)
+-restul utilizatorilor (o-others)
+
+Nucleul SO Unix identifica utilizatorii prin UID-uri (User IDentifications) si grupurile prin 
+GID-uri (Group IDentifications)
+Un utilizator aparte cu drepturi depline asupra tuturor fisierelor este root sau superuserul
+
+*Drepturi:
+-de citire (r-read)
+-de scriere (w-write)
+-de executie (x-execution)
+
+Reprezentarea externa a acestei configuratii se face printr-un grup de 9 caractere: rwxrwxrwx
+Modul de atribuire a acestor drepturi: chmod o1o2o3 fisier ...
+
+*Drepturi implicite: umask
+-fixarea drepturilor implicite sau aflarea valorii acestora se poate face folosind comanda umask
+
+*setuid si setgid
+-dupa lansarea in executie de catre utilizatorul U a programului P, in mod setuid/setgid 
+actiunile pe care le poate efectua programul P asupra fisierului F sunt cele permise de 
+drepturile proprietarului P si ale grupului din care face parte acesta
+-daca bitul setuid (set-user-id) este 1 atunci un utilizator care lanseaza in executie acest 
+fisier primeste, pe timpul executiei, aceleasi drepturi de acces la resurse ca si proprietarul 
+fisierului executabil 

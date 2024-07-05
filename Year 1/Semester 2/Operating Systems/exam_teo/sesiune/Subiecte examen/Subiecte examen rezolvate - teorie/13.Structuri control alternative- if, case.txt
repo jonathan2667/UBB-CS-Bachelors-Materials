@@ -1,0 +1,30 @@
+ 
+Shell conþine douã structuri alternative: if ºi case. Ele sunt similare construcþiilor if ºi 
+case din Pascal, respectiv if ºi switch din C/C++. 
+ 
+2.2.5.1 if 
+ 
+Sintaxa structurii este urmãtoarea: 
+ 
+if listaCom then listaCom [ elif listaCom then listaCom ]* 
+[ else listaCom ]? fi 
+ 
+Se poate vedea din specificarea sintaxei cã în cadrul unei instrucþiuni if pot sã aparã ori de 
+câte ori perechi elif ... then .... De asemenea, înainte de sfârºitul instrucþiunii, 
+poate apãrea, cel mult o datã, construcþia else .... 
+ 
+2.2.5.2 case 
+Sintaxa structurii este urmãtoarea: 
+ 
+ case cuvant in [ cuvant [ | cuvant ]* ) listaCom ;; ]+ esac 
+Primul cuvânt (cel dintre case ºi in) este cuvântul dupã care se face selecþia. 
+ 
+Fiecare listã de comenzi este prefixatã - pânã la caracterul “)”, de unul sau mai multe cuvinte, 
+separate prin caracterul |. Fiecare dintre aceste cuvinte are rolul de machetã de potrivire, 
+specificatã printr-o expresie regularã sau specificare genericã. 
+ 
+Efectul unei construcþii case este urmãtorul. Se comparã primul cuvant, cel dupã care se 
+face selecþia, pe rând de la stânga spre dreapta ºi de sus în jos, cu fiecare dintre celelalte 
+cuvant. La prima potrivire a primului cuvant, în sensul expresiei regulare sau specificãrii 
+generice, se va executa lista de comenzi corespunzãtoare ºi case se va termina (se trece la 
+prima instrucþiune dupã esac). 

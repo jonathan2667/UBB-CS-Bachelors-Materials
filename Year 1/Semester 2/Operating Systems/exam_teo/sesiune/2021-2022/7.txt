@@ -1,0 +1,4 @@
+Considering that the size of a block is B and the size of an address is A, how many data blocks are addressed by the triple indirect addressing of an i-node?
+
+solution:
+(B/A)^3

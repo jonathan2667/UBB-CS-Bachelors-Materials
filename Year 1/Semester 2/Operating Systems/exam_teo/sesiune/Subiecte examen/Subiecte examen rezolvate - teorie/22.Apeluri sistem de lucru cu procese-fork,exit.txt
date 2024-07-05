@@ -1,0 +1,25 @@
+
+
+*fork()
+-modul de creare al unui proces
+-(din proceul parinte) se copiaza imaginea procesului intr-o zona de memorie libera, 
+aceaasta copie fiind noul proces creat (proces fiu), in prima faza identic cu procesul initial
+-un apel fork() intoarce in procesul parinte pid-ul noului proces fiu, iar in procesul fiu
+intoarce valoarea 0
+-in caz de esec => -1 si seteaza coresp variabila errno
+-rezultat >0 =>suntem in parinte
+	  =0 =>suntem in fiu
+
+*exit()
+exit(int n)
+-provoaca terminarea procesului curent si revenirea la procesul parinte
+-n este codul de retur cu care se termina procesul  
+
+*wait()
+-suspenda executia programului pana la terminarea unui proces fiu
+
+*waitpid()
+-pune programul in asteptare pana la aparitia unuia dintre urm evenimente:
+  ->terminarea procesului precizat prin argumentul pid
+  ->receptionarea unui semnal de terminare a proceesului curent
+  ->aparitia unui semnal cu efect de iesire din starea de asteptare

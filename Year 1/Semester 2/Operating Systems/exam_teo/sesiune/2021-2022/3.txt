@@ -1,0 +1,3 @@
+Why I/O operations cause a process to move from the state RUN to the state WAIT?
+
+Because the process has to pause itself while it gets/sends the data through the I/O operations and it frees the processor until the operations have been completed, leaving the processor for other processes

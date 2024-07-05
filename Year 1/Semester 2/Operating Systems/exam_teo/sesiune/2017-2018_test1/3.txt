@@ -1,0 +1,4 @@
+File a.txt contains on each line two numbers separated by space. Write a UNIX Shell command that displays for each line the sum of its numbers
+
+solution:
+awk '{print $1 + $2}' a.txt

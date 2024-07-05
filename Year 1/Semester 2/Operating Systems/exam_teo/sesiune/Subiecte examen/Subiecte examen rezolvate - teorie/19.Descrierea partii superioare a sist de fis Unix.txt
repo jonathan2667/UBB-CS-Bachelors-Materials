@@ -1,0 +1,41 @@
+25. Structura superioarã de directoare a sistemului de fiºiere Unix
+
+vezi figura 4.3 pag 103
+
+/etc -informatii specifice masinii necesare intretinerii sistemului
+/home -folosit pt directorii gazda ai utilizatorilor
+/usr -folosit in mod traditional pt a stoca fisiere ce pot fi modificate; este punctul de 
+montare pentru partitia ce contine usr
+/bin -contine programele principalelor comenzi standard Unix
+/sbin (super-utilizator bin) -contine comenzi critice pt procedura de incarcare a sistemului
+/lib -contine diverse biblioteci si baze de date necesare apelurilor sistem
+/dev -folosit pt memorarea fisierelor speciale (fisierele devices)
+/stand -contine informatiile necesare incarcarii sistemului
+/mnt -folosit pt a monta un sistem de fisiere temporar
+/spool -in el sunt memorate fisierele tampon temporare destinate prelucrarilor asincrone
+/export -folosit ca pct implicit de montare pt un arbore de sistem de fisiere exportat,
+pt fisierele in retea gestionate prin pachetul NFS(Network File System)
+/var -folosit pt memorarea fisierelor care cresc dinamic
+/tmp -folosit pt a memora fisiere temporare pt aplicatii
+
+*continutul directorului /usr:
+-unele dintre subdirectoare sunt plasate la nivel de radacina: bin, sbin, lib
+/usr/include -contine fisierele header (*.h) standard ale limbajului C de sub Unix
+/usr/share -contine o serie de directoare partajabile in retea
+/usr/ucb -contine programele executabile compatibile Unix BSD
+/usr/src -contine textele sursa C ale nucleului Unix de pe masina respectiva
+/usr/ccs -contine instrumentele de dezvoltare a programelor C oferite de Unix: cc,gcc,dbx,cb,indent,etc.
+
+*continutul directorului /var
+-unele subdirectoare de la nivele superioare au fost mutate aici de catre versiunile mai noi de Unix: 
+spool si tmp
+/var/saf -contine fisiere jurnal si de contabilizare a serviciilor oferite
+/var/uucp -contine programele necesare efectuarii de copieri de fisiere intre sisteme Unix
+/var/news -contine fisierele necesare serviciului de (stiri) noutati (news) care 
+poate fi instalat pe masinile Unix
+/var/mail -contine casutele postale implicite ale utilizatorilor (INBOX)
+/var/cron -contine fisierele jurnal necesare serviciilor executate la termen
+/var/opt -constituie un punct de montare pt diferite pachete de aplicatii
+/var/preserve -contine fisiere jurnal destinate refacerii starii editoarelor de texte "picate"
+ca urmare a unor incidente
+/var/adm -contine fisiere jurnal(log-uri) de contabilizare si administrare a sistemului)

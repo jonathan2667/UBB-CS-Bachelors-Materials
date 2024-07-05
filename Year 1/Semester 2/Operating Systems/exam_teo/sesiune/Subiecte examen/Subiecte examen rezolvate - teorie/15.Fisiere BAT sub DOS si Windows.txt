@@ -1,0 +1,63 @@
+18.Fiºiere de comenzi bat de sub MS-Windows
+
+Un fisier de comenzi DOS / Windows contine in interiorul lui comenzi
+DOS si un numar limitat de directive.
+Din punct de vedere formal, numele unui fisier de comenzi trebuie sa
+se termine (sa fie de tipul / extensia) .bat
+
+Continutul unui fisier de comenzi bat:
+ - comenzi DOS;
+ - etichete (nume la inceput de linie precedat de :);
+ - caracterele speciale | > < @ % ;
+ - parametri formali (%n);
+ - variabile globale (%nume%);
+ - variabile locale (numai in FOR);
+ - directive;
+
+Directivele principale:
+
+FOR %%variabilalocala IN ( multime ) DO comanda
+ ->variabila locala parcurge multime si pentru fiecare valoare executa comanda
+
+CALL fisiercomenzi [ parametri ]
+ Dintr-un fisier de comenzi se cheama un alt fisier de comenzi
+
+IF [NOT] ERRORLEVEL n  comanda
+ Daca codul de retur al comenzii precedente este mai mare sau egal
+ cu n (sau strict mai mic in cazul NOT), atunci se executa comanda.
+
+IF [NOT] sir1 == sir2  comanda
+ Daca cele doua siruri sunt egale (sa diferite in cazul NOT), atunci se executa comanda.
+
+IF [NOT] EXIST fisier  comanda
+ Daca fisier existe (sau nu exista in cazul NOT), atunci se executa comanda.
+
+GOTO  eticheta
+ Urmatoarea linie de executat va fi cea marcata cu eticheta.
+
+SHIFT
+ Muta spre stanga cu o pozitie argumentele liniei de comanda.
+   %0 se pierde, %1 devine %0, %2 devine %1 s.a.m.d.
+
+SET nume=valoare
+ Defineste o variabila de mediu nume careia ii atribuie valoare.
+ Utilizarea variabilei (obtinerea valorii ei) se face prin %nume%
+
+ECHO [ ON | OFF | mesaj ]
+ Permite sau interzice afisarea la executie a liniilor fisierului
+ de comenzi, sau afiseaza mesaj pe iesirea standard.
+
+PAUSE [ mesaj ]
+ Afiseaza mesaj pe iesirea standard si asteapta apasarea unei taste.
+
+REM comentariu
+ Definirea unei linii comentariu
+
+Comenzi DOS mai des folosite:
+-de lucru cu discul: diskcopy, sys, format, fdisk, chkdsk
+-de lucru cu directoare: mkdir(md), chdir(cd), rmdir(rd), dir, path, subst
+-de lucru cu fisiere: more, attrib, del, erase, deltree, fc, find, move,
+                      rename, sort, xcopy, copy, type, print
+-eticheta de volum: label, vol
+-alte comenzi: choice, edit, keyb, mode, cls, date, time, ver, echo, rem
+

@@ -1,0 +1,26 @@
+Processes A, B and C communicate through FIFOs X, Y and Z according to the diagram below. Sketch the code fragments that open the FIFOs in the 3 processes.
+
+A --X--> B
+B --Y--> C
+C --Z--> A
+
+solution:
+
+if (A == 0)
+{
+	open("X", O_RDONLY);
+	open("Z", O_WRONLY);
+}
+
+if (B == 0)
+{
+        open("Y", O_RDONLY);
+        open("X", O_WRONLY);
+}
+
+if (C == 0)
+{
+        open("Z", O_RDONLY);
+        open("Y", O_WRONLY);
+}
+

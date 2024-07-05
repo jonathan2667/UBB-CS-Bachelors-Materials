@@ -1,0 +1,6 @@
+What is a binary semaphore, and what is the effect of its P method, when called by multiple concurrent processes/threads?
+
+solution:
+a binary semaphore is a synchronization primitive that can have two states: 0 (locked) and 1 (unlocked). it is often used to control access to a shared resource or coordinate the execution of concurrent processes or threads.
+
+the P method of a binary semaphore decrements its value by 1 and, if the value becomes negative, blocks the calling process or thread until the semaphore becomes unlocked (i.e. its value becomes 1). if the semaphore is already unlocked, the P method simply decrements the value to 0 and continues executing.

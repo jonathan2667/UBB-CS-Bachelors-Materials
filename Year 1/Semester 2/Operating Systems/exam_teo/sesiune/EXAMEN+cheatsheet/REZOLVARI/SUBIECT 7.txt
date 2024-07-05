@@ -1,0 +1,59 @@
+1. grep -E "[aeiou]{3}" <fis
+2. sed -r "s/([a-zA-Z])([0-9])/\1\1\2/g" <fis
+3. awk 'BEGIN { FS=":" ; sum = 0 } { if ($1 > $2) { sum += $3 } } END { print sum }' a.txt
+-----
+BEGIN = do all computations from the code block following this keyword BEFORE parsing through the lines of the file.
+FS=":" = change the field separator to : (basically, use : as separator between words, instead of space).
+END = do all computations from the code block following this keyword AFTER parsing through the lines of the file.
+-----
+4.
+#!/bin/bash
+
+for arg in $* ; do
+    if [ -x $arg ] ; then 
+	echo $arg
+    fi
+done
+
+5.
+#!/bin/bash
+
+for arg in $*
+do
+
+        if [ $((arg%2)) -eq 0 ]
+        then
+                echo $arg
+        fi
+
+done
+
+6. 2^4-1=15 (fara parinte)
+7. /home/scs/abie/1234 -> /home/scs/abie -> /home/scs -> /home/scs => /home/scs/xyz
+8. In procese 0 inseamna adevarat (exit(0) inseamna ca s-a executat ok), pt c 0 inseamna fals;
+9. 
+#!/bin/bash
+cnt=0
+for arg in $*
+do
+        cnt=$((cnt+1))
+        if [ $((cnt%3)) -eq 0 ]
+        then
+                sum=$((sum+arg))
+        fi
+done
+echo $sum
+
+10. Exec inlocuieste tot codul procesului vechi si se executa el.
+11. mkfifo
+12. asteapta
+13. Sa nu ocupe procesor cat timp procesul nu face nimic (ex cand asteapta input).
+14. pe z fix dupa malloc si pe x in functie inainte de return
+15. pthread_mutex_t m;
+    pthread_mutex_init(&m,NULL);
+    pthread_mutex_lock(&m);
+    ...
+    pthread_mutex_unlock(&m);
+    pthread_mutex_destroy(&m);
+16. paginata, segmentata, paginat-segmentata
+17. teorie semafor

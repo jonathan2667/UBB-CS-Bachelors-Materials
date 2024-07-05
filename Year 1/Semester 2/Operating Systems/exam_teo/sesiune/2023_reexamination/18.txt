@@ -1,0 +1,4 @@
+Write an AWK command that displays the sum of all the numbers in a text file whose lines consist of sequences of digits separated by spaces.
+
+solution:
+

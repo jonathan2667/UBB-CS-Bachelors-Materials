@@ -1,0 +1,30 @@
+2.2.6.2 while ºi until 
+ 
+Aceste construcþii sunt oarecum similare, ambele executând mai întâi listaCom de dupã 
+cuvântul while sau until. In funcþie de codul de retur obþinut se executã listaCom din 
+corpul ciclului (dintre do ºi done) ºi apoi se reia secvenþa listaCom (de dupã while sau 
+until), sau execuþia ciclului se încheie. Execuþia ciclului while se terminã când în urma 
+procesãrii listei de comenzi, listaCom se primeºte codul de retur 0. Spre deosebire de 
+while, pentru încheierea execuþiei ciclului repetitiv until este necesar sã se întoarcã un 
+numãr nenul. 
+
+2.2.6.1 for
+ 
+Aceastã construcþie este cel mai des folositã pentru structurile repetitive shell. Ea are douã 
+forme, ambele folosind o variabilã shell de control indicatã prin nume. 
+ 
+In prima formã, variabila nume ia toate valorile parametrilor din linia de comandã: $1, $2, ..., 
+$#, (de fapt valorile sunt luate din variabila $@). Pentru fiecare dintre acestea, executã 
+comenzile din corpul ciclului: listaCom. 
+In forma a doua, cuvântul sau lista de cuvinte care urmeazã dupã in desemneazã cuvinte 
+simple separate prin spaþii, sau specificãri generice care se expandeazã la numele tuturor 
+fiºierelor din directorul curent care se potrivesc, rezultând în final o listã de elemente. 
+Variabila nume ia pe rând ca valori aceste elemente ºi pentru fiecare dintre ele executã corpul 
+ciclului: listaCom. 
+
+
+Comanda break cere pãrãsirea corpului unui ciclu ºi continuarea execuþiei cu comanda care 
+urmeazã ciclului (urmãtoarea instrucþiune dupã done). Dacã parametrul n lipseºte, atunci este 
+pãrãsit ciclul cel mai interior care conþine comanda break. Dacã este prezent n ºi break 
+este conþinut în cel puþin n cicluri incluse unul în altul, atunci execuþia continuã cu comanda 
+aflatã dupã cel de-al n-lea ciclu (dupã cel de-al n-lea cuvânt done). 

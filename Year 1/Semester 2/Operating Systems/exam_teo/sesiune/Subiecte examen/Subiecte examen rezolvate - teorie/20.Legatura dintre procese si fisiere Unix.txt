@@ -1,0 +1,18 @@
+26.Legãtura între procese ºi fiºiere sub Unix
+
+*Suporturile fizice pt cele 12 tipuri de fisiere:
+-zona fisierelor pe disc,pt fisierele normale, directori, legaturi hard si simbolice, FIFO
+si socket din familia Unix
+-perifericul respectiv pentru perifericele caracter si bloc
+-zone rezervate de nucleu in memoria interna, pt pipe, memorie partajata,cozi de mesaje 
+si semafoare
+-interfata de comunicatie prin retea, pt socket din familia Internet
+
+Traseul accesului unui proces la un fisier trece prin mai multe nivele:
+1) Nivelul proces: fiecare proces isi intretine o tabela proprie in care inregistreaza toate 
+fisierele lui deschise
+2) Nivelul sistem: intretine o tabela unica cu toate fisierele deschise de catre toate procesele 
+din sistem
+3) Nivelul inod: zona(zonele) de inoduri de pe disc. Pt fisierele deschise, se pastreaza 
+in memoria interna copii ale inodurilor corespunzatoare
+4) Nivelul fisier: reprezentat de blocurile disc ce apartin fisierului

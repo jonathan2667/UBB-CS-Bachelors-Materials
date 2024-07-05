@@ -1,0 +1,37 @@
+19.Imaginea în memorie a unui proces Unix; conþinutul contextului unui proces
+
+vezi figura 5.4 pagina 134
+
+Imaginea unui proces in memorie este compusa din 2 parti:
+
+1) Contextul user(utilizator) cuprinde:
+*Zona text: portiunea de instructiuni masina a procesului
+*Datele initializate read/only reprezinta constantele utilizate de catre proces
+*Date initializate read/write reprezinta aceke variabile ale procesului care primesc 
+valori initiale in faza de compilare
+*Date neinitializate contine zona ocupata de catre restul variabilelor, cu exceptia celor
+carora li se aloca spatiu pe stiva sau in zona heap. Pt acestea nu se rezerva spatiu in 
+fisierul executabil
+*Heap reprezinta zona unde se aloca spatiu pentru variabilele dinamice, iar Stiva este 
+zona de memorie folosita pt transferul parametrilor in cazul apelului de functii
+
+2) Contextul nucleu cuprinde:
+*Intrarea in tabela proceselor:
+ -starea procesului
+ -pointer la zona User si la tabela regiunilor de memorie ale procesului
+ -dimensiunea procesului in memorie
+ -PID (Process ID) si PPID(Parent Process ID)
+ -UID (User ID) = identificatorul utilizatorului care a lansat procesul ->getuid()
+ -GID (Group ID) = identificatorul grupului la care apartine utilizatorul ->getgid()
+ -EUID (Effective User ID) =identificatorul efectiv al procesului aflat in executie ->geteuid()
+ -EGID (Effective Group ID) =identificatorul efectiv de grup ->getegid()
+*Tabela regiunilor de memorie ale procesului = o tabela de translatie adrese virtuale - 
+adrese fizice de memorie pentru regiunile (sectiunile) programului care este executat in 
+contextul acestui proces
+*Stiva nucleu este memoria alocata pt stiva folosita de nucleul sistemului de operare in 
+modul de executie nucleu
+*Contextul registru (hardware) =o zona de memorie unde se salveaza continutul registrilor 
+generali, de stiva, de executie si control si de stare in momentul in care algoritmul de
+planificare a accesului la procesor decide sa dea controlul procesorului unui alt proces.
+Acesti registrii ai procesorului se salveaza pt a putea relua, mai tarziu, executia procesului,
+de unde a ramas.

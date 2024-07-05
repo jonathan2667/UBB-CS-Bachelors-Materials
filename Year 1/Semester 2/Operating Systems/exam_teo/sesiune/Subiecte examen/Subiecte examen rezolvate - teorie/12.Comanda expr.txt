@@ -1,0 +1,24 @@
+Comanda expr
+
+EXPR-calculeaza valoarea unei expresii aritmetice intregi si tipareste la iesirea std valoarea acesteia
+$ expr expresie(o expresie aritmetica, logica sau referitoare la siruri de caractere)
+Operatori:
+s \| d      SAU-val.s daca s!=0 sau NULL,d in caz contrar
+s \& d      SI-s daca s!=0/NULL si d!=0/NULL, 0 altfel
+s = \> \>= \< \<= != d  1-daca relatia dintre s si d este adevarata, 0 altfel
+s + - d  suma, diferenta
+s \*, /, % d -suma, cat, modulo
+length s
+substr s,p,l -substrigul care incepe in sirul s, pe pozitia p, de lung l
+index s sc  pozitia primei aparitii in cadrul sirului s a unui caracter din sirul de caractere sc, 0 daca niciun caract din sc nu apare in s
+\( \) utilizate la definirea subexpresiilor
+
+TRUE,FALSE-folosite pt  a descrie "cicluri infinite"; terminarea acestor cicluri se va face din interiorul lor prin intermediul apelurilor exit, break sau continue
+TRUE-intoarce permanent codul de retur 0, FALSE-codul de retur 1
+ex. while true                 until false
+      do                         do  
+        ps                         ps
+        sleep 300                  sleep 300
+      done                       done
+
+                

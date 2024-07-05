@@ -1,0 +1,12 @@
+Write a UNIX Shell script that displays the name of each .txt file in the current directory that contains the word "cat".
+
+solution:
+
+#!/bin/bash
+
+find $1 -name "*.txt" | while read file; do
+        counter=`cat $file|grep -E "^cat\ |\ cat\ "|wc -l`
+        if [ $counter -gt 0 ]; then
+                echo "$file"
+        fi
+done

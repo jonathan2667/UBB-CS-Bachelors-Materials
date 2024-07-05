@@ -1,0 +1,50 @@
+27. Comunicarea prin pipe între procese Unix
+
+-un pipe Unix este un flux unidirectional de date, gestionat de catre nucleul sistemului
+-crearea unui pipe se face prin apelul sistem: int pipe (int fd[2]);
+-intregul fd[0] identifica descriptorul pt citirea din "fisierul" pipe, ir fd[1] indica
+descriptorul pt scriere in pipe
+-dupa crearea lui pipe se executa fork, facandu-se legatura intre cele 2 procese
+-inainte de a transmite prin pipe:
+ *in procesul parinte se apeleaza close(fd[0]);
+ *in procesul fiu se apeleaza close(fd[1]);
+
+-pentru o comunicare bidirectionala intre 2 procese, sunt necesare 2 pipe-uri.Pasii:
+ *creare pipe1 si pipe2 (presupunem ca avem descriptorii fd1 si fd2)
+ *executie fork()
+ *in procesul parinte close(fd1[0]) si close(fd2[1])
+ *in procesul fiu close(fd1[1]) si close(fd2[0])
+
+vezi figurile de la paginile 163 - 164
+
+
+28. Comunicarea prin FIFO între procese Unix
+
+FIFO (pipe cu nume) = un flux de date unidirectional, accesat prin intermediul unui fisier
+rezident in sistemul de fisiere
+-au nume si ocupa un loc in sistemul de fisiere
+-poate fi accesat de orice 2 procese, nu neaparat cu parinte comun
+-pe disc nu se stocheaza nici o data care trece prin canalul FIFO, acestea fiind stocate
+si gestionate in buffer-ele nucleului sistemului de operare
+
+*Deosebiri intre pipe si FIFO:
+-suportul pt pipe este o portiune din memoria RAM gestionata de nucleu, in timp ce FIFO 
+are ca suport discul magnetic
+-toate procesle care comunica printr0un pipe trebuie sa fie descendente ale procesului creator 
+al canalului pipe, in timp ce pentru FIFO nu se cere nici o relatie intre procese
+
+*Creare FIFO:
+ int mknod(char *numeFIFO, int mod, 0);
+ int mkfifo(char *numeFIFO,int mod);
+sau cu una dintre comenzile shell:
+ $ mknod numeFIFO p
+ $ mkfifo numeFIFO
+
+*Stergere FIFO:
+-se poate face fie cu comanda shell rm numeFIFO, fie cu un apel sistem C unlink()
+-dupa ce e cret FIFO, el trebuie deschis pt citire sau scriere, folosind comanda open(0_RDONLY,O_WRONLY)
+
+*cLIENT/SERVER prin FIFO:
+-pt a se asigura comunicarea bidirectionala se folosesc 2 FIFO-uri
+-fiecare dintre ele primeste ca si parametri descriptorii de fisiere, presupuse deschise, 
+prin care comunica cu partenerul

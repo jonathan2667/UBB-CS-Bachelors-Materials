@@ -1,0 +1,68 @@
+1. Write a UNIX command that displays from file a.txt all lines containing  at least 3 vowels next to each other.
+2. Write a UNIX command that displays all lines from a file a.txt duplicating every letter that is followed by a digit.
+3. Consider file a.txt containing on each line 3 numbers separated by ":". Write an awk program that displays the 
+sum of all the third numbers on each line where the first number is greater than the second.
+4. Write a UNIX Shell script that displays only those of its arguments that are executable files.
+5. Write a UNIX Shell script that gets only numbers as arguments and displays those that are even.
+6. How many processes are created by: fork();fork();fork();fork();
+7. If the user home directory is /home/scs/abie/1234, what will the following command print?
+        cd ~/../.././xyz; pwd
+8. What's the truth value of 0?
+9. Write a UNIX Shell script program that displays the sum of its arguments on positions multiple of 3.
+10. What is the effect of an "exec" call on the process that executes it, considering that "exec" executes successfully.
+11. What UNIX C function can you use to create a fifo?
+12. What is the behavior of a "read" system call on an empty pipe without O_NDELAY.
+13. One reason for which the OS scheduler may change the status of a process from RUN to WAIT.
+14. Between which lines would you insert a call to free the space allocated on lines 8 and 10?
+ 
+                void* f(void* p){
+                        printf("%d\n",*(int*)p);
+                        return NULL;
+                }
+ 
+                int main(){
+                        int i;
+                        pthread_t t[3];
+                        int* x,z;
+ 
+                        z = (int*) malloc(15*sizeof(int));
+                        for (i = 0 ; i < 3; i++){
+                                 x = (int*) malloc(sizeof(int));
+                                *x = i;
+                                pthread_create(&t[i],NULL,f,x);
+ 
+                        }
+ 
+                        for (i = 0; i < 3; i++){
+                                pthread_join(t[i],NULL);
+                        }
+ 
+                return 0;
+                }
+15. Add the necessary code so that the sum is calculated correctly.
+                int sum = 0;
+                void *f(void * arg){
+                        sum++;
+                }
+ 
+                int main(){
+                                int i;
+                                pthread_t t[10];
+                               
+                                for(i = 0 ; i < 10; i++){
+                                                                pthread_create(&t[i],NULL,f,NULL);
+                                }
+                               
+                                for (i = 0 ; i < 10; i++)
+                                                                pthread_join(t[i],NULL);
+                                }
+ 
+                                return 0;
+                        }
+La 16 parca trebuia sa dai 2 exemple de alocare de memorie virtuala.
+La 17 din cate imi amintesc trebuia sa scrii componentele teoretice (in pesudocod) ale semaphorului.
+La 18 era o problema cu semaphors.
+La 19 nu sunt sigur.
+La 20 trebuia sa dai o metoda care rezolva deadlock.
+ 
+Bafta ( ͡° ͜ʖ ͡°).

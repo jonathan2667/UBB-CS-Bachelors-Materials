@@ -1,0 +1,16 @@
+Draw the hierarchy of processes created by the code below, including the parent process.
+
+for (i = 0; i < 3; i++)
+{
+	if (fork() > 0)
+	{
+		wait(0);
+		wait(0);
+		exit(0);
+	}
+}
+
+solution:
+p -> c1
+c1 -> c2
+c2 -> c3

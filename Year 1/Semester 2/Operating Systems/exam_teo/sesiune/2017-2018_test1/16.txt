@@ -1,0 +1,4 @@
+When does a process change state from RUN to READY?
+
+solution:
+a process changes states from RUN to READY when it is no longer executing on the CPU and is temporarily suspended, waiting for the CPU to be allocated to it again.

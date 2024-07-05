@@ -1,0 +1,251 @@
+1. grep '[aeiouAEIOU][aeiouAEIOU][aeiouAEIOU]' a.txt
+
+
+2. sed 's/\([a-zA-Z]\)[0-9]/\1&/g' a.txt
+
+
+3. awk 'BEGIN { FS=":" ; sum = 0 } { if ($1 > $2) { sum += $3 } } END { print sum }' a.txt
+
+-----
+Breakdown: BEGIN = do all computations from the code block following this keyword BEFORE 
+parsing through the lines of the file.
+FS=":" = change the field separator to : (basically, use : as 
+separator between words, instead of space).
+END = do all computations from the code block following 
+this keyword AFTER parsing through the lines of the file.
+-----
+
+
+4.
+#!/bin/bash
+
+if [ $# == 0 ] ; then # validate argument count
+    echo Err.
+    exit 1
+fi
+
+for arg in $* ; 
+do # parse through the list of arguments
+    if [ -x $arg ] ; then # -x checks if the file (which is the 
+argument, in our case) has execution rights
+	echo $arg
+    fi
+done
+
+
+
+5. 
+#!/bin/bash
+
+if [ $# == 0 ] ; then # 
+validate argument count
+    echo Err.
+    exit 1
+fi
+
+re='^[0-9]+$' # regular expression
+
+for arg in $* ; 
+do # parse through the list of arguments
+    if [[ $arg =~ $re ]] ; then # check if the argument 
+matches the given regular expression (which is basically checking if it's a number in our case)
+	
+if (( $arg % 2 == 0 )) ; then
+          echo $arg
+        fi
+    else
+	echo "Argument" $arg ": NaN." >&2 # 
+echo error to the standard error stream (which is &2)
+	exit 1
+    fi
+done
+
+
+
+6.Parent process
+         /        |   | \
+        C         C   C C
+     /   |  \    / \  |
+   CC    CC CC  CC 
+                   CC CC
+  /  \   |       |
+CCC CCC CCC    CCC
+ |
+CCCC
+
+4 (children) + 6 (subchildren) + 4 (subsubchildren) + 1 (subsubsubchild) 
+= 15 processes (parent doesn't count because of how the problem is phrased).
+Parent creates 4 children.
+  
+1st child has 3 more forks, so it creates 3 subchildren.
+    1st subchild has 2 more forks, so it creates 2 subsubchildren.
+      
+1st subsubchild has 1 more fork, so it creates 1 subsubsubchild.
+    2nd subchild has 1 more fork, so it creates 1 subsubchild.
+  
+2nd child has 2 more forks, so it creates 2 subchildren.
+    1st subchild has 1 more fork, so it creates 1 subsubchild.
+  
+3rd child has 1 more fork, so it creates 1 subchild.
+
+C - child.
+CC - subchild.
+CCC - subsubchild.
+CCCC - subsubsubchild.
+
+Or, 
+if you're a normal human being, you'll use this formula: no. of processes = (2^number_of_forks) - 1.
+
+
+
+7. 
+~ - home directory
+../ - go up one level
+./ - in current directory.
+-----
+~/../ = go up one level from home, so 
+go /home/scs/abie/
+~/../../ = go up 2 levels from home, so go /home/scs/
+~../.././ = in /home/scs/, 
+go into the xyz folder.
+-----
+current directory will be /home/scs/xyz. pwd will print precisely that.
+
+
+
+8. 0 means false when evaluating an expression, but in the case of evaluating a program's return code, 0 signifies 
+that the program terminated successfully, while anything other than 0 signifies that an error occured.
+
+
+
+9. 
+#!/bin/bash
+
+if [ $# == 0 ] ; then
+    echo Err. >&2
+    exit 1
+fi
+
+arg_count=1 # used for counting the index of the 
+argument we are currently at. note that arguments start at index 1.
+
+sum=0
+for arg in $* ; do
+    if (( $arg_count % 3 == 0)) ; then
+	   ((sum += $arg))
+    fi
+	((arg_count++))
+done 
+
+
+echo $sum
+
+
+
+10. Exec replaces the current process image with that of the program it executes (basically, if there's no 
+error, exec stops your program and launches the program you pass as argument to the exec function).
+
+
+
+11. mkfifo("fifo_string_name", fifo_rights_flag);
+fifo_rights_flag = what rights the FIFO file should have 
+(usually 600, meaning rw- for user, no rights for group/others).
+
+
+
+12. If O_NDELAY is not set, then the read function will wait until a write operation is performed, in the pipe. Since the 
+pipe is empty, the program will freeze, because read will wait indefinitely.
+
+
+
+13. The status of a process may go from RUN to WAIT because it had reached the allowed time limit for being on the CPU, 
+so it gets taken off of it and another process gets to execute. Alternatively, a process could be set to WAIT if another 
+process with higher priority was launched. Depends on the process scheduling that the system has in place.
+
+
+
+14. z can be deallocated at any given time, after it is allocated, because it is never used. 
+A good rule of thumb would be to deallocate it in the same thread it was created in (which, in our case, is the main one), 
+since the other threads do not use it.
+
+x should be deallocated in the thread function (deallocating it in the main thread 
+will most likely lead to the thread accessing a freed memory area), after the printf.
+
+
+
+15. Not 100% sure what gets added to the sum. Guessing it adds the "index" of the thread that's currently executing. 
+The code for that would be:
+
+
+pthread_mutex_t mtx;
+
+int sum = 0;
+
+void *f(void * arg)
+{
+    int* val = (int*)arg;
+
+    
+pthread_mutex_lock(&mtx); // avoid having multiple threads modify the same variable simultaneously
+    
+sum += *val;
+    pthread_mutex_unlock(&mtx);
+
+    free(val);
+}
+
+int main()
+{
+    int i;
+    pthread_t t[10];
+
+    
+pthread_mutex_init(&mtx, NULL);
+   
+    
+for(i = 0 ; i < 10; i++)
+    {
+    	
+int* pos = (int*)malloc(sizeof(i)); // use dynamic allocation to pass the index, because the value of i gets modified 
+after passing it as argument; remember that we are passing by address, not by value
+    	
+*pos = i;
+        pthread_create(&t[i], NULL, f, pos);
+    }
+   
+    
+for (i = 0 ; i < 10; i++)
+        
+pthread_join(t[i],NULL);
+
+    
+pthread_mutex_destroy(&mtx);
+
+    
+return 0;
+}
+
+
+
+16. Virtual paged (split programs into virtual pages, and RAM into physical pages. 
+CPU gets virtual page/offset + page table and returns the physical page/offset), virtual segmented
+ (rarely found in pure form, in practice; the programs are split into logical modules, which benefit from access control).
+
+
+
+17. A semaphore contains a non-negative integer variable, semval, which keeps track of the unit amounts of a resource. 
+Basically, semval == 0 means the resource is unavailable. semval > 0 means you currently have semval units left of 
+that resource. Alternatively, if you use a binary semaphore, semval == 0 means the resource is unavailable, while 
+semval == 1 means the resource is available. 
+See more at 
+http://www.exforsys.com/tutorials/programming-concepts/semaphore-in-unix-an-overview.html
+http://en.wikipedia.org/wiki/Semaphore_%28programming%29
+
+18. 
+
+???
+19. ???
+
+
+20. In the case of mutex deadlocks, lock mutexes in the same order across all threads, and avoid 
+calling functions that might come back to the same thread function.

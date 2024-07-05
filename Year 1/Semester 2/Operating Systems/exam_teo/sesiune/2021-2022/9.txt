@@ -1,0 +1,17 @@
+What is the maximum number of child processes, created by the code fragment below, that can coexist simultaneously?
+
+for (i = 0; i < 7; i++)
+{
+	if (fork() == 0)
+	{
+		sleep(rand() % 10);
+		exit(0);
+	}
+	if (i % 3 == 0)
+	{
+		wait(0);
+	}
+}
+
+solution:
+3

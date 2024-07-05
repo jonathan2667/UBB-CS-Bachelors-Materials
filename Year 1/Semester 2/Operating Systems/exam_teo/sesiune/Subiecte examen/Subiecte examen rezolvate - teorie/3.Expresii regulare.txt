@@ -1,0 +1,31 @@
+4.Conceptul de expresie regularã sub Unix
+
+*Exista programe utilitare utilizate frecvent in prelucrarea fisierelor text: grep, awk, vi,
+sed. Pt aceste utilitare, conditiile care descriu subsirurile de cautare in texte, pot sa
+apara fie sub forma de sir de caractere, fie sub forma unor sabloane care descriu constructii 
+mai sofisticate de astfel de siruri de caractere. Aceste sabloane sunt specificate cu ajutorul 
+unor notatii speciale, numite expresii regulare. 
+*Notatii folosite in expr regulare (unde c,c1,c2=caractere; r,r1,r2=expr regulare deja construite)
+. -orice caracter
+\c -caracterul c isi pierde eventualul statut de caracter special
+[lista] -un sg caracter, oricare din lista
+[c1-c2] -orice caracter cuprins lexicografic intre caract c1 si c2
+[^lista] -negatia lui [lista], un sg caract care nu este in lista
+^ -urm sablon se aplica numai la inceput de linie
+$ -urm sablon se aplica numai la sf de linie
+\< -inceput de cuv (un cuv este format din litere,cifre sau -, orice alt caract este considerat separator)
+\> -sfarsit de cuv
+r* -sirul vid sau concatenarea repetata a expr regulare r ori de cate ori
+r+ -concatenarea repetata a expr reg r cel putin o data
+r? -sirul vid sau expr reg r
+(r) -expr r privita ca o sg entitate; in anumite situatii este \(r\)
+r1 r2 -rezultatul concatenarii expr reg r1 urmata de r2
+r1 | r2 -fie expr reg r1, fie expr reg r2
+r\{n,m\} -repeta expr regulara r de cel putin n ori si de cel mult m ori
+n,m -partea de text dintre liniile n si m
+. -indica la editare linia curenta
+$ -indica la editare ultima linie
+/sir/ -prima dintre liniile urm fata de linia curenta care contine sir
+?sir? -prima dintre liniile precedente fata de linia curenta care contine sir
+
+exemplu: [0-3][0-9][-/][01][0-9][0-9][0-9][0-9] este un pattern pt o data calendaristica 23/03/1991 

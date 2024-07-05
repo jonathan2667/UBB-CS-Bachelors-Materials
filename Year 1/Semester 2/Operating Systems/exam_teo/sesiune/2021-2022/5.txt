@@ -1,0 +1,4 @@
+Give an advantage and a disadvantage of the First-Fit placement policy versus the Worst-Fit
+
+solution:
+First-Fit is very fast, but some memory goes to waste

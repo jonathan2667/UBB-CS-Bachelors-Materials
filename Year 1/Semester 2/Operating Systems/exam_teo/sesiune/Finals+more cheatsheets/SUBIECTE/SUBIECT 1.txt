@@ -1,0 +1,89 @@
+1. grep -E "\<[A-Z].*\>" <fisier
+2. sed -r 's/([0-9])([0-9])/\2\1/g'
+3. awk '{print(($1+$2))}' <fisier
+	awk se aplica linie cu linie!!!!
+4. sort d.txt | uniq -u
+5.
+#!/bin/bash
+
+FILES=$(find -maxdepth 1 -type f -name "*.txt")
+
+for FILE in $FILES
+do
+        NR=`grep -E "\<cat\>" $FILE | wc -l`
+        if [ $NR -ge 1 ]
+        then
+                echo $FILE
+        fi
+done
+
+6. 
+P k = fork();
+P C if (k == 0){
+C printf("A\n");
+ }
+P else {
+P printf("B\n");
+ }
+P C printf(C\n");
+
+7. wait nu incurca cu nimic (se executa ca si fara, dar parintele asteapta dupa fiecare copil) pt ca wait 
+trece direct daca nu e niciun copil creat.
+8. A\n daca execl se executa corect sau A\nB\n daca execl nu se executa corect
+9. Daca alt proces are capatul deschis pentru scriere, asteapta. 
+   Daca nu mai poate scrie nimeni, returneaza 0 (se opreste).
+10. Asteapta sa fie deschis si pentru operatia complementara(daca deschid pentru citire, asteapta sa fie deschis 
+si pentru scriere sau invers).
+11. E mai usoara si mai rapida comunicarea intre thread-uri decat intre procese. 
+12. Mutexul e degeaba ca sunt 2 diferite -> orice rezultat de la 0 la nr de threaduri.
+13. A,C,B 
+14. avantaj segmentare: securitate
+    dezavantaj segmentare: fregmentarea memoriei
+15. Incarc atunci cand e nevoie de ea si folosesc principiul vecinatatii.
+16. Cand pierde procesorul, cand intra in wait (asteapta input/mutex), cand intra in swap (nu mai are loc)
+17. ???????
+18. Daca stergi fisierul, the hard link pastreaza datele din el. Daca stergi si the hard link, fisierul original
+    e sters si el.
+19. Sa blochezi resurse in aceeasi ordine.
+20. A binary semaphore is also known as mutex lock. It can have only two 
+values – 0 and 1. Its value is initialized to 1. It is used to implement the 
+solution of critical section problems with multiple processes.
+Method P: If the semaphore is unlocked, it becomes locked and the call 
+returns, allowing the thread to continue. If the semaphore is locked, the 
+thread is blocked and placed in a queue Q of waiting threads.
+
+
+
+2. sed -r 's/([13579])([aeiou])/\2\1/g' b.txt
+
+
+
+6. 4
+7. la n=3,n=2,n=1 nu creaza proces, la n=0 creaza proces si decrementeaza n, nu se opreste programul
+9. Citeste cat poate. Returneaza cat a citit. (nu asteapta, trece mai departe)
+10. Pipe-ul e deschis pentru scriere, deci are cine sa scrie, dar nu scrie nimic. Deci read o sa astepte si se 
+blocheaza. (daca nu ar avea cine sa scrie returna 0 - EOF).
+11. Ocupa PID (process id) degeaba si pot impiedica crearea de noi procese.
+14. dezavantaj: direct era mai rapid
+    avantaj: nu se produc asa des coliziuni
+15. Alegem victima pagina cu cea mai mica suma a liniei.
+16. 4 sets of 2 pages e mai buna pt ca e mai rapida cautarea (niciuna nu produce chache trashing)
+17. n^3 (e ca un arbore)
+18. 3 semafoare: unul s_empty initializat cu n, unul s_full initializat cu 0 (ambele cu n pozitii) si un semafor
+binar. Producatorul creste s_full si scade s_empty, consumatorul scade s_full si creste s_empty. Semaforul binar 
+face sa nu se corupa date.
+
+
+1. Nu poti sa arati catre un i-node din alt file system (nu e valid). Fiecare partitie are file system prorpiu.
+2. Atunci cand incarcam o pagina, ii incarcam si vecinii (e foarte probabil sa avem nevoie de ei curand).
+3. C A B (1 sec delay) ~incearca sa ordonezi crescator dupa deadline
+4. A (execl sterge tot dupa, nu mai continua for-ul)
+5. zona critica si resursa critica
+6. fiecare segment e impartit in pagini: ne trebuie tabela de segmente, tabela de pagini pt fiecare 
+segment si offset-ul
+7. Scrie cat poate ( nu asteapta sa se elibereze). Returneaza nr bytes scrisi.
+8.
+• string is not empty -n
+• is executable -x
+• is different (for numbers) -ne
+• is directory -d

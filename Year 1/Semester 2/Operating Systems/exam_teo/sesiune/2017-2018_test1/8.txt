@@ -1,0 +1,10 @@
+What are the possible console outputs of the following code fragment (ignoring any output that execl might generate), and when will they happen?
+
+printf("A\n"); execl(.....); printf("B\n");
+
+solution:
+the possible console output will be "A", but the output "B" will not be printed due to the 'execl' call
+the 'execl' funcion is used to replace the current process with a new process, so any code after it will not be executed.
+
+note: not really sure about this answer
+

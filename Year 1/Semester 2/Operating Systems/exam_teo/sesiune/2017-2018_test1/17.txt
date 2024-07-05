@@ -1,0 +1,4 @@
+Given a UNIX file system configured with a block size of B bytes that can contain A addresses, and i-nodes having S direct link, one simple indirection link, one double indirection link, and one triple indirection link, give the formula for the maximum file size possible.
+
+solution:
+(S + A + A^2 + A^3) * B

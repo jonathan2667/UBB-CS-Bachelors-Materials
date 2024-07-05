@@ -1,0 +1,14 @@
+What happens with the data when you delete a file that has a hard link pointing to it?
+
+solution:
+1. reference count adjustment: each file on a file system has an associated reference count. when a file is created, the reference count is set to 1. each hard link to the file increments the reference count by 1. when a hard link is deleted, the reference count is decremented by 1.
+
+2. deletion of the directory entry: when you delete a file by removing its directory entry (using a command like `rm`), the directory entry is removed from the directory listing. this action removes the association between the file name and the file's metadata.
+
+3. reference count check: after deleting the directory entry, the file system checks the reference count of the file. If the reference count reaches zero, it means there are no more hard links pointing to the file.
+
+4. actual file deletion: when the reference count of the file reaches zero, indicating that no more hard links exists, the file system preoceeds to delete  the file's contents and release the disk space occupied by the file.
+
+however, if there are still one or more hard links pointing to the file (i.e., the reference count is greater than zero), the file contents remain intact, and only the directory entry associated with the deleted hard link is removed.
+
+hard links provide multiple names (directory entries) for the same file, and the file is not truly deleted until the reference count reaches zero. As long as there is at least one hard link remaining, the file's data is still accessible and can be modified through the remaining hard link(s).

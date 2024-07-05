@@ -1,0 +1,4 @@
+When would you load into memory the pages of a process that is just starting?
+
+solution:
+

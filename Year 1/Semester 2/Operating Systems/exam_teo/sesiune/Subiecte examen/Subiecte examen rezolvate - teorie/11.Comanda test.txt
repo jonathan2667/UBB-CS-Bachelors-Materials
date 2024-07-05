@@ -1,0 +1,29 @@
+comanda test
+
+
+TEST-primeste ca parametru o conditie pe care o evalueaza(cod de retur!). Daca ac. conditie este adevarata, codul de retur se fixeaza la 0, altfel codul de retur
+     este fixat la o valoare nenula. Lansarea:  test conditie sau | conditie |	
+Comanda are sens sa fie executata doar impreuna cu structurile de control shell: if, while si until.Astfel, apar constructii de forma:
+   if test conditie then ...fi   (if | conditie | then...fi)
+   while test conditie do...done  (while | conditie | do...done)
+   until test conditie do...done  (until | conditie | do...done)
+In momentul specificarii conditiei, sunt admise 3 tipuri de conditii elementare:
+a.conditii numerice -lt, -le, -eq, -ne, -ge, -gt
+b.teste asupra sirurilor de caractere: -z sir(verifica daca sirul are lung 0), 
+                                       -n sir(verifica daca sirul are lungime nenula
+                                       -s1=s2, s1!=s2
+c.teste asupra fisierelor:
+-e fisier (daca exista fisierul)
+-s fisier (daca exista si are  lungime nenula)
+-r fisier (daca exista si din el se poate citi)
+-w fisier (daca exista si in el se poate scrie)
+-x fisier (daca exista si este executabil)
+-f fisier (daca exista si este un fisier obisnuit)
+-d fisier (daca exista si este un director)
+-L fisier(daca exista si este o legatura simbolica)
+-p fisier(daca e si este un pipe)
+
+Aceste conditii elemenatre pot fi legate intre ele prin operatorii :
+-a (joaca rolul de SI logic- AND)
+-o (SAU logic-OR)
+!  (NOT)

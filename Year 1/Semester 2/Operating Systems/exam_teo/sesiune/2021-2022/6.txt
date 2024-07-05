@@ -1,0 +1,4 @@
+What is the most prioritary memory page that the NRU replacement policy chooses as victim page?
+
+solution:
+the page from class 0: the unreffered and unmodified page (0, 0)

@@ -1,0 +1,20 @@
+Considering that functions "fa" and "fb" are run in concurrent threads, what will the value of "n" be after the threads are finished? why?
+
+pthread_mutex_t a, b;
+int n = 0;
+void* fa(void *p)
+{
+	pthread_mutex_lock(&a);
+	n++;
+	pthread_mutex_unlock(&a);
+}
+void* fb(void* p)
+{
+	pthread_mutex_lock(&b);
+        n++;
+        pthread_mutex_unlock(&b);
+}
+
+solution:
+the final value of "n" will be 2 because each thread increments "n" by 1 when it acquires its respective mutex lock.
+

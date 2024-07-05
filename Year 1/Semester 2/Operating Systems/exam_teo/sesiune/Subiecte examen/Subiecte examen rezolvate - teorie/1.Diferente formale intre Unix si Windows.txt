@@ -1,0 +1,27 @@
+1. Deosebiri formale între SO Unix ºi MS-Windows
+
+*specificarea unui fisier in windows se face astfel: d:\dir1\dir2\...\dirn\fisier; iar in
+unix: /dir1/dir2/.../dirn/fisier ->separarea de directoare
+
+*PATH (directorul in care se cauta progr executabil)
+W: spatiu;spatiu;spatiu;...;spatiu
+U: spatiu:spatiu:spatiu:...:spatiu   ->path separator
+
+*fisier de comenzi: ...fisier arg1 arg2 ... argn
+W: %0 %1 %2 ...
+U: $0 $1 $2 ...
+
+*optiuni
+W: /optiune
+U: -optiune
+
+*Fisiere text
+W: - \r \n -
+     CR LF
+U: - \n -
+     LE
+Fisierele text sub Unix:
+Separa doua linii consecutive printr-un caracter '\n' (New Line)
+
+Fisierele text sub Windows:
+Separa doua linii consecutive prin doua caractere succesive '\r\n' (Carriage Return, New Line,)
