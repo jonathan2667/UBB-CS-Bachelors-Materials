@@ -1,0 +1,3 @@
+/mnt/e/UBB_IE_2020-2023/S4.S2.OOP/written-practice/iun2018-row1/2b/cmake-build-debug/CMakeFiles/2b.dir
+/mnt/e/UBB_IE_2020-2023/S4.S2.OOP/written-practice/iun2018-row1/2b/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/e/UBB_IE_2020-2023/S4.S2.OOP/written-practice/iun2018-row1/2b/cmake-build-debug/CMakeFiles/rebuild_cache.dir

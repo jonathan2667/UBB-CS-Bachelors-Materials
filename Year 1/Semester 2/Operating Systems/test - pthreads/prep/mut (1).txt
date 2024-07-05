@@ -1,0 +1,66 @@
+#include<pthread.h>
+#include<stdio.h>
+#include<stdlib.h>
+/*
+Sa se scrie un program care citeste o propozitie de la tastatura formata din cel putin 6 cuvinte, creeaza 5 thread-uri care
+ primesc ca si parametru acea propozitie. Fiecare thread va lua un cuvant din propozitie, si il va pune
+pe o noua pozitie astfel incat dupa ce fiecare thread isi incheie executia, propozitia este complet inversata.
+Thread-ul principal va afisa rezultatul.
+Exemplu: Ana are multe mere foarte frumoase -> frumoase foarte mere multe are ana
+*/
+
+
+
+/*
+Solutia: citim intr-o matrice cuvintele, creeam 5 threaduri, inversam propozitia cu un index global si mecanism de sincornizare MUTEX, pentru
+a inversa corect propozitia, transmitem propozitia cu ajutorul unui struct
+*/
+
+pthread_mutex_t m;
+
+typedef struct {
+        char ** propozitie;
+}arg_t;
+
+char** matrix;
+
+int NrCuv = 0, index_curent;
+
+void* worker(void *arg) {
+        arg_t a = *(arg_t*)arg; //in a avem propozitia
+        while(1) {
+                pthread_mutex_lock(&m);
+                if (index_curent < NrCuv) {
+                        index_curent++;
+                        //facem swap a.propozitie[index] cu  a.propozitie[NrCuv-index]
+                        char *aux = matrix[index_curent];
+                        a.propozitie[index_curent] =  a.propozitie[NrCuv - index_curent];
+                        a.propozitie[NrCuv - index_curent] = aux;
+                }
+                else { return 0; }
+                pthread_mutex_unlock(&m);
+        }
+
+        return 0;
+}
+
+int main(int argc, char **argv) {
+        pthread_t* t;
+        printf("Reading sentence: \n");
+        /*citire in matrix cuvintele si NrCuv primeste nr de cuvinte citite*/
+        index_curent = 0;
+        pthread_mutex_init(&m, 0);
+        t = malloc(5 * sizeof(pthread_t));
+
+        for (int i = 0; i < 5; i++) {
+                arg_t *a = malloc(sizeof(arg_t));
+                a->propozitie = matrix;
+                pthread_create(&t[i], 0, worker, (void*) a);
+        }
+        for (int i = 0; i < 5; i++) {
+                pthread_join(t[i], 0);
+        }
+        printf("Outputing sentenc: \n");
+        pthread_mutex_destroy(&m);
+        free(t);
+  

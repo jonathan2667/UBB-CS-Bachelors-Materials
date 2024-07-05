@@ -1,0 +1,70 @@
+Write a c program that recives as command line arguments as many triplets
+ containig a file (f), a number (n), and a character (c). 
+For each such triplet the program will create a thread. 
+Each thread will check if the nth character of the file f is the same 
+as the character c, from its corespondig triplet. If n is too large or 
+f is too small the proper message will be writen in the standard output 
+(the console). NOTE: When you compile use the -pthread obtion.
+ The source file must be compiled using gcc with -Wall -g options 
+WITHOUT WARNINGSOR SYNTAX ERRORS!!! Memory leacks and zombie processes are not allowed.
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<pthread.h>
+#include<string.h>
+
+typedef struct{
+   char* nume_fisier;
+   int n;
+   char* car;
+}arg;
+
+
+pthread_mutex_t m;
+void* f(void* a){
+    char* nume = (*(arg*)a).nume_fisier;
+    int nr = (*(arg*)a).n;
+    char* caracter = (*(arg*)a).car;
+    FILE* f = fopen(nume, "r");
+    char citit;
+    int contor=1;
+  
+    while(fscanf(f, "%c", &citit)!=EOF && contor<nr){
+        contor++;
+        
+    }
+    if(contor==nr){
+     
+        int ascii_citit = citit - '0';
+        int ascii_caracter = caracter[0] - '0';
+
+        if(ascii_citit==ascii_caracter)
+            printf("sunt egale\n");
+        else
+          printf("nu sunt egale\n");
+    }
+    else
+       printf("n nu e un numar potrivit\n");
+    free(a);
+    fclose(f);
+    return NULL;
+}
+
+int main(int argc, char** argv){
+
+       pthread_t *t = malloc((argc-1)/3*sizeof(pthread_t));
+       int i;
+       pthread_mutex_init(&m, NULL);
+       for(i=0;i<argc-1;i+=3){
+           arg* arguments = malloc(sizeof(arg));
+           arguments->nume_fisier = argv[i+1];
+           arguments->n = atoi(argv[i+2]);
+           arguments->car =argv[i+3];
+           pthread_create(&t[i/3], NULL, f, (void*) arguments);
+      }
+       for(i = 0;i<argc-1;i+=3)
+          pthread_join(t[i/3], NULL);
+       free(t);
+       pthread_mutex_destroy(&m);
+       return 0;
+  }

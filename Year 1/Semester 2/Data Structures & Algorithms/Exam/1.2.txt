@@ -1,0 +1,8 @@
+Considering a stack implementation on an array, where the top of the stack is at the beginning of the array (at position 1). What is the problem with this implementation?
+
+a) Creating an empty stack needs linear time.
+b) Pushing an element needs linear time.
+c) Popping an element needs linear time.
+d) Getting the element from the top needs linear time.
+
+answer: b, c

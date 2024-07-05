@@ -1,0 +1,61 @@
+se se scrie un program care citeste o propozitie de la tastatura format din cel putin 6 cuvinte, creeaza 5 thread-uri care primesc ca si parametru acea propozitie. Fiecare thread va lua un cuvant din propozitie, si il va pune pe o noua pozitie astfel incat dupa ce fiecare thread isi incheie executia, propozitia este complet inversata. Thread-ul principal va afisa rezultatul.
+Exemplu: Ana are multe mere foarte frumoase -> frumoase foarte mere multe are Ana
+
+
+
+#include<pthread.h>
+#include<string.h>
+#include<stdlib.h>
+#include<stdio.h>
+
+#define NUM_THREADS 5
+#define MAX_LENGTH 1024
+
+char sentence[MAX_LENGTH];
+char *words[MAX_LENGTH / 2];
+char *reversed_words[MAX_LENGTH / 2];
+int word_count;
+
+void *reverse_word(void *arg) {
+        int index=*(int*)arg;
+        reversed_words[word_count-index-1] = words[index];
+        return NULL;
+}
+
+int main() {
+        printf("Enter the sentence with at least 6 words");
+        fgets(sentence, MAX_LENGTH, stdin);
+        int len=strlen(sentence);
+
+        if (len>0 && sentence[len-1]=='\n') sentence[len-1]='\0';
+
+        word_count = 0;
+        char *token=strtok(sentence, " ");
+        while (token!=NULL) {
+                words[word_count]=token;
+                word_count++;
+                token=strtok(NULL, " ");
+        }
+
+        pthread_t threads[NUM_THREADS];
+        int indices[NUM_THREADS];
+        for (int i = 0; i < NUM_THREADS; i++) {
+                indices[i]=i;
+                pthread_create(&threads[i], NULL, reverse_word, &indices[i]);
+        }
+         for (int i = NUM_THREADS; i < word_count; i++) {
+        reversed_words[word_count - i - 1] = words[i];
+    }
+
+    // Wait for all threads to complete
+    for (int i = 0; i < NUM_THREADS; i++) {
+        pthread_join(threads[i], NULL);
+    }
+
+    // Print the reversed sentence
+    printf("Reversed sentence: ");
+    for (int i = 0; i < word_count; i++) {
+        printf("%s ", reversed_words[i]);
+    }
+    printf("\n");
+}

@@ -1,0 +1,75 @@
+1. 4 rules for regexp's that show how many times the previous expression to be repeated:
+
+* - zero or more times
++ - 1 or more times
+{1,} - 1 or more times
+{2, 3} - between 2 and 3 times (min 2 max 3 times)
+
+
+2. Nr maixm de procese fiu:
+   8, pt ca 0, 3, 6, 9 o sa faca wait(0)
+   cand ajunge la procesul 9, p1 se va incheia si va fi scos din program, raman p2-9 => 8 procese
+
+
+3. Un proces deschide fifo pt citire si e singurul proces ce va folosi vreodata acel fifo, cand isi va incheia executia?
+	Niciodata, pentru ca acesta asteapta un alt proces pe cealalta parte a fifo-ului sa citeasca ce scrie, dar acesta
+nu va exista.
+
+4. I would use as many threads as there are CPU cores to maximize efficiency.That way, the threads will execute in parallel
+and I would have as many operations as possible without needing to go past a CPU-bound.
+
+5. T=N1=N2=N3=1
+
+6. I/O operations (input/output) will put the process that handles them on wait because they have to wait for the data to
+be ready for writing/reading (that means that the data is read from the disk handler or that the data is written to the
+data storage of the disk handler) before they can run again. When the I/O operations are completely executed, the
+process will be out of the Waiting state and into the Ready state waiting for the CPU to be scheduled.
+
+7.
+Paged allocation vs variable partition allocation
+
+Paged : - The virtual memory (logical memory) is divided into fixed-sized blocks called PAGES
+	- Physical memory is divided into fixed-size blocks called FRAMES
+	- PAGES and FRAMES have usually the same size
+	Page table : The page table contains entries that map page numbers to frame numbers
+Accessing paged memory: When a process needs to use the memory, the virual address is divided into a page number and an offset
+The page number is used to look up the frame number in the Page table, then with the offset gives the actual memory address.
+Advantages: - prevents fragmentation
+	    - efficient use of memory and easy swapping of pages in and out of memory
+Disadvantages: none
+
+
+Variable partition allocation: - The memory is dynamically allocated to processes as needed, creating partitions that are
+				sized to fit the processes requirements
+Advantages: - Flexible memory allocation that fit processes needs
+Disadvantages: - Without compaction, it can lead to fragmentation (scattered memory blocks in the memory segment)
+
+How data is placed in variable partition allocation:
+First-Fit: allocates the first hole that is big enough to fit the processes' requirements
+Worst-Fit: allocates the largest hole. This leaves out larger leftover holes which can be used for future requests
+Best-Fit: allocates the smallest hole that is big enough to fit the data. This requires a search but minimises leftovers.
+
+Answer:
+The advantage of using partition allocation is that the memory is flexibily allocated to fit each processes' requirements
+but one disadvantage that paged memory allocation takes care of is memory fragmentation, because blocks of memory may remain
+scattered over the memory segment. Another advantage which paged memory allocation doesn't have is the fact that the address
+is calculated much more simply by just using the partition number and the offset
+
+
+8. First-fit vs Worst-fit, advantage and disadvantage of using first compared to worst
+The first fit is much faster than worst fit because it allocates the first space that is found that is big enough to
+fit the data, but a disadvantage is that it can cause memory fragmentation.
+
+
+9. What is the most prioritary memory page that the NRU (not recently used) replacement chooses as a victim page?
+NRU will pick the first non-empty page as a victim page. This is the priority order of the NRU placement:
+not read and not written recently -> written recently -> read recently -> read and written recently
+READ/WRITTEN can be REFERENCED/MODIFIED
+So the most priority will be the not read and not written recently page.
+
+
+10. size of block - B
+    size of address - A
+    triple indirect addressing of inode
+How many data blocks are addressed by the triple addressing method of the inode?
+(B/A)^3 = number of DATA BLOCKS addressed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  

@@ -1,0 +1,131 @@
+Determine the result of the execution of the following C++ programs. If there are any errors, indicate the exact place where the errors occur. Justify your answers.
+
+a)
+#include <iostream>
+using namespace std;
+
+class B
+{
+	public:
+		virtual void f() {cout << "B.f ";}
+		virtual ~B() {cout << "~B ";}
+};
+
+class D : public B
+{
+	private:
+		B& b;
+	public:
+		D(B& _b): b(_b) {cout << "D "; b.f();}
+		void f() override {cout << "D.f ";}
+		~D() {cout << "~D ";}
+};
+
+int main()
+{
+	B* b1 = new B{};
+	b1 -> f();
+	B* b2 = new D{*b1};
+	b2 -> f();
+	delete b2;
+	delete b1;
+	return 0;
+}
+
+solution:
+B.f D B.f D.f ~D ~B ~B
+
+b)
+#include <iostream>
+#include <string>
+using namespace std;
+
+string except(int x)
+{
+	if (x < 0)
+		throw string{"Negative "};
+	return "Positive ";
+}
+
+int main()
+{
+	cout << "One ";
+	try
+	{
+		cout << except(3);
+		cout << except(-2);
+		cout << except(5);
+	}
+	catch(string& ex) {cout << ex << " ";}
+	return 0;
+}
+
+solution:
+One Positive Negative 
+
+
+c)
+#include <iostream>
+#include <string>
+using namespace std;
+
+template<typename T, typename U>
+U fct2(T a, T b, U x, U y)
+{
+	cout << a << " ";
+	cout << b << " ";
+	if (a == b)
+		return x + y;
+	return x;
+}
+
+class A
+{
+		int a;
+	public:
+		A(int _a): a{_a} {}
+};
+
+int main()
+{
+	cout << fct2<int, int>(10, 10, 5, 5) << " ";
+	cout << fct2<double, int>(10, 10.5, 5, 5) << " ";
+	cout << fct2<int, string>(-2, -2, "Good ", "luck!");
+	cout << fct2<int, A>(1, 1, A{2}, A{3});
+	return 0;
+}
+
+solution:
+cout << fct2<int, A>(1, 1, A{2}, A{3});
+error: no match for "operator<<" (operand types are "std::ostream" and "A")
+
+return x + y;
+error: no match for "operator+" (operand types are "A" and "A")
+
+
+d)
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector<string> str{"a", "b", "c", "d"};
+	str.erase(str.begin() + 2);
+	vector<string>::iterator it = str.begin();
+	str.insert(it + 2, "b");
+	str.insert(str.end() - 1, "a");
+	str.pop_back();
+	it = str.begin();
+	while (it != str.end())
+	{
+		cout << *it << " ";
+		it++;
+	}
+	return 0;
+}
+
+solution: 
+a b b a
+

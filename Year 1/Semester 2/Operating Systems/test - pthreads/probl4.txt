@@ -1,0 +1,79 @@
+Scrieti un program c care primeste ca si argumente in linia de comanda 
+oricate triplete formate din un numar n, un index next si un index prev. 
+Valoarea lui next si prev vor fi mai mici decat numarul de triplete date 
+in linia de comanda. Nu vor fi date doua triplete care vor avea aceasi 
+valoare pentru next, de asemenea nu vor fi date doua triplete care vor 
+avea aceasi valoare pentru prev. Programul va crea cate un thread pentru 
+fiecare triplet,
+fiecare thread va primi ca si parametru un triplet. Ficare thread va adauga la o variabila globala valoarea n din 
+tripletul primit ca parametru, daca in urma adaugarii variabila globala este un numar par atunci urmatorul thread 
+care va altera variabila globala va fi thread-ul cu index-ul next, in caz contrar thread-ul care va altera variabila va fi thread-ul cu
+ index-ul prev. Thread-urile vor fi indexate de la 0 in oridinea in care sunt create. Executia programului
+ se va incheia in momentul in care variabila globala depaseste o valoare prestabilita. Se vor afisa pe ecran mesaje 
+si date care sa faca posibila urmarirea desfasurarii rularii thread-urilor. Accesul la variabilele globale trebuie sincronizat 
+in cel mai eficient mod posibil. Programul trebuie compilat folosind utilitarul gcc cu obtiunile -Wall si -g fara a rezulta nici 
+un avertisment sau o eroare de sintaxa. Programul trebuie sa ruleze fara memory leak sau erori de context. Se vor face toate validarile necesare. 
+In cazul alocarilor dinamice nu se va aloca mai mult spatiu decat este necesar.
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+typedef struct{
+  int nr;
+  int prev;
+  int next;
+  int index;
+}triple;
+
+int g=0;
+pthread_mutex_t* m;
+
+void* functie(void* da){
+  triple trio = *(triple*)da;
+  while(1){
+    pthread_mutex_lock(&m[trio.index]);
+    if(g>10000){
+	pthread_mutex_unlock(&m[trio.next]);
+        break;
+    }
+    g += trio.nr; 
+    printf("g:%d %d\n", g, trio.index);
+    if(g%2==0){
+	printf("P:%d a deblocat pe %d\n", trio.index, trio.next);
+    	pthread_mutex_unlock(&m[trio.next]);
+    }
+    else{
+	printf("I:%d a deblocat pe %d\n", trio.index, trio.prev);
+	pthread_mutex_unlock(&m[trio.prev]);
+    }
+  }
+  return 0;
+} 
+
+int main (int argc, char **argv)
+{
+  int i;
+  triple trio[(argc-1)/3];
+  pthread_t t[(argc-1)/3];
+  m = (pthread_mutex_t*)malloc((argc-1)/3*sizeof(pthread_mutex_t));
+  for(i=0; i<(argc-1)/3; i++)
+  {
+	trio[i].nr = atoi(argv[i*3+1]);
+	trio[i].prev = atoi(argv[i*3+2]);
+	trio[i].next = atoi(argv[i*3+3]);
+	trio[i].index = i;
+	pthread_mutex_init(&m[i], NULL);
+	pthread_mutex_lock(&m[i]);
+	pthread_create(&t[i], NULL, functie, (void*)&trio[i]);
+  }
+
+  pthread_mutex_unlock(&m[0]);
+
+  for(i=0; i<(argc-1)/3; i++){
+	pthread_join(t[i], NULL);
+
+	pthread_mutex_destroy(&m[i]);
+  }
+
+  return 0;
+}

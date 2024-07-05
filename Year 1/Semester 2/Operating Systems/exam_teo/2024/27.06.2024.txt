@@ -1,0 +1,110 @@
+RO: Daţi trei expresii regulare care acceptă orice linie care conţine cel puţin două vocale dar nicio cifră.
+EN: Give three regular expressions that match any line that contains a least two vowels but no digits.
+
+Answer:
+
+RO: Daţi o comandă GREP care afişează toate liniile dintr-un fişier care conţin un număr par de vocale (pe lângă alte eventuale caractere).
+EN: Give a GREP command that display all the lines in a file that contain an even number of vowels (among other potential characters).
+
+Answer:
+
+RO: Scrieţi o comandă SED care afişează dintr-un fişier doar liniile care conţin exclusiv o expresie artimetică validă conţinând adunări şi scăderi de numere întregi.
+EN: Write a SED command that display from a file only the lines that contain exclusively a valid artihmetical expression of integer additions and subtractions.
+
+Answer:
+
+RO: Scrieţi o comandă AWK care afişează suma câmpurilor de pe poziţia egală cu numărul liniei curente.
+EN: Write an AWK command that displays the sum of the fields on the position equal to the current line number.
+
+Answer:
+
+RO: Daţi două soluţii pentru a ascunde ieşirea standard şi ieşirea de eroare a unei comenzi prin redirectarea în /dev/null.
+EN: Give two solutions for hiding a commands standard and error outputs by redirecting them to /dev/null.
+
+Answer:
+
+RO: Scrieţi un script Shell UNIX care cere utilizatorului un nume director şi insistă până când primeşte un director care nu există deja.
+EN: Write a UNIX Shell script that asks the user for a directory name and insists until it gets a directory that does not exist already.
+
+Answer:
+
+RO: Desenati ierarhia proceselor create de codul de mai jos, incluzand procesul parinte.
+EN: Draw the hierarchy of processes created by the code below, including the parent process.
+
+    for(i=0; i<2; i++) {
+        fork();
+        execl("/etc", "/etc", NULL);
+    }
+
+Answer:
+
+RO: Adăugaţi liniile de cod C necesare pentru ca instrucţiunea de mai jos să suprascrie conţinutul unui fişier b.txt. Nu modificaţi instrucţiunea.
+EN: Add the necessary lines of C code so that the instruction below overwrites the content of a file b.txt. Do not change the instruction.
+
+    execlp("sort", "sort", "a.txt", NULL);
+
+Answer:
+
+RO: De ce nu e recomandat sa comunicaţi bidirecţional printr-un singur pipe?
+EN: Why is it not advisable to communicate bidirectionally through a single pipe?
+
+Answer:
+
+RO: Ce va afişa secvenţa de comenzi de mai jos, considerând că f se creează ccu succes?
+EN: What will display the sequence of commands below, considering the f is created successfully?
+
+mkfifo f
+echo asdf > f
+cat f
+
+Answer:
+
+RO: Când aţi folosi un process în locul unui thread?
+EN: When would you prefer using a process instead of a thread?
+
+Answer:
+
+RO: Ce este o "resursă critică"?
+EN: What is a "critical resource"?
+
+Answer:
+
+RO: De ce apelul pthread_cond_wait primeşte şi un mutex ca argument?
+EN: Why does the pthread_cond_wait call get also a mutex as argument?
+
+Answer:
+
+RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la pthread_rwlock_wrlock?
+EN: What will be the effect of replacing calls to pthread_mutex_lock with calls to pthread_rwlock_wrlock?
+
+Answer:
+
+RO: Care e efectul apelului la sem_wait pentru un semafor cu valoarea zero?
+EN: What is the effect of calling sem_wait on a semaphore with value zero?
+
+Answer:
+
+RO: Cum puteţi decrementa valoarea unui semafor?
+EN: How can you decrement the value of a POSIX semaphore?
+
+Answer:
+
+RO: Ce puteţi face ca programator pentru a preveni deadlock-urile? Justificaţi răspunsul.
+EN: What can you do as a software developer to prevent deadlocks? Justify your answer.
+
+Answer:
+
+RO: Prin ce tranziţie de stare va trece un process când scrie într-un fişier?
+EN: What state transition will a process undergo when writing to a file?
+
+Answer:
+
+RO: Ce conţinue superblocul unui disc Linux?
+EN: What is the content of the superblock on a Linux disk?
+
+Answer:
+
+RO: Considerând că într-un bloc încap N adrese spre alte blocuri, câte blocuri de date sunt adresate de indirectarea dublă împreună cu cea triplă a unui i-nod?
+EN: Considering that a block can contain N addresses towards other blocks, how many data blocks are addressed by an i-node's double and triple indirections together?
+
+Answer:

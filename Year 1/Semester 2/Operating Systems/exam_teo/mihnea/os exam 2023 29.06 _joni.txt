@@ -1,0 +1,147 @@
+1. scrieti un grep care ia grupurile de cate 2 cuvinte, separate de un singur spatiu, care sunt formate doar din litere mici si fiecare cuvant contine cel putin 2 vocale
+
+grep -Eo '[bcdfghjklmnpqrstvwxyz]*[aeiou][bcdfghjklmnpqrstvwxyz]*[aeiou][bcdfghjklmnpqrstvwxyz]* [bcdfghjklmnpqrstvwxyz]*[aeiou][bcdfghjklmnpqrstvwxyz]*[aeiou][bcdfghjklmnpqrstvwxyz]*' grep.txt
+
+
+2. scrieti 2 grep uri care iau liniile care nu au numarul de caractere multiplu al lui 3
+
+grep -E -v "^(...)*$" grep.txt
+grep -E -v "^(.{3})*$" grep.txt
+
+
+3. scrieti un sed care inlocuieste prima aparitie a caracterului A cu caracterul B
+
+sed "s/A/B/" (de pe fiecare linie?)
+
+4. scrieti un awk care afiseaza liniile care au primul cuvant identic cu ultimul cuvant si al caror penultim cuvant are numar par de caractere
+
+awk 'NF > 1 && $1 == $NF && length($(NF - 1)) % 2 == 0 {print $0}'
+
+5. scrieti 3 moduri de a crea un fisier gol
+
+nano file
+> file
+touch file
+echo "" > a.txt
+
+6. scrieti 5 moduri de a verifica daca un string este gol(cu test)
+
+if test -z "$string";
+if ! test -n "$string"
+if test "$string" == "";
+if test ${#string} -eq 0;
+if test ${#A} -lt 1; 
+
+7. afisati ierarhia proceselor a urmatorului cod:
+for(int i = 0; i < 3; i++)
+    if (fork() != 0)
+        wait();
+
+P->C1->C2->C3
+
+8. scrieti ce afiseaza codul:
+execlp(“expr”,”expr”,”a”,”+”,”1”);    ("mut" era aici,o sa ignor in rezolvare)
+printf(“xyz\n”);
+
+error since (a+1) is not a number
+(cred)
+
+
+9. schitati o implementare a functiilor popen si pclose
+FILE* mypopen(char *cmd, char *type) {
+    int p[2];
+    pipe(p);
+    if ((child_pid = fork()) == 0) {
+        if (type[0] == 'r') {
+            close(p[0]);
+            dup2(p[1], STDOUT_FILENO);
+        } else {
+            close(p[1]);
+            dup2(p[0], STDIN_FILENO);
+        }
+        execlp("sh", "sh", "-c", cmd, NULL);
+        exit(1);
+    }
+    if (type[0] == 'r') {
+        close(p[1]);
+        return fdopen(p[0], type);
+    } else {
+        close(p[0]);
+        return fdopen(p[1], type);
+    }
+}
+int mypclose(FILE *fp) {
+    int status;
+    fclose(fp);
+    waitpid(child_pid, &status, 0);
+    return status;
+}
+
+n-am idee ce inseamna pentru boian schita(cod ca mai sus sau text, desi intrebarea asta a venit already in 21)
+
+popen:
+-create a pipe
+-fork the process
+-child: close read end of the pipes, redirect stdout to pipe and execute command with execlp
+-parent: close write end of pipe, return file pointer for reading
+
+pclose:
+-close file pointer
+-wait for the child process
+-return child exit status
+
+
+10. cate FIFO pot fi deschise de catre un fisier daca fiecare dintre acele FIFO-uri va avea capatul celalalt deschis de catre un alt proces?
+
+It depends about the file descriptor limits of the system, which can be checked using "ulimits -n". It is important to open cprrectly and in the same order the FIFOs, because it could lead to deadlocks. If correct opening, limit is the file descriptor limit of the system. 
+
+11. cand am dori sa folosim execl si cand am dori sa folosim execv?
+
+Use execl: When you have a fixed, known number of arguments.
+Use execv: When the number of arguments is dynamic or determined at runtime.
+
+(donno, aici s-au batut gemini si gpt si asta a fost raspunsul lor final)
+
+12. definiti notiunea de sectiune critica
+
+A critical section is a part of the program where we have shared ressources, such as memory variables, where they can be accessed and modified. It is important to handle the program correctly to avoid race conditions, deadlocks, by using mutual exclusions for example.
+
+13.
+
+14. care sunt consecintele inlocuirii lui pthread_mutex_lock cu sem_post in cod?
+
+Replacing pthread_mutex_lock with sem_post would lead to chaos, since sem_post increments the semaphore, allowing any thread to enter in the critical section, thus failing to prevent concurent access to share ressources. this could result in race conditions and data corruption.
+
+15. definiti un semafor binar si explicati cum functioneaza
+
+A binary semaphore is a synchronization mechanism that can have only two values: 0 and 1
+operations:
+-wait: This operation decrements the semaphore(from 1 to 0)
+-signal: This operation increments the semaphore(from 0 to 1)
+
+
+16. 
+
+17. scrieti un mod de a preveni deadlock
+
+-use consistent locking order 
+-avoid nested loops
+-use deadlock detection algorithm
+-use lock timeouts
+
+18. prin ce stare(gen ready, wait, swap, etc) trece un proces cand apelam pthread_join?
+
+(????????? - no idea, better than nothing i guess)
+Initial State: The thread is in the running state and calls pthread_join.
+Waiting for Termination: The thread calling pthread_join moves to the blocked state, waiting for the target thread to finish.
+Target Thread Terminates: Once the target thread completes its execution, it changes its state to terminated.
+Unblocking: The waiting thread is unblocked and moves to the ready state.
+Resuming Execution: The thread is eventually scheduled by the OS and returns to the running state.
+
+19. daca avem B drept block size si A drept address size, cate adrese o sa aiba un double indirect dintr-un i-node?
+(B/A) ^ 2
+
+20. ce se intampla cu continutul directorului in care montam o partitie?
+
+The existing content of the directory where you are mounting the partition becomes temporarily inaccessible. After mounting, any access to the directory actually accesses the root of the mounted partition.
+(again, sigur are boian teorie mai buna)

@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+// Maximum length of the array
+int N;
+
+// Shared array and its index
+int *array;
+int index = 0;
+
+// Mutex and condition variables for synchronization
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond_even = PTHREAD_COND_INITIALIZER;
+pthread_cond_t cond_odd = PTHREAD_COND_INITIALIZER;
+
+// Function to generate even numbers
+void *generate_even(void *arg) {
+    while (1) {
+        pthread_mutex_lock(&mutex);
+
+        while (index % 2 != 0 && index < N) {
+            pthread_cond_wait(&cond_even, &mutex);
+        }
+
+        if (index >= N) {
+            pthread_mutex_unlock(&mutex);
+            pthread_cond_signal(&cond_odd);
+            break;
+        }
+
+        array[index] = index * 2;
+        index++;
+
+        pthread_mutex_unlock(&mutex);
+        pthread_cond_signal(&cond_odd);
+    }
+    return NULL;
+}
+
+// Function to generate odd numbers
+void *generate_odd(void *arg) {
+    while (1) {
+        pthread_mutex_lock(&mutex);
+
+        while (index % 2 == 0 && index < N) {
+            pthread_cond_wait(&cond_odd, &mutex);
+        }
+
+        if (index >= N) {
+            pthread_mutex_unlock(&mutex);
+            pthread_cond_signal(&cond_even);
+            break;
+        }
+
+        array[index] = index * 2 + 1;
+        index++;
+
+        pthread_mutex_unlock(&mutex);
+        pthread_cond_signal(&cond_even);
+    }
+    return NULL;
+}
+
+int main() {
+    printf("Enter the length of the array (N): ");
+    scanf("%d", &N);
+
+    // Allocate memory for the array
+    array = (int *)malloc(N * sizeof(int));
+
+    pthread_t thread_even, thread_odd;
+
+    // Create threads
+    pthread_create(&thread_even, NULL, generate_even, NULL);
+    pthread_create(&thread_odd, NULL, generate_odd, NULL);
+
+    // Wait for threads to finish
+    pthread_join(thread_even, NULL);
+    pthread_join(thread_odd, NULL);
+
+    // Print the array
+    for (int i = 0; i < N; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    // Free allocated memory
+    free(array);
+
+    return 0;
+}

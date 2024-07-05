@@ -1,0 +1,529 @@
+1:
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <pthread.h>
+
+int litere, suma;
+pthread_mutex_t m;
+
+void* f(void* a){
+    int n, i;
+    char s[105] = "a";
+    char* nume_f = a;
+    FILE* fis = fopen(nume_f, "r");
+    if(fis == NULL){
+        perror("Eroare");
+        exit(1);
+    }
+    while(fscanf(fis, "%s", s) > 0){
+        n=strlen(s);
+        for(i=0; i < n; i++){
+            if(s[i] >= '0' && s[i] <= '9'){
+                pthread_mutex_lock(&m);
+                suma++;
+                pthread_mutex_unlock(&m);
+            }
+            if(s[i] >= 'A' && s[i] <= 'Z'){
+                 pthread_mutex_lock(&m);
+                 litere++;
+                 pthread_mutex_unlock(&m);
+            }
+        }
+    }
+    fclose(fis);
+    return NULL;
+}
+
+int main(int argc, char** argv){
+    if( argc == 1 ){
+        printf("Fisierele, ba!\n");
+        exit(1);
+    }
+    int i;
+    pthread_t* thr = malloc(1005*sizeof(pthread_t));
+    pthread_mutex_init(&m, NULL);
+    for(i = 1; i < argc; i++){
+        pthread_create(&thr[i], NULL, f, argv[i]);
+    }
+    for(i = 1; i < argc; i++){
+        pthread_join(thr[i], NULL);
+    }
+    pthread_mutex_destroy(&m);
+    free(thr);
+    printf("%d, %d\n", litere, suma);
+    return 0;
+}
+
+
+
+
+
+
+
+3:
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int v[505];
+pthread_mutex_t mtx;
+
+void* worker(void* a){
+    int tn = *(int*)a;
+    int n1 = random() %1000;
+    int n2 = random() %1000;
+    printf("%d : %d, %d\n", tn, n1, n2);
+    if(n1 % 2 == n2 % 2){
+        pthread_mutex_lock(&mtx);
+        v[++v[0]] = n1;
+        v[++v[0]] = n2;
+        pthread_mutex_unlock(&mtx);
+    }
+    return NULL;
+}
+
+int main(int argc, char**argv){
+    if(argc < 2 ){
+        perror("Argumentele bosule");
+        exit(0);
+    }
+    int n = atoi(argv[1]);
+    int i;
+    pthread_mutex_init(&mtx, NULL);
+    int* ar = (int*)malloc(n*4);
+    pthread_t* t = (pthread_t*)malloc(n*sizeof(pthread_t));
+
+    for(i = 0; i < n; i++){
+        ar[i] = i;
+        pthread_create(&t[i], NULL, worker, &ar[i]);
+    }
+
+    for(i=0; i < n; i++){
+        pthread_join(t[i], NULL);
+    }
+    pthread_mutex_destroy(&mtx);
+    printf("Sir: ");
+    for(i=1; i < v[0]; i+=2){
+        printf("%d %d ", v[i], v[i+1]);
+    }
+    printf("\n");
+    free(ar); free(t);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+4:
+#include <string.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define T 8
+
+int fr[256];
+int* poz;
+struct coite{
+        char f[50];
+        char ch;
+        int nt;
+};
+struct coite* pereche;
+pthread_mutex_t mt;
+
+void* worker(void* a){
+        int nt = (*(struct coite*)a).nt;
+        FILE* fd = fopen(pereche[nt].f, "r");
+        if(fd==NULL){
+                perror("fisierul nu exista");
+                exit(0);
+        }
+        char chc;
+        int gasit=0;
+        char ch = pereche[nt].ch;
+        int pc=0;
+        while(fscanf(fd, "%c", &chc)!=EOF){
+                if(gasit==0 && chc==ch){
+                        gasit = 1;
+                        pthread_mutex_lock(&mt);
+                        poz[nt] = pc;
+                        pthread_mutex_unlock(&mt);
+                }
+                pthread_mutex_lock(&mt);
+                fr[(int)chc]++;
+                pthread_mutex_unlock(&mt);
+                pc++;
+        }
+        if(gasit==0){
+                pthread_mutex_lock(&mt);
+                poz[nt] = -1;
+                pthread_mutex_unlock(&mt);
+        }
+        fclose(fd);
+        return NULL;
+}
+
+int main(int argc, char** argv){
+        int nn = (argc - 1)/2;
+        if(argc % 2 == 0){
+                perror("Argumente ciudate");
+                exit(0);
+        }
+        int i;
+        pthread_t* t = malloc(nn*sizeof(pthread_t));
+        pthread_mutex_init(&mt,NULL);
+        pereche = (struct coite*)malloc(nn*sizeof(struct coite));
+        poz = (int*)malloc(nn*sizeof(int));
+        int* a = malloc(nn*4);
+        for(i=0; i < nn; i++){
+                a[i] = i;
+                strcpy(pereche[i].f, argv[2*i+1]);
+                pereche[i].ch = argv[2*i+2][0];
+                pereche[i].nt = i;
+                pthread_create(&t[i], NULL, worker, &pereche[i]);
+        }
+        for(i=0; i < nn; i++){
+                pthread_join(t[i], NULL);
+        }
+        pthread_mutex_destroy(&mt);
+        for(i='a'; i<='z'; i++){
+                printf("%c: %d\n", i, fr[i]);
+        }
+        for(i=0; i <nn;i++){
+                printf("%s: %d\n", pereche[i].f, poz[i]);
+        }
+        free(t); free(pereche); free(poz); free(a);
+        return 0;
+}
+
+
+
+
+
+
+
+
+
+5:
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+struct mda{
+    char f[55];
+    int cif;
+    int nr;
+};
+struct mda* pereche;
+int frcif[10];
+char* chars;
+pthread_mutex_t mt;
+
+void* worker(void* a ){
+    int nt = *(int*)a;
+    FILE* fd = fopen(pereche[nt].f,"r");
+    if(fd==NULL){
+	chars[nt]='#';
+        perror("Nu exista fisier");
+        return NULL;
+    }
+    int fr[200], i;
+    for(i=0; i<200;i++) fr[i] = 0;
+    char ch;
+    while(fscanf(fd, "%c", &ch) > 0){
+        if(ch-'0' == pereche[nt].cif){
+            pthread_mutex_lock(&mt);
+            frcif[pereche[nt].cif]++;
+            pthread_mutex_unlock(&mt);
+        }
+        if((ch>='A' && ch<='Z') || (ch>='a' && ch<='z')) fr[(int)ch]++;
+    }
+    for(i='A'; i<='z'; i++){
+        if(fr[i] > pereche[nt].nr){
+            chars[nt]=i;
+            fclose(fd);
+            return NULL;
+        }
+        if(i=='Z') i='a'-1;
+    }
+    chars[nt]='*';
+    fclose(fd);
+    return NULL;
+}
+
+int main(int argc, char** argv){
+    int nn = (argc-1)/3;
+    if(argc % 3 != 1){
+        perror("Nr argumente invalid");
+        exit(0);
+    }
+    pthread_mutex_init(&mt,NULL);
+    pthread_t* t = malloc(nn*sizeof(pthread_t));
+    pereche = malloc(nn*sizeof(struct mda));
+    chars = malloc(nn);
+    int* a = malloc(nn*4);
+    int i;
+    for(i=0;i<nn;i++){
+        a[i] = i;
+        strcpy(pereche[i].f,argv[3*i+1]);
+        pereche[i].nr = atoi(argv[3*i+2]);
+        pereche[i].cif = atoi(argv[3*i+3]);
+        pthread_create(&t[i], NULL, worker, &a[i]);
+    }
+
+    for(i=0;i<nn;i++){
+        pthread_join(t[i], NULL);
+    }
+    pthread_mutex_destroy(&mt);
+
+    for(i=0;i<10;i++) printf("frecv %d: %d\n", i, frcif[i]);
+    for(i=0;i<nn;i++) printf("Fisier: %s -> cif: %c\n", pereche[i].f, chars[i]);
+    free(t); free(pereche); free(chars); free(a);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2:
+#include <stdio.h>
+#include <openssl/evp.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fnctl.h>
+#include <unistd.h>
+#include <dirent.h>
+#include <string.h>
+
+#define T 8
+#define L 20
+#define B 1024
+
+pthread_mutex_t mtx;
+pthread_cond_t cond;
+pthread_rwlock_t rwl;
+pthread_barrier_t bar;
+sem_t sem;
+
+typedef struct rec{
+        char* file;
+        unsigned char checksum[];
+        int ignore;
+        struct rec* next;
+}rec;
+
+rec* list = NULL;
+
+char* path(char* dir, char* name){
+        char* p = (char*)malloc(strlen(dir)+strlen(name)+2);
+        sprintf(p, "%s/%s", dir, name);
+        return p;
+}
+
+rec* newrec(char* file){
+        rec* n = (rec*)malloc(sizeof(rec));
+        n->file = file;
+        n->ignore = 0;
+        n->next = NULL;
+        return n;
+}
+
+void sha1(rec* r){
+        unsigned char buf[B];
+        int fd, k;
+        EVP_MD_CTX* ctx;
+        fd=open(r->filename, O_RDONLY);
+        if(fd < 0){
+                r->ignore = 1;
+                return;
+        }
+        ctx = EVP_MD_CTX create();
+        EVP_DigestInit_ex(ctx, EVP_sha1(), NULL);
+
+        while(1){
+                k=read(fd, buf, B);
+                if(k < 0){
+                        r->ignore = 1;
+                }
+                if(k <= 0){
+                        break;
+                }
+                EVP_DigestUpdate(ctx, buf, k);
+        }
+        close(fd);
+        EVP_DigestFinal_ex(ctx, r->checksum, NULL);
+        EVP_MD_CTX_destroy(ctx);
+}
+
+int equal(rec* a, rec* b){
+        int i;
+        if(b->ignore) return 0;
+        for(i=0; i<L; i++){
+                if(a->checksum[i] != b->checksum[i]) return 0;
+        }
+        return 1;
+}
+
+rec* find(char* dir, rec** head, rec* tail){
+        struct dirent* e;
+        DIR* d = opendir(dir);
+        rec* t = tail;
+
+        if(d!=NULL){
+                while((e = readdir(d)) != NULL){
+                        if(e->d_type == DT_DIR && strcmp(e->d_name, "..") != 0 && strcmp(e->d_name, ".") != 0 ){
+                                char* subd = path(dir, e->d_name);
+                                t = find(subd, head, t);
+                                free(subd);
+                        }
+                        else if(e->d_type == DT_REG){
+                                pthread_rwlock_wrlock(&rwl);
+                                if(t == NULL){
+                                        t = newrec(path(dir, e->d_name));
+                                        *head = t;
+                                }
+                                else{
+                                        t->next = newrec(path(dir, e->name));
+                                        t = t->next;
+                                }
+                                pthread_rwlock_unlock(&rwl);
+                                pthread_mutex_lock(&mtx);
+                                pthread_cond_broadcast(&cond);
+                                pthread_mutex_unlock(&mtx);
+                        }
+                }
+                closedir(d);
+        }
+        return t;
+}
+
+void* worker(void* a){
+        int n=0, id = *(int*)a;
+        rec* r, *x;
+
+        pthread_mutex_lock(&mtx);
+        while(list == NULL){
+                pthread_cond_wait(&cond, &mtx);
+        }
+        pthread_mutex_unlock(&mtx);
+        r=list;
+
+        while(1){
+                pthread_rwlock_rdlock(&rwl);
+                while(1){
+                        if(r->filename == NULL) break;
+                        if(n%T == id) sha1(r);
+                        n++;
+                        if(r->next == NULL) break;
+                        r = r->next;
+                }
+                pthread_rwlock_unlock(&rwl);
+                if(r->filename == NULL) break;
+                pthread_mutex_lock(&mtx);
+                while(r->next == NULL){
+                        pthread_cond_wait(&cond, &mtx);
+                }
+                pthread_mutex_unlock(&mtx);
+                r=r->next;
+        }
+
+        pthread_barrier_wait(&bar);
+        r = list;
+        n=0;
+        while(r->file != NULL){
+                if(n % T == id && !r->ignore){
+                        x = r->next;
+                        while(x->file != NULL){
+                                if(strcmp(r->file, x->file) != 0 && equal(r,x)){
+                                        printf("%s = %s \n", r->file, x->file);
+                                }
+                                x = x->next;
+                        }
+                }
+                r = r->next;
+                n++;
+        }
+        return NULL;
+}
+
+int main(int argc, char**argc){
+        rec* r;
+        pthread_t t[T];
+        int i, a[T];
+
+        pthread_mutex_init(&mtx, NULL);
+        pthread_cond_init(&cond, NULL);
+        pthread_rwlock_init(&rwlock, NULL);
+        pthread_barrier(&bar, NULL, T);
+        sem_init(&sem, 0, R);
+
+        for(i=0; i<T; i++){
+                a[i] = i;
+                pthread_create(&t[i], NULL, worker, &a[i]);
+        }
+
+        r = find(argv[1], &list, NULL);
+        pthread_rwlock_wrlock(&mtx);
+        r->next = newrec(NULL);
+        pthread_rwlock_unlock(&rwlock);
+
+        pthread_mutec_lock(&mtx);
+        pthread_cond_broadcast(&cond);
+        pthread_mutex_unlock(&mtx);
+
+        for(i=0; i<T; i++){
+                pthread_join(t[i], NULL);
+        }
+        pthread_mutex_destroy(&mtx);
+        pthread_cond_destroy(&cond);
+        pthread_rwlock_destroy(&rwl);
+        pthread_barrier_destroy(&bar);
+        sem_destroy(&sem);
+
+        while(list != NULL){
+                r = list->next;
+                free(list->file);
+                free(list);
+                list = r;
+        }
+        return 0;
+}
+
+
+
+
