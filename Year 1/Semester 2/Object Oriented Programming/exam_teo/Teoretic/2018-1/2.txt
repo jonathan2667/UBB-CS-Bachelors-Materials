@@ -1,0 +1,115 @@
+Determine the result of the execution of the following C++ programs. If there are any errors, indicate the exact place where the errors occur. Justify your answers.
+
+a)
+#include <iostream>
+using namespace std;
+
+int except(bool ex)
+{
+	if (ex)
+		throw 10;
+	cout << "finished function." << '\n';
+}
+
+int main()
+{
+	cout << 1 << " ";
+	try
+	{
+		cout << except(true) << " ";
+		cout << except(5 < 5) << " ";
+	}
+	catch (int& ex) {cout << ex << " ";}
+	cout << 40 << " ";
+	return 0;
+}
+
+solution:
+1 10 40
+
+b)
+#include <iostream>
+using namespace std;
+
+class B
+{
+	public:
+		virtual void f() {cout << "B.f ";}
+		virtual ~B() {cout << "~B ";}	
+};
+
+class D : public B
+{
+	private:
+		B& b;
+	public:
+		D(B* b) : b(*b) {}
+		void f() override {b.f(); cout << "D.f ";}
+		virtual ~D() {cout << "~D ";}
+};
+
+int main()
+{
+	B* b1 = new B{};
+	b1 -> f();
+	B* b2 = new D{b1};
+	b2 -> f();
+	delete b2;
+	delete b1;
+	return 0;
+}
+
+solution:
+B.f B.f D.f ~D ~B ~B
+
+c)
+#include <iostream>
+#include <string>
+using namespace std;
+
+template <typename T>
+class elem
+{
+	private:
+		T x;
+	public:
+		elem(T _x): x{_x} {}
+		static T add(T a, T b) {return a + b;}
+		elem& operator+=(const T& a) {x += a; return *this;}
+		T get() {return x;}
+};
+
+int main()
+{
+	cout << elem<string>::add("answer to ", "life ");
+	elem<int> e{3};
+	e += 39;
+	cout << e.get();
+	return 0;
+}
+
+solution:
+answer to life 42
+
+d)
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main()
+{
+	vector<string> str{"a", "b", "c", "d"};
+	vector<string>::iterator it = str.end();
+	it--;
+	*it = "a";
+	it--;
+	str.erase(it);
+	str.insert(it, "b");
+	for (it = str.begin(); it != str.end(); it++)
+		cout << *it << " ";
+	return 0;
+}
+
+solution:
+a b b a

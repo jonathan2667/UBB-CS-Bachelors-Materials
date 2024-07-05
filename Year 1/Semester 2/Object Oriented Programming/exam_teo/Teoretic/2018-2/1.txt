@@ -1,0 +1,37 @@
+Given the test function below, specify and implement the function fct.
+
+void testFct()
+{
+	vector<int> v1{4, 2, 1, -4};
+	assert(fct<int>(v1) == 3);
+	vector<int> v2;
+	try
+	{
+		fct<int>(v2);
+		assert(false);
+	}
+	catch (std::exception&) {assert(true);}
+	
+	vector<double> v3{2, 10.5, 5, -10};
+	assert(fct<double>(v3) == 7.5);
+
+	vector<string> v4{"y", "q", "a", "m"};
+	assert(fct<string>(v4) == "yqam");
+}
+
+solution:
+
+template<typename T>
+T fct(const std::vector<T>& v)
+{
+    if (v.empty())
+        throw std::exception();
+    if (std::is_same<T, int>::value || std::is_same<T, double>::value || std::is_same<T, std::string>::value)
+    {
+        T result = T();
+        for (const T& element : v)
+            result += element;
+        return result;
+    }
+    throw std::exception();
+}

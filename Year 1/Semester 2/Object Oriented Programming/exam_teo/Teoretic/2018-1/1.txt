@@ -1,0 +1,33 @@
+Given the test function below, specify and implement the function fct.
+
+void testFct()
+{
+	vector<int> v1{4, 2, 1, 6, 3, -4};
+	assert(fct<int>(v1) == 6);
+	vector<int> v2;
+	try
+	{
+		fct<int>(v2);
+		assert(false);
+	}
+	catch (std::exception&) {assert(true);}
+	
+	vector<double> v3{2, 10.5, 6.33, -100, 9, 1.212};
+	assert(fct<double>(v3) == 10.5);
+}
+
+template<typename T>
+T fct(const std::vector<T>& v)
+{
+	if (v.empty())
+		throw std::exception();
+	if (std::is_same<T, int>::value || std::is_same<T, double>::value || std::is_same<T, std::string>::value)
+	{
+		T max = T();
+		for (const T& element : v)
+			if (element > max)
+				max = element;
+		return max;
+	}
+	throw std::exception();
+}

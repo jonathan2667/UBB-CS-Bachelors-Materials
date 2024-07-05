@@ -1,0 +1,165 @@
+1. RO: Daţi o expresie regulară care acceptă orice număr impar de cuvinte separate prin spaţii, fiecare cuvânt având număr impar de litere.
+EN: Give a regular expression that matches any odd number of words, each word having an odd number of letters.
+
+^(((([a-z][a-z])*[a-z] )(([a-z][a-z])*[a-z] ))*(([a-z][a-z])*[a-z] ))$
+
+2. RO: Daţi patru comenzi care afişează numărul de linii goale dintr-un fişier.-8, 8
+EN: Give four commands that display the number of empty lines in a file.
+
+grep -c "^$" filename
+grep -Ec "^$" filename
+awk "BEGIN {count = 0} /^$/ {count++} END {print count}" filename
+sed -n "/^$/p" filename | wc -l
+
+3. RO: Scrieţi o comandă SED care afişează liniile dintr-un fişier ştergând din ele primul, al treilea, al cincilea, al şaptelea, etc spaţii.
+EN: Write a SED command that displays a file's lines deleting the first, the third, the fifth, the seventh, etc space on those lines
+
+sed -E "s/([^ ]*) ([^ ]*) /\1 \2/g' filename (no idea??)
+
+
+4. RO: Scrieţi o comandă AWK care afişează produsul ultimului câmp al liniilor de pe poziţii impare care au număr impar de câmpuri.
+EN: Write an AWK command that displays the product of the last field of lines on odd positions having an odd number of fields.
+
+awk "BEGIN {P=1} NR%2==1 && NF%2==1{P*=$NF} END {prinr P}"
+
+5. RO: Daţi patru moduri prin care ieşirea standard a unui proces poate fi redirectată.
+EN: Give four ways of redirecting the standard output of a process.
+
+command > file
+command >> file
+command | file
+command > file 2>&1
+
+6. RO: Scrieţi trei condiţii Shell UNIX care verifică existenţa unui fişier.
+EN: Write three UNIX Shell conditions that check the existence of a file.
+
+if test -e file; then
+	echo "Exist"
+fi
+if [-e file]; then
+	echo "Exist"
+fi
+if [[-e file]]; then
+	echo "Exist"
+fi
+
+7. RO: Desenati ierarhia proceselor create de coduld e mai jos, incluzand procesul parinte.
+EN: Draw the hierarchy of processes created by the code below, including the parent process.
+
+    for(i=0; i<3; i++) {
+        if(execlp("ls", "ls", "/", NULL) != -1) {
+            fork();
+        }
+    }
+
+P->C1 (cred??)
+
+8. RO: Adăugaţi codul C necesar pentru ca instrucţiunea de mai jos să nu se blocheze aşteptând la intrarea standard.
+EN: Add the necessary code so that the instruction below does not get stuck waiting for standard input.
+
+    execlp("cat", NULL);
+
+int fd = open(STD_IN, "O_WRONLY", 0644)
+dup2(fs, STDIN_FILENO);
+(cred???)
+
+9. RO: Schiţaţi o implementare a funcţiilor popen şi pclose, doar pentru cazul în care outputul comenzii e citit în codul C.
+EN: Sketch an implementation of the popen and pclose functions, only for the case when the command output should be read in the C code.
+
+popen:
+-create a pipe
+-fork the process
+-child: close read end of the pipes, redirect stdout to pipe and execute command with execlp
+-parent: close write end of pipe, return file pointer for reading
+
+pclose:
+-close file pointer
+-wait for the child process
+-return child exit status
+
+10. RO: Câte FIFO-uri poate deschide pentru citire un process, dacă FIFO-urile sunt şi vor fi întotdeauna folosite de alte procese doar pentru citire?
+EN: How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for reading?
+
+It will depend on the file descriptor system capacity which we can acess using ulimits -n. Also, FIFO wait for the complementary end to be opened. Great management prevents deadlocks, while
+allowing as many FIFOs as the file descriptor capacity allows. 
+
+11. RO: Când aţi folosi un FIFO în locul unui pipe?
+EN: When would you prefer using a FIFO instead of a pipe?
+
+(i donnoooo;( )
+-allows communication between processes without common ancestor
+-communication channel that persists beyond the lifetime of the process
+-requires multiple readers of writers
+
+12. RO: Ce este o "secţiune critică"?
+EN: What is a "critical section"?
+
+A critical section is a part of the program where we have shared ressiources, such as varbiale memory that can be accesed and modified. It is importnat to fully take care of the mechanism involved to not cause unwanted behaviour, race conditions, deadlock by using mutual exclusion for example. 
+
+13. RO: Când aţi folosi un mutex în locul unui rwlock?
+EN: When would you prefer using a mutex instead of a rwlock?
+
+(i donnoooo;( )
+-when a program has more write operations that read, mutex would be more efficient
+-simplicity
+-deadlock avoidance, mutexes are less prone to deadlocks
+
+14. RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la sem_wait?
+EN: What will be the effect of replacing calls to pthread_mutex_lock with calls to sem_wait?
+
+-sem_wait decrements the semaphore and may allow multiple threads to enter the critical section, would also lead to race conditions and data corruption 
+
+15. RO: Ce face pthread_cond_wait cu mutex-ul primit ca argument?
+EN: What does pthread_cond_wait do with the mutex it gets as argument?
+
+-releases the mutex, allow other threads to aquire it
+-puts the thread to sleep and wait for the condition variable to be signaled
+-reaquires the mutex, while ensuring exclusive access to shared ressoursces 
+
+16. RO: Schiţaţi o soluţie pentru problema producător-consumator.
+EN: Sketch a solution for the producer-consumer problem.
+
+answer:
+n=size of buffer
+p=next index to insert obj
+c=next index to take obj
+consumer: tale while not empty(p==c)
+producer: produce while not full ((p+1)%n==c)
+
+
+17. RO: Ce puteţi face ca programator pentru a preveni deadlock-urile?
+EN: What can you do as a software developer to prevent deadlocks?
+
+-use consistent lcoking order 
+-avoid nested loops
+-use deadlock detection algorithm
+-use lock timeouts
+
+18. RO: Prin ce tranziţie de stare va trece un process când apelează pthread_cond_wait? Justificaţi răspunsul.
+EN: What state transition will a process undergo when it calls pthread_cond_wait? Justify your answer.
+
+-when pthread_cond_wait is called, the process releases the associated mutex and blocks itself
+-it remains blocked until another process signals the codition with pthread_cond_signal
+-after condition is signaled, pricess is awakened, it re acquire the mutex and it back to running state
+
+19. RO: Ce conţinue un fişier de tip director în sistemul de fişiere Linux?
+EN: What is the content of file of type directory in the Linux file system?
+
+-directory entreies(file names, inode numbers)
+-.(dot) represent the directory, has the inode of the directory
+-..(dot dot) represent parent directory, inode of parent
+-regular entries, name file or subdirectory and inode specifc
+
+20. RO: Explicaţi diferenţa dintre un link simbolic şi un link hard.
+EN: Explain the difference between a symbolic link and a hard link.
+
+Symbolic link:
+-points to the path of the target file
+-can span across different file systems
+-becomes invalid if the target file is deleted
+-created with ln -s
+Hard link:
+-points to the inode of the target file
+-cannot span across different file systems
+-remains valid as long as at least one link exist to the inode
+-created with ln

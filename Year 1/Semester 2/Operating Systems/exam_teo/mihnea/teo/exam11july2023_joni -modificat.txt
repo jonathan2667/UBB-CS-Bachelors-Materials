@@ -1,0 +1,263 @@
+RO: Daţi o expresie regulară care acceptă orice secvenţă de lungime pară de cuvinte (formate din litere) separate prin spaţii, cu condiţia ca pentru fiecare cuvânt să lungimea şi poziţia în secvenţă să fie ambele pare sau impare. Numărarea cuvintelor începe de la 1. Ex: al 5-lea cuvânt trebuie să aibă lungime impară, iar al 16-lea să aibă lungime pară.
+EN: Give a regular expression that matches any even-length sequence of lower-case words separated by spaces, if for each word its length and its position in the sequence are either both odd or both even. The words ware counted starting with 1. Ex: the 5th word must have odd length and the 16th word must of even length.
+Answer:
+^((([a-z]{2})*[a-z] ([a-z]{2})*[a-z])( ([a-z]{2})*[a-z] ([a-z]{2})*[a-z])*)$  (cred)
+
+
+*****
+^([a-z]{2}*[a-z] [a-z]{2}+ ){0,}([a-z]{2}*[a-z] [a-z]{2}+)*$ -asta a mers pe terminal
+
+
+RO: Daţi trei comenzi GREP care afişează dintr-un fişier liniile formate exclusiv dintr-o secvenţă nevidă de litere şi cifre alternativ (ex: a0g sau 1r5m).
+EN: Give three GREP commands that display the lines of a file which consist exclusively of a non-empty sequence of alternating leters and digits (eg a0g or 1r5m)
+
+Answer:
+grep -E -i "(^([0-9]?([a-z][0-9])*)$|^([a-z]?([0-9][a-z])*)$)"
+grep -E "(^([0-9]?([a-zA-Z][0-9])*)$|^([a-zA-Z]?([0-9][a-zA-Z])*)$)"
+grep -E -i "(^(\d?([a-z]\d)*)$|^([a-z]?(\d[a-z])*)$)"
+
+*****
+Ultima nu mi-a mers pe terminal.
+Am mai incercat eu asta si pare ca merge: 
+grep -E -i -v "[a-z][a-z]|[0-9][0-9]" a.txt
+
+
+RO: Scrieţi două comenzi SED care afişează liniile unui fişier ştergând prima secvenţă nevidă de litere mici.
+EN: Write two SED commands that display a file's lines deleting the first non-empty sequence of lower-case letters
+
+Answer:
+sed -E "s/[a-z]+//"
+sed "s/[a-z]\+//"
+
+*****
+Merg ambele:)
+
+RO: Scrieţi o comandă AWK care afişează suma tuturor numerelor dintr-un fişier text ale cărui linii sunt formate din secvenţe de cifre separate prin spaţii.
+EN: Write an AWK command that displays the sum of all the numbers in a text file whose lines consist of sequences of digits separated by spaces.
+
+Answer:
+
+awk "{for(i = 1; i <= NF; i++) SUM += $i} END {print SUM}"
+
+
+RO: Daţi trei moduri de a afla dimensiunea unui fişier în linia de comandă Linux.
+EN: Give three ways of finding the size of a file on the Linux command line.
+Answer:
+
+ls -lh file
+du -h file
+stat -c %d file
+
+*****
+Victor a mai zis si:
+wc -c file
+
+RO: Scrieţi o condiţie Shell UNIX care verifică dacă un un fişier există şi utilizatorul curent are vreo permisiune asupra lui.
+EN: Write a UNIX Shell condition that checks whether a file exists and the current user has any permissions on it.
+Answer:
+
+if [-e file] ** [-r file -o -w file -o -x file]; then
+	echo "Exist"
+else
+	echo "Does not exist or No persmission"
+fi
+
+*****
+Dadea eroare codul de mai sus (nu uita sa lasi spatii la if)
+if [-e file] -incorect
+if [ -e file ] -corect
+
+#!/bin/bash
+
+if [ -e file.txt ] && [ -r file.txt -o -w file.txt -o -x file.txt ]; then           
+	echo "Exist"
+else
+        echo "Does not exist or No persmission"
+fi
+
+
+
+RO: Desenati ierarhia proceselor create de codul e mai jos, incluzand procesul parinte.
+EN: Draw the hierarchy of processes created by the code below, including the parent process.
+
+    for(i=0; i<3; i++) {
+        if(fork() > 0) {
+            wait(0);
+            wait(0);
+            exit(0);
+        }
+    }
+
+Answer:
+
+P -> C1
+  -> C2
+  -> C3
+
+*****
+Cred ca mai mult e asa, pt ca P il creeaza pe C1, C1 il creeaza pe C2 si C2 pe C3 
+P -> C1
+       |-> C2
+             |-> C3
+The loop as given does not ensure each process has two child processes to wait for, leading potentially to hangs or errors unless there are other child processes being created elsewhere in the program.
+
+
+RO: Ce va tipări fragmentul de cod de mai jos? Justificaţi răspunsul.
+EN: What will the fragment below print? Justify your answer.
+
+    execl("expr", "expr", "1", "+", "1", NULL);
+    execlp("echo", "echo", "3", NULL);
+    printf("4\n");
+
+Answer: 
+3
+
+*****
+For justify your answer: The execl function requires the full path to the executable. (execl("/bin/expr", "expr", "1", "+", "1", NULL);. We have just the command name, so execl fails executing. The program continues to execlp, it prints 3 and since execlp replaces the process image and terminates the process upon completion, no further code is executed after this line.
+)
+
+
+RO: De ce descriptorul de fişier returnat de popen trebuie închis cu pclose şi nu cu fclose?
+EN: Explain why the file descriptor returned by popen must be closed with pclose instead of fclose.
+
+Answer:
+Since popen opens a new process that needs to be closed with pclose. Pclose closes the file pointer, waits for the associated process to finish and returns
+the termination status, while fclose would only close the file stream, and failing to do the other tasks.
+
+RO: Câte FIFO-uri poate deschide pentru citire un process, dacă FIFO-urile sunt şi vor fi întotdeauna folosite de alte procese doar pentru scriere?
+EN: How many FIFOs can a process open for reading if the FIFOs are and will ever be used by other processes only for writing?
+
+Answer:
+it depends on the system file descriptor limit which can be checked using ulimit -n. Fifos wait for the complementary end to be opened. If each
+writing process opens exactly one FIFO, the reading process can open as many as file descriptor allows. Incorect ordering lead to deadlock.
+
+
+RO: Când aţi folosi execv în locul de execl?
+EN: When would you use execv instead of execl?
+
+Answer:
+I would use execv when i have to pass an array of arguments to the new program. since it is useful when the number of argument is stored allowing
+to pass the arguments to the new process.
+
+RO: Ce este o "secţiune critică"?
+EN: What is a "critical section"?
+
+Answer:
+A critical section is a part of the program where we have share ressources, for example memory variables, which can be accessed and modified. 
+it is important to handle rightfully to prevent unwanted outcome(race conditions, deadlocks) by using mutual exclusion
+
+
+RO: Daţi trei apeluri de funcţii care asigură excludere mutuală.
+EN: Give three function calls that ensure mutual exclusion.
+
+Answer:
+pthread_mutex_lock(&mutex)
+sem_wait(&sem)
+pthread_rwlock_wrlock(&rwlock)
+
+
+RO: Care va fi efectul înlocuirii apelurilor la pthread_mutex_lock cu apeluri la sem_post?
+EN: What will be the effect of replacing calls to pthread_mutex_lock with calls to sem_post?
+
+Answer:
+Replacing pthread_mutex_lock with sem_post would lead to chaos, since sem_post increments the semaphore, allowing any thread to enter in the critical section, thus failing to prevent concurent access to share ressources. this could result in race conditions and data corruption.
+
+RO: Ce se poate întâmpla dacă funcţia f este rulată de mai multe thread-uri simultane? De ce?
+EN: What could happen if function f were executed by several simultaneous threads? Why?
+
+pthread_mutex_t m[2];
+void* f(void* p) {
+    int id = (int)p;
+    pthread_mutex_t* first = &m[id % 2];
+    pthread_mutex_t* second = &m[(id+1) % 2];
+
+    pthread_mutex_lock(first);
+    pthread_mutex_lock(second);
+    ...
+    pthread_mutex_unlock(second);
+    pthread_mutex_unlock(first);
+}
+
+
+Answer:
+It could lead to a deadlock, since if one has id%2=0 and the other id%2=1, they could lock the mutexes simultunaously and start waiting for the release result in a deadlock.
+
+
+RO: Daţi un exemplu de valori distincte şi mai mari ca 0 pentru T, N1, N2 şi N3 pentru care programul de mai jos se incheie.
+EN: Give an example of distinct values greater than 0 for T, N1, N2, and N3 for which the program below finishes execution.
+
+pthread_barrier_t b1, b2;
+
+void* f1(void* a) {
+    pthread_barrier_wait(&b1);
+    return NULL;
+}
+
+void* f2(void* a) {
+    pthread_barrier_wait(&b2);
+    return NULL;
+}
+
+int main() {
+    int i;
+    pthread_t t[T][2];
+
+    pthread_barrier_init(&b1, NULL, N1);
+    pthread_barrier_init(&b2, NULL, N2);
+    for(i=0; i<T; i++) {
+        pthread_create(&t[i][0], NULL, f1, NULL);
+        pthread_create(&t[i][1], NULL, f2, NULL);
+    }
+    for(i=0; i<T; i++) {
+        pthread_join(t[i][0], NULL);
+        pthread_join(t[i][1], NULL);
+    }
+    pthread_barrier_destroy(&b1);
+    pthread_barrier_destroy(&b2);
+    return NULL;
+}
+
+Answer:
+
+T = 4
+N1 = 2
+N2 = 1
+
+*****
+Oare nu ar trebui sa fie N1 si N2 egale cu T? Ca nr barierelor care asteapta sa fie egal cu nr call urilor de f1 si f2? (nu stiu daca zic ceva bine pe aici:)) )
+
+RO: Ce puteţi face ca programator pentru a preveni deadlock-urile?
+EN: What can you do as a software developer to prevent deadlocks?
+
+Answer:
+-use consistent ordering locking
+-avoid nested loops
+-utilize ressources hierarchies
+-apply deadlock detection alorithm
+
+
+RO: Prin ce tranziţie de stare va trece un process când apelează sem_wait şi în ce condiţii? Justificaţi răspunsul.
+EN: What state transition will a process undergo when it calls sem_wait and under what conditions? Justify your answer.
+
+Answer:
+-if sem value > 0, the process decrements the sem and continues execution in RUNNING STATE
+-sem = 0, the proces trantionstion to WAITING or blocked until the semaforre is incremented by sem_post 
+
+*****
+Pare ok, mai pun si cum scrie in manual:
+ A  semaphore  is  an integer whose value is never allowed to fall below zero.  Two operations can be performed on semaphores: increment the sema‐
+       phore value by one (sem_post(3)); and decrement the semaphore value by one (sem_wait(3)).  If the value of a semaphore is currently zero, then  a
+       sem_wait(3) operation will block until the value becomes greater than zero.
+
+
+RO: Considerand ca dimensiunea unui bloc este B si dimensiunea unei adrese este A, cate blocuri de date sunt adresate de indirectarea dubla a unui i-nod?
+EN: Considering that the size of a block is B and the size of and address is A, how many data blocks are addressed by the double indirect addressing of an i-node?
+
+Answer:
+(B/A)^2
+
+RO: Cand ati incarca in memorie paginile unui program care tocmai este pornit?
+EN: When would you load into memory the pages of a process that is just starting?
+
+Answer:
+at startup, i would load the initial page and prefetch neighboring pages based on the locality principle, which states that a process is likely to access nearby pages soon. This approach help impove the performance by reducing page faults.
