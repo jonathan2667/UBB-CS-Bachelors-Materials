@@ -1,9 +1,9 @@
 # Bachelor's Degree Materials - Babeș-Bolyai University (UBB)
 ## Faculty of Mathematics and Computer Science
 
-This repository contains the materials, exams, and tests from Year 1 (2023-2024). 📚
+This repository contains the materials, exams, and tests from Year 1 (2023–2024). 📚
 
-Due to time constraints, Year 2 and Year 3 materials have not been organized or committed to this repository.
+Due to time constraints, Year 2 and Year 3 materials have not been fully organized or committed to this repository.
 
-For access to exams, tests, or academic advice regarding Year 2 and Year 3 coursework, please contact me.
+If you need *specific* exams, tests, or materials from certain Year 2 or Year 3 subjects, feel free to contact me.
 
