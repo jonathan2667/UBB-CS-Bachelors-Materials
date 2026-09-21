@@ -12,8 +12,6 @@ When you open that link, you’ll find the full project with questions, ranking,
 
 ## I Learning Platform - Deployment Guide
 
-This AI learning platform was originally created for personal use. If you need help to host this, you can contact me via LinkedIn anytime to set up this nice ranking website for AI.
-
 If you want to host your own version, follow these simple deployment steps using Netlify (free) and Firebase database.
 
 ## 🚀 Deployment
